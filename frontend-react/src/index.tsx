@@ -12,6 +12,7 @@ if (container) {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
+        {/* TODO: ログイン、非ログインで切り分け */}
         <BaseApp />
       </BrowserRouter>
     </React.StrictMode>

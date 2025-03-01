@@ -1,4 +1,3 @@
-
 import Carousel from 'react-material-ui-carousel';
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -27,7 +26,8 @@ const DashBoardCarousel = () => {
       autoPlay = {false} //自動でCarouselを動かすかどうか(true or false)
       //stopAutoPlayOnHover = {true} Carouselの上にマウスを置いている間、自動スクロールを継続するかどうか
       //interval = {4000} 自動でCarouselを動かす時間の間隔(ミリ秒単位)
-      //animation = {fade} (fade or slide) Carouselのアニメーションの種類を変更
+      animation = "slide"
+      // (fade or slide) Carouselのアニメーションの種類を変更
       //duration = {500} アニメーションの長さを定義
       //swipe = {true} スワイプで動かせるかどうか
       //indicators = {true} インジケーター(下の丸いアイコン)が必要かどうか

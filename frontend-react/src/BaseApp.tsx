@@ -11,35 +11,79 @@ const BaseApp = () => {
 
   // const isLoggedIn = false;
 
+  type ProjectType = {
+    id: number,
+    date: string,
+    content: string
+  }[];
+
+  type PortfolioType = {
+    id: number,
+    date: string,
+    content: string
+  }[];
+
+  type ActivityType = {
+    id: number,
+    date: string,
+    content: string
+  }[];
+
   // JSONデータを取得する
-  const [ProjectList, setProjectList] = useState([]);
-  const [PortfolioList, setPortfolioList] = useState([]);
-  const [ActivityList, setActivityList] = useState([]);
+  const [projectList, setProjectList] = useState<ProjectType>([]);
+  const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
+  const [activityList, setActivityList] = useState<ActivityType>([]);
 
   // useEffect(() => {
-  //   const json = require('./data/ProjectList.json');
-  //   setProjectList(json);
-  // }, []);
+  //   fetch('./data/project.json')
+  //   .then(response => {
+  //     return response.json();
+  //   })
+  //   .then(jsondata => console.log(jsondata));
+  // }, [projectList]);
 
   // useEffect(() => {
-  //   const json = require('./data/PortfolioList.json');
-  //   setPortfolioList(json);
-  // }, []);
+  //   fetch('./data/project.json', {
+  //     headers : {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     }
+  //   })
+  //   .then(response => {
+  //     console.log(response);
+  //     return response.json();
+  //   })
+  //   .then(jsondata => {
+  //     console.log(jsondata);
+  //     setProjectList(jsondata);
+  //   });
+  // }, [projectList]);
 
-  // useEffect(() => {
-  //   const json = require('./data/ActivityList.json');
-  //   setActivityList(json);
-  // }, []);
+  useEffect(() => {
+    const json = require('./data/project.json');
+    // requireではなくfetch
+    setProjectList(json);
+  }, [projectList]);
 
-  // const filteredProjectList = ProjectList.filter((item) => {
-  //   return item.id <= 3;
-  // });
-  // const filteredPortfolioList = PortfolioList.filter((item) => {
-  //   return item.id <= 3;
-  // });
-  // const filteredActivityList = ActivityList.filter((item) => {
-  //   return item.id <= 3;
-  // });
+  useEffect(() => {
+    const json = require('./data/portfolio.json');
+    setPortfolioList(json);
+  }, [portfolioList]);
+
+  useEffect(() => {
+    const json = require('./data/activity.json');
+    setActivityList(json);
+  }, [activityList]);
+
+  const filteredProjectList: ProjectType = projectList.filter((item) => {
+    return item.id <= 3;
+  });
+  const filteredPortfolioList = portfolioList.filter((item) => {
+    return item.id <= 3;
+  });
+  const filteredActivityList = activityList.filter((item) => {
+    return item.id <= 3;
+  });
   
   return (
     <div className="app">
@@ -102,12 +146,12 @@ const BaseApp = () => {
                 <dt>2022.10.01</dt>
                 <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
               </dl>
-              {/* {filteredProjectList.map((item) => (
+              {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>[プロジェクト]{item.name}デプロイされました。</dd>
+                  <dd>{item.content}</dd>
                 </dl>
-              ))} */}
+              ))}
             </div>
           </div>
 
@@ -131,6 +175,12 @@ const BaseApp = () => {
                 <dt>2022.10.05</dt>
                 <dd>「ポートフォリオ3」vue.js / vuetify / node.js / bootstrap</dd>
               </dl>
+              {filteredPortfolioList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>{item.content}</dd>
+                </dl>
+              ))}
             </div>
           </div>
 
@@ -154,51 +204,12 @@ const BaseApp = () => {
                 <dt>2022.10.11</dt>
                 <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
               </dl>
-            </div>
-          </div>
-
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>活動記録</div>
-              <div>
-                <Link to='/activity'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>[ポートフォリオ]「ポートフォリオ名2」いいねがつきました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.11</dt>
-                <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
-              </dl>
-            </div>
-          </div>
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>活動記録</div>
-              <div>
-                <Link to='/activity'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>[ポートフォリオ]「ポートフォリオ名2」いいねがつきました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.11</dt>
-                <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
-              </dl>
+              {filteredActivityList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>{item.content}</dd>
+                </dl>
+              ))}
             </div>
           </div>
 
