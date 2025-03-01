@@ -1,10 +1,19 @@
 .app {
   margin: 0;
   padding: 0;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 .app-header {
-  background-color: #282c34;
+  // background-color: #282c34;
   color: white;
 
   height: 62px;
@@ -12,6 +21,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  a {
+    color: white;
+  }
 
   .header-logo {
     flex: 0 0 20%;
@@ -37,7 +50,8 @@
 
   .side-menu {
     flex: 0 0 20%;
-    background-color: greenyellow;
+    color: white;
+    // background-color: greenyellow;
 
     ul {
       list-style: none;
@@ -54,8 +68,9 @@
 
   .page-maincontents {
     flex: 0 1 80%;
-    background-color: lightblue;
+    // background-color: lightblue;
     padding: 1em;
+    overflow-y: auto;
 
     .section-wrapper {
       margin-bottom: 1em;
