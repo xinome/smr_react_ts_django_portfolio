@@ -43,16 +43,19 @@ const BaseApp = () => {
 
   const fetchProjectList = async () => {
     const response = await Axios.get(`${BASE_API_URL}/project_topics`);
+    console.log("response: ", response);
     setProjectList(response.data);
   }
 
   const fetchPortfolioList = async () => {
     const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
+    console.log("response: ", response);
     setPortfolioList(response.data);
   }
 
   const fetchActivityList = async () => {
     const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
+    console.log("response: ", response);
     setActivityList(response.data);
   }
 
