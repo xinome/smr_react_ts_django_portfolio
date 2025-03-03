@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 import Axios from 'axios';
 
+import { Avatar, Box, Container } from '@mui/material';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+
 import './BaseApp.scss';
 import { bgcolor_header, bgcolor_sidemenu } from './utils/ColorUtils';
 
@@ -12,6 +15,8 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 const BaseApp = () => {
 
   // const isLoggedIn = false;
+
+  const BASE_API_URL = "http://localhost:8000/api";
 
   type ProjectType = {
     id: number,
@@ -36,23 +41,23 @@ const BaseApp = () => {
   const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
   const [activityList, setActivityList] = useState<ActivityType>([]);
 
-  const fetchProjectListFromApi = async () => {
-    const response = await Axios.get("http://localhost:8000/api/data");
-    console.log(response);
+  const fetchProjectList = async () => {
+    const response = await Axios.get(`${BASE_API_URL}/project_topics`);
     setProjectList(response.data);
   }
 
-  const fetchPortfolioList = () => {
-    const json = require('./data/portfolio.json');
-    setPortfolioList(json);
+  const fetchPortfolioList = async () => {
+    const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
+    setPortfolioList(response.data);
   }
-  const fetchActivityList = () => {
-    const json = require('./data/activity.json');
-    setActivityList(json);
+
+  const fetchActivityList = async () => {
+    const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
+    setActivityList(response.data);
   }
 
   useEffect(() => {
-    fetchProjectListFromApi();
+    fetchProjectList();
     fetchPortfolioList();
     fetchActivityList();
   }, []);
@@ -69,26 +74,28 @@ const BaseApp = () => {
   
   return (
     <div className="app">
-      <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
-        <div className='header-logo'>
-          <Link to='/'>ロゴ</Link>
-        </div>
-        <div className='header-menu'>
-          <div className='header-menu-item'>
-            {/* アカウント画像アイコン */}
-            アカウントID
+      <Box>
+        <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
+          <div className='header-logo'>
+            <Link to='/'>ロゴ</Link>
           </div>
-          <div className='header-menu-item'>
-            <Link to='/mypage'>マイページ</Link>
+          <div className='header-menu'>
+            <div className='header-menu-item'>
+              {/* アカウント画像アイコン */}
+              <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
+            </div>
+            <div className='header-menu-item'>
+              <Link to='/mypage'>マイページ</Link>
+            </div>
+            <div className='header-menu-item'>
+              <Link to='/password'>パスワード変更</Link>
+            </div>
+            <div className='header-menu-item'>
+              <Link to='/logout'>ログアウト</Link>
+            </div>
           </div>
-          <div className='header-menu-item'>
-            <Link to='/password'>パスワード変更</Link>
-          </div>
-          <div className='header-menu-item'>
-            <Link to='/logout'>ログアウト</Link>
-          </div>
-        </div>
-      </header>
+        </header>
+      </Box>
       <div className='app-container'>
         <div className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>
@@ -103,8 +110,8 @@ const BaseApp = () => {
           </ul>
         </div>
         <div className='page-maincontents'>
+          {/* カルーセル */}
           <div className='dashboard-carousel section-wrapper'>
-            {/* カルーセル */}
             <DashBoardCarousel />
           </div>
 
@@ -116,18 +123,6 @@ const BaseApp = () => {
               </div>
             </div>
             <div className='section-wrapper-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl> */}
               {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -145,18 +140,6 @@ const BaseApp = () => {
               </div>
             </div>
             <div className='section-wrapper-contents'>
-              {/* <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ1」html / css / wordpress</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ2」php / laravel / docker</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ3」vue.js / vuetify / node.js / bootstrap</dd>
-              </dl> */}
               {filteredPortfolioList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -174,18 +157,6 @@ const BaseApp = () => {
               </div>
             </div>
             <div className='section-wrapper-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>[ポートフォリオ]「ポートフォリオ名2」いいねがつきました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.11</dt>
-                <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
-              </dl> */}
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
