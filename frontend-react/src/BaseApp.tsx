@@ -42,21 +42,36 @@ const BaseApp = () => {
   const [activityList, setActivityList] = useState<ActivityType>([]);
 
   const fetchProjectList = async () => {
-    const response = await Axios.get(`${BASE_API_URL}/project_topics`);
-    console.log("response: ", response);
-    setProjectList(response.data);
+    try {
+      const response = await Axios.get(`${BASE_API_URL}/project_topics`);
+      console.log("fetchProjectList: ", response);
+      setProjectList(response.data);
+    }
+    catch (error) {
+      console.log("fetchProjectList: ", error);
+    }
   }
 
   const fetchPortfolioList = async () => {
-    const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
-    console.log("response: ", response);
-    setPortfolioList(response.data);
+    try {
+      const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
+      console.log("fetchPortfolioList: ", response);
+      setPortfolioList(response.data);
+    }
+    catch (error) {
+      console.log("fetchPortfolioList: ", error);
+    }
   }
 
   const fetchActivityList = async () => {
-    const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
-    console.log("response: ", response);
-    setActivityList(response.data);
+    try {
+      const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
+      console.log("fetchActivityList: ", response);
+      setActivityList(response.data);
+    }
+    catch (error) {
+      console.log("fetchActivityList: ", error);
+    }
   }
 
   useEffect(() => {

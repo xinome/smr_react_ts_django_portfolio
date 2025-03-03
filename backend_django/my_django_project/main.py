@@ -1,9 +1,9 @@
 import os
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend_django.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'my_django_project.settings')
 
 from django import setup
-setup()
+setup(set_prefix=False)
 
 from django_app.models import ProjectTopics
 
@@ -16,7 +16,7 @@ project_topics = ProjectTopics.objects.all()
 print(project_topics)
 
 for project_topic in project_topics:
-  print("id: ", project_topic.topic_id)
+  print("id: ", project_topic.id)
   print("date: ", project_topic.date)
   print("content: ", project_topic.content)
   print("created_at: ", project_topic.created_at)
@@ -24,10 +24,10 @@ for project_topic in project_topics:
   print("--------------------")
 
 # # データを更新する
-# project_topics = ProjectTopics.objects.get(topic_id=1)
+# project_topics = ProjectTopics.objects.get(id=1)
 # project_topics.content = '[プロジェクト]「プロジェクト名1」デプロイされました。'
 # project_topics.save()
 
 # # データを削除する
-# project_topics = ProjectTopics.objects.get(topic_id=1)
+# project_topics = ProjectTopics.objects.get(id=1)
 # project_topics.delete()
