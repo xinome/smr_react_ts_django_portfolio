@@ -7,7 +7,10 @@ import { Avatar, Box, Container } from '@mui/material';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
 import './BaseApp.scss';
-import { bgcolor_header, bgcolor_sidemenu } from './utils/ColorUtils';
+import {
+  bgcolor_header, bgcolor_sidemenu,
+  category_project, category_portfolio, category_activity,
+} from './utils/ColorUtils';
 
 // コンポーネント
 import DashBoardCarousel from './components/DashBoardCarousel';
@@ -21,19 +24,22 @@ const BaseApp = () => {
   type ProjectType = {
     id: number,
     date: string,
-    content: string
+    content: string,
+    category: number,
   }[];
 
   type PortfolioType = {
     id: number,
     date: string,
-    content: string
+    content: string,
+    category: number,
   }[];
 
   type ActivityType = {
     id: number,
     date: string,
-    content: string
+    content: string,
+    category: number,
   }[];
 
   // JSONデータを取得する
@@ -89,6 +95,31 @@ const BaseApp = () => {
   const filteredActivityList = activityList.filter((item) => {
     return item.id <= 3;
   });
+
+  const getCategoryTags = (category: number) => {
+    switch (category) {
+      case 1:
+        return (
+          <span className="tag_category" style={{ backgroundColor: category_project }}>
+            プロジェクト
+          </span>
+        );
+      case 2:
+        return (
+          <span className="tag_category" style={{ backgroundColor: category_portfolio }}>
+            ポートフォリオ
+          </span>
+        );
+      case 3:
+        return (
+          <span className="tag_category" style={{ backgroundColor: category_activity }}>
+            スカウト
+          </span>
+        );
+      default:
+        return "";
+    }
+  };
   
   return (
     <div className="app">
@@ -144,7 +175,10 @@ const BaseApp = () => {
               {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    { getCategoryTags(item.category) }
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
             </div>
@@ -161,7 +195,10 @@ const BaseApp = () => {
               {filteredPortfolioList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    { getCategoryTags(item.category) }
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
             </div>
@@ -178,7 +215,10 @@ const BaseApp = () => {
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    { getCategoryTags(item.category) }
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
             </div>

@@ -11,11 +11,24 @@ class BaseMeta(models.Model):
   class Meta:
     abstract = True  # 抽象クラスとして定義する
 
+# トピックスカテゴリ
+class TopicsCategory(BaseMeta):
+  id = models.AutoField(primary_key=True)
+  category_name = models.CharField(max_length=100)
+
+  class Meta:
+    db_table = 'topics_category'
+    verbose_name_plural = 'トピックスカテゴリ'
+
+  def __str__(self):
+    return self.category_name
+
 # ダッシュボード: プロジェクトのトピック一覧を取得するAPI
 class ProjectTopics(BaseMeta):
   id = models.AutoField(primary_key=True)
   date = models.DateField()
   content = models.CharField(max_length=1000)
+  category = models.ForeignKey(TopicsCategory, on_delete=models.PROTECT, null=True, default=1)  # デフォルト値: 1(プロジェクト)
 
   class Meta:
     db_table = 'project_topics'  # テーブル名を指定する
@@ -42,6 +55,7 @@ class ActivityTopics(BaseMeta):
   id = models.AutoField(primary_key=True)
   date = models.DateField()
   content = models.CharField(max_length=1000)
+  category = models.ForeignKey(TopicsCategory, on_delete=models.PROTECT, null=True)
 
   class Meta:
     db_table = 'activity_topics'

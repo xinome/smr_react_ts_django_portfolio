@@ -6,7 +6,7 @@ from .models import ProjectTopics, PortfolioTopics, ActivityTopics
 class ProjectTopicsSerializer(serializers.ModelSerializer):
   class Meta:
     model = ProjectTopics
-    fields = ('id', 'date', 'content', 'created_at', 'updated_at')
+    fields = ('id', 'date', 'content', 'category', 'created_at', 'updated_at')
 
 class PortfolioTopicsSerializer(serializers.ModelSerializer):
   class Meta:
@@ -16,5 +16,5 @@ class PortfolioTopicsSerializer(serializers.ModelSerializer):
 class ActivityTopicsSerializer(serializers.ModelSerializer):
   class Meta:
     model = ActivityTopics
-    fields = ('id', 'date', 'content', 'created_at', 'updated_at')
+    fields = ('id', 'date', 'content', 'category', 'created_at', 'updated_at')
     
