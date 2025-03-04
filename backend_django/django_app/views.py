@@ -81,19 +81,23 @@ def project_topics(request):
   # django管理画面で追加した項目が反映されるようになる
   queryset = ProjectTopics.objects.all()
 
-  for ProjectTopic in queryset:
-    print("ProjectTopic: ", ProjectTopic)
-    print("ProjectTopic.id: ", ProjectTopic.id)
-    print("ProjectTopic.date: ", ProjectTopic.date)
-    print("ProjectTopic.content: ", ProjectTopic.content)
-    print("ProjectTopic.category: ", ProjectTopic.category)
-    # print("ProjectTopic.category.id: ", ProjectTopic.category.id)
-    # print("ProjectTopic.category.category_name: ", ProjectTopic.category.category_name)
-    print("ProjectTopic.created_at: ", ProjectTopic.created_at)
-    print("ProjectTopic.updated_at: ", ProjectTopic.updated_at)
+  # for ProjectTopic in queryset:
+  #   print("ProjectTopic: ", ProjectTopic)
+  #   print("ProjectTopic.id: ", ProjectTopic.id)
+  #   print("ProjectTopic.date: ", ProjectTopic.date)
+  #   print("ProjectTopic.content: ", ProjectTopic.content)
+  #   print("ProjectTopic.category: ", ProjectTopic.category)
+  #   # print("ProjectTopic.category.id: ", ProjectTopic.category.id)
+  #   # print("ProjectTopic.category.category_name: ", ProjectTopic.category.category_name)
+  #   print("ProjectTopic.created_at: ", ProjectTopic.created_at)
+  #   print("ProjectTopic.updated_at: ", ProjectTopic.updated_at)
 
   serializer_class = ProjectTopicsSerializer(queryset, many=True)
   data = serializer_class.data
+
+  # for item in data:
+  #   print("item: ", item)
+  #   print("item['category']: ", item['category'])
 
   return JsonResponse(data, safe=False)
 

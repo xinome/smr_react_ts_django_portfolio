@@ -9,7 +9,7 @@ import { deepOrange, deepPurple } from '@mui/material/colors';
 import './BaseApp.scss';
 import {
   bgcolor_header, bgcolor_sidemenu,
-  category_project, category_portfolio, category_activity,
+  color_category_project, color_category_portfolio, color_category_activity,
 } from './utils/ColorUtils';
 
 // コンポーネント
@@ -96,26 +96,28 @@ const BaseApp = () => {
     return item.id <= 3;
   });
 
-  const getCategoryTags = (category: number) => {
-    switch (category) {
+  const getCategoryColor = (category_id: number) => {
+    switch (category_id) {
       case 1:
-        return (
-          <span className="tag_category" style={{ backgroundColor: category_project }}>
-            プロジェクト
-          </span>
-        );
+        return color_category_project;
       case 2:
-        return (
-          <span className="tag_category" style={{ backgroundColor: category_portfolio }}>
-            ポートフォリオ
-          </span>
-        );
+        return color_category_portfolio;
       case 3:
-        return (
-          <span className="tag_category" style={{ backgroundColor: category_activity }}>
-            スカウト
-          </span>
-        );
+        return color_category_activity;
+      default:
+        return "";
+    }
+  };
+
+  // カテゴリーIDからカテゴリー名を取得する
+  const getCategoryName = (category_id: number) => {
+    switch (category_id) {
+      case 1:
+        return "プロジェクト";
+      case 2:
+        return "ポートフォリオ";
+      case 3:
+        return "活動記録";
       default:
         return "";
     }
@@ -176,7 +178,11 @@ const BaseApp = () => {
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
                   <dd>
-                    { getCategoryTags(item.category) }
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
                     {item.content}
                   </dd>
                 </dl>
@@ -196,7 +202,11 @@ const BaseApp = () => {
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
                   <dd>
-                    { getCategoryTags(item.category) }
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
                     {item.content}
                   </dd>
                 </dl>
@@ -216,7 +226,11 @@ const BaseApp = () => {
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
                   <dd>
-                    { getCategoryTags(item.category) }
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
                     {item.content}
                   </dd>
                 </dl>
