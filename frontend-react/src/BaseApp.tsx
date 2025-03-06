@@ -3,14 +3,24 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 import Axios from 'axios';
 
-import { Avatar, Box, Container } from '@mui/material';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-
 import './BaseApp.scss';
 import {
   bgcolor_header, bgcolor_sidemenu,
   color_category_project, color_category_portfolio, color_category_activity,
 } from './utils/ColorUtils';
+
+// Material UI(MUI) components
+import { Avatar, Box, Container, Grid } from '@mui/material';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
+import { createTheme } from '@mui/material/styles';
 
 // コンポーネント
 import DashBoardCarousel from './components/DashBoardCarousel';
@@ -122,58 +132,163 @@ const BaseApp = () => {
         return "";
     }
   };
+
+  const menuAccordionStyle = {
+    backgroundColor: bgcolor_sidemenu,
+    color: '#fff',
+    padding: '.5em',
+    borderRadius: '0',
+    borderBottom: '1px solid #ccc',
+    boxShadow: 'none',
+  };
+
+  const menuItemStyle = {
+    padding: '.5em 1em',
+    margin: '0',
+    borderBottom: '1px solid #ccc',
+  };
+
+  const menuNestedItemStyle = {
+    padding: '.5em 1em',
+    margin: '0',
+    borderBottom: '1px solid #ccc',
+  };
+
+  // const themeAccordion = createTheme({
+  //   components: {
+  //     MuiAccordion: {
+  //       styleOverrides: {
+  //         root: {
+  //           '&.MuiAccordion-root': {
+  //             padding: '0',
+  //           },
+  //           '&.MuiAccordion-root.Mui-expanded': {
+  //             margin: '0px',
+  //             borderBottom: 'none',
+  //           },
+  //         },
+  //       },
+  //     },
+  //     MuiAccordionSummary: {
+  //       styleOverrides: {
+  //         root: {
+  //           '&.MuiAccordionSummary-root': {
+  //             margin: '0',
+  //           },
+  //         },
+  //       },
+  //     },
+  //     MuiAccordionDetails: {
+  //       styleOverrides: {
+  //         root: {
+  //           '&.MuiAccordionDetails-root': {
+  //             padding: '0',
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
   
   return (
     <div className="app">
-      <Box>
-        <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
-          <div className='header-logo'>
-            <Link to='/'>ロゴ</Link>
-          </div>
-          <div className='header-menu'>
-            <div className='header-menu-item'>
-              {/* アカウント画像アイコン */}
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
-            </div>
-            <div className='header-menu-item'>
-              <Link to='/mypage'>マイページ</Link>
-            </div>
-            <div className='header-menu-item'>
-              <Link to='/password'>パスワード変更</Link>
-            </div>
-            <div className='header-menu-item'>
-              <Link to='/logout'>ログアウト</Link>
-            </div>
-          </div>
-        </header>
-      </Box>
-      <div className='app-container'>
-        <div className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
+      <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
+        <Box className='header-logo'>
+          <Link to='/'>ロゴ</Link>
+        </Box>
+        <Grid container className='header-menu' sx={{ alignItems: 'center' }}>
+          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+            {/* アカウント画像アイコン */}
+            <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
+          </Grid>
+          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+            <Link to='/mypage'>マイページ</Link>
+          </Grid>
+          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+            <Link to='/password'>パスワード変更</Link>
+          </Grid>
+          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+            <Link to='/logout'>ログアウト</Link>
+          </Grid>
+        </Grid>
+      </header>
+      <Box className='app-container'>
+        <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>
-            <li>ポートフォリオ</li>
-            <li>ユーザ基本情報変更</li>
-            <li>プロジェクト管理</li>
-            <li>プロジェクト作成</li>
-            <li>プロジェクト検索</li>
-            <li>スカウト管理</li>
-            <li>開発Tips</li>
-            <li>活動記録</li>
+            {/* <li>
+              ポートフォリオ
+              <ul>
+                <li>ポートフォリオ一覧</li>
+                <li>ポートフォリオ作成</li>
+              </ul>
+            </li> */}
+            <Accordion sx={menuAccordionStyle} className="hoge">
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
+              >
+                <Typography>ポートフォリオ</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{
+                padding: '0',
+                margin: '0',
+              }}>
+                <Link to='/portfolio/list/'>
+                  <Box sx={menuNestedItemStyle}>ポートフォリオ一覧</Box>
+                </Link>
+                <Link to='/portfolio/create/'>
+                  <Box sx={menuNestedItemStyle}>ポートフォリオ作成</Box>
+                </Link>
+              </AccordionDetails>
+            </Accordion>
+            <Link to='/mypage/edit/'>
+              <Box sx={menuItemStyle}>ユーザ基本情報変更</Box>
+            </Link>
+            <Accordion sx={menuAccordionStyle}>
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
+              >
+                <Typography>プロジェクト管理</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{
+                padding: '0',
+                margin: '0',
+              }}>
+                <Link to='/project/list/'>
+                  <Box sx={menuItemStyle}>プロジェクト一覧</Box>
+                </Link>
+                <Link to='/project/list/'>
+                  <Box sx={menuItemStyle}>プロジェクト作成</Box>
+                </Link>
+              </AccordionDetails>
+            </Accordion>
+            <Link to='/searchproject/'>
+              <Box sx={menuItemStyle}>プロジェクト検索</Box>
+            </Link>
+            <Link to='/scout/'>
+              <Box sx={menuItemStyle}>スカウト管理</Box>
+            </Link>
+            <Link to='/tips/'>
+              <Box sx={menuItemStyle}>開発Tips</Box>
+            </Link>
+            <Link to='/activity/'>
+              <Box sx={menuItemStyle}>活動記録</Box>
+            </Link>
           </ul>
-        </div>
-        <div className='page-maincontents'>
+        </Box>
+        <Container className='page-maincontents'>
           {/* カルーセル */}
-          <div className='dashboard-carousel section-wrapper'>
+          <Container className='dashboard-carousel section-wrapper'>
             <DashBoardCarousel />
-          </div>
+          </Container>
 
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>参加プロジェクト</div>
-              <div>
-                <Link to='/project'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid item className='section-wrapper-title'>参加プロジェクト</Grid>
+              <Grid item>
+                <Link to='/project/list'>詳細を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
               {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -187,41 +302,34 @@ const BaseApp = () => {
                   </dd>
                 </dl>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>ポートフォリオ</div>
-              <div>
-                <Link to='/portfolio'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid item className='section-wrapper-title'>ポートフォリオ</Grid>
+              <Grid item>
+                <Link to='/portfolio/list'>詳細を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
               {filteredPortfolioList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>
-                    {item.category && (
-                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
-                        { getCategoryName(item.category) }
-                      </span>
-                    )}
-                    {item.content}
-                  </dd>
+                  <dd>{item.content}</dd>
                 </dl>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>活動記録</div>
-              <div>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid item className='section-wrapper-title'>活動記録</Grid>
+              <Grid item>
                 <Link to='/activity'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -235,11 +343,58 @@ const BaseApp = () => {
                   </dd>
                 </dl>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-        </div>
-      </div>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid item className='section-wrapper-title'>活動記録</Grid>
+              <Grid item>
+                <Link to='/activity'>詳細を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
+              {filteredActivityList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
+                    {item.content}
+                  </dd>
+                </dl>
+                ))}
+            </Box>
+          </Box>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid item className='section-wrapper-title'>活動記録</Grid>
+              <Grid item>
+                <Link to='/activity'>詳細を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
+              {filteredActivityList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
+                    {item.content}
+                  </dd>
+                </dl>
+                ))}
+            </Box>
+          </Box>
+
+        </Container>
+      </Box>
     </div>
   );
 }

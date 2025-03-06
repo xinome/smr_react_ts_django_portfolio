@@ -53,6 +53,13 @@ a:hover {
     color: white;
     // background-color: greenyellow;
 
+    a {
+      color: white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -113,4 +120,36 @@ span.tag_category {
   font-size: 0.8em;
   margin-right: 0.5em;
   color: #fff;
+}
+
+// *************************
+// Material UI用のスタイル
+// *************************
+
+.MuiPaper-root {
+  padding: 0;
+}
+
+.MuiAccordion-heading {
+  .MuiButtonBase-root {
+    padding: .5em 1em;
+    min-width: 0;
+    width: 100%;
+    justify-content: space-between;
+
+    .MuiAccordionSummary-content {
+      margin: 0;
+
+      &.Mui-expanded {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.MuiCollapse-wrapper {
+  .MuiBox-root {
+    padding: .5em 1em;
+    border: none;
+  }
 }
