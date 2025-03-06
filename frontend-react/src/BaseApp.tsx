@@ -23,7 +23,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { createTheme } from '@mui/material/styles';
 
 // コンポーネント
+import BaseHeader from "./components/BaseHeader";
+import BaseSideMenu from "./components/BaseSideMenu";
 import DashBoardCarousel from './components/DashBoardCarousel';
+
+// ページ
+import DashBoard from './pages/DashBoard';
 
 const BaseApp = () => {
 
@@ -192,13 +197,12 @@ const BaseApp = () => {
   
   return (
     <div className="app">
-      <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
+      {/* <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
         <Box className='header-logo'>
           <Link to='/'>ロゴ</Link>
         </Box>
         <Grid container className='header-menu' sx={{ alignItems: 'center' }}>
           <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
-            {/* アカウント画像アイコン */}
             <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
           </Grid>
           <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
@@ -211,17 +215,11 @@ const BaseApp = () => {
             <Link to='/logout'>ログアウト</Link>
           </Grid>
         </Grid>
-      </header>
+      </header> */}
+      <BaseHeader />
       <Box className='app-container'>
-        <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
+        {/* <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>
-            {/* <li>
-              ポートフォリオ
-              <ul>
-                <li>ポートフォリオ一覧</li>
-                <li>ポートフォリオ作成</li>
-              </ul>
-            </li> */}
             <Accordion sx={menuAccordionStyle} className="hoge">
               <AccordionSummary
                 expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
@@ -274,7 +272,13 @@ const BaseApp = () => {
               <Box sx={menuItemStyle}>活動記録</Box>
             </Link>
           </ul>
-        </Box>
+        </Box> */}
+        <BaseSideMenu />
+
+        {/* <Routes>
+          <Route path="/dashboard/" element={<DashBoard />} /> 
+        </Routes> */}
+
         <Container className='page-maincontents'>
           {/* カルーセル */}
           <Container className='dashboard-carousel section-wrapper'>
@@ -343,53 +347,6 @@ const BaseApp = () => {
                   </dd>
                 </dl>
               ))}
-            </Box>
-          </Box>
-
-          <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
-              <Grid item className='section-wrapper-title'>活動記録</Grid>
-              <Grid item>
-                <Link to='/activity'>詳細を見る</Link>
-              </Grid>
-            </Grid>
-            <Box className='section-wrapper-contents'>
-              {filteredActivityList.map((item) => (
-                <dl key={item.id}>
-                  <dt>{item.date}</dt>
-                  <dd>
-                    {item.category && (
-                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
-                        { getCategoryName(item.category) }
-                      </span>
-                    )}
-                    {item.content}
-                  </dd>
-                </dl>
-                ))}
-            </Box>
-          </Box>
-          <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
-              <Grid item className='section-wrapper-title'>活動記録</Grid>
-              <Grid item>
-                <Link to='/activity'>詳細を見る</Link>
-              </Grid>
-            </Grid>
-            <Box className='section-wrapper-contents'>
-              {filteredActivityList.map((item) => (
-                <dl key={item.id}>
-                  <dt>{item.date}</dt>
-                  <dd>
-                    {item.category && (
-                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
-                        { getCategoryName(item.category) }
-                      </span>
-                    )}
-                    {item.content}
-                  </dd>
-                </dl>
-                ))}
             </Box>
           </Box>
 
