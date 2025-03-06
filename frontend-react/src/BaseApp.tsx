@@ -13,13 +13,6 @@ import {
 import { Avatar, Box, Container, Grid } from '@mui/material';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-
 import { createTheme } from '@mui/material/styles';
 
 // コンポーネント
@@ -138,62 +131,11 @@ const BaseApp = () => {
     }
   };
 
-  const menuAccordionStyle = {
-    backgroundColor: bgcolor_sidemenu,
-    color: '#fff',
-    padding: '.5em',
-    borderRadius: '0',
-    borderBottom: '1px solid #ccc',
-    boxShadow: 'none',
-  };
-
   const menuItemStyle = {
     padding: '.5em 1em',
     margin: '0',
     borderBottom: '1px solid #ccc',
   };
-
-  const menuNestedItemStyle = {
-    padding: '.5em 1em',
-    margin: '0',
-    borderBottom: '1px solid #ccc',
-  };
-
-  // const themeAccordion = createTheme({
-  //   components: {
-  //     MuiAccordion: {
-  //       styleOverrides: {
-  //         root: {
-  //           '&.MuiAccordion-root': {
-  //             padding: '0',
-  //           },
-  //           '&.MuiAccordion-root.Mui-expanded': {
-  //             margin: '0px',
-  //             borderBottom: 'none',
-  //           },
-  //         },
-  //       },
-  //     },
-  //     MuiAccordionSummary: {
-  //       styleOverrides: {
-  //         root: {
-  //           '&.MuiAccordionSummary-root': {
-  //             margin: '0',
-  //           },
-  //         },
-  //       },
-  //     },
-  //     MuiAccordionDetails: {
-  //       styleOverrides: {
-  //         root: {
-  //           '&.MuiAccordionDetails-root': {
-  //             padding: '0',
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
   
   return (
     <div className="app">
