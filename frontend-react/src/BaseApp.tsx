@@ -158,7 +158,7 @@ const BaseApp = () => {
           </Grid>
         </Grid>
       </header> */}
-      <BaseHeader />
+      <BaseHeader userId={1} />
       <Box className='app-container'>
         {/* <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>

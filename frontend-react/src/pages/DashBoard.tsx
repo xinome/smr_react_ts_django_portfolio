@@ -14,30 +14,30 @@ const DashBoard = () => {
   const BASE_API_URL = "http://localhost:8000/api";
 
   type ProjectType = {
-      id: number,
-      date: string,
-      content: string,
-      category: number,
-    }[];
+    id: number,
+    date: string,
+    content: string,
+    category: number,
+  }[];
   
-    type PortfolioType = {
-      id: number,
-      date: string,
-      content: string,
-      category: number,
-    }[];
+  type PortfolioType = {
+    id: number,
+    date: string,
+    content: string,
+    category: number,
+  }[];
   
-    type ActivityType = {
-      id: number,
-      date: string,
-      content: string,
-      category: number,
-    }[];
+  type ActivityType = {
+    id: number,
+    date: string,
+    content: string,
+    category: number,
+  }[];
   
-    // JSONデータを取得する
-    const [projectList, setProjectList] = useState<ProjectType>([]);
-    const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
-    const [activityList, setActivityList] = useState<ActivityType>([]);
+  // JSONデータを取得する
+  const [projectList, setProjectList] = useState<ProjectType>([]);
+  const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
+  const [activityList, setActivityList] = useState<ActivityType>([]);
 
   const fetchProjectList = async () => {
     try {
@@ -101,7 +101,7 @@ const DashBoard = () => {
     }
   };
 
-    // カテゴリーIDからカテゴリー名を取得する
+  // カテゴリーIDからカテゴリー名を取得する
   const getCategoryName = (category_id: number) => {
     switch (category_id) {
       case 1:
