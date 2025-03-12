@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 
-import { Box, Grid, Avatar } from '@mui/material';
+import { Box, Avatar } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { deepPurple } from '@mui/material/colors';
 
 import { bgcolor_header } from '../utils/ColorUtils';
@@ -67,18 +68,18 @@ const BaseHeader = (props: headerProps) => {
         <Link to='/'>ロゴ</Link>
       </Box>
       <Grid container className='header-menu' sx={{ alignItems: 'center' }}>
-        <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+        <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
           {/* アカウント画像アイコン */}
           {/* <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar> */}
           <Avatar {...stringAvater(usersList.name)}></Avatar>
         </Grid>
-        <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+        <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
           <Link to='/mypage'>マイページ</Link>
         </Grid>
-        <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+        <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
           <Link to='/password'>パスワード変更</Link>
         </Grid>
-        <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+        <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
           <Link to='/logout'>ログアウト</Link>
         </Grid>
       </Grid>

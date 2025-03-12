@@ -10,7 +10,8 @@ import {
 } from './utils/ColorUtils';
 
 // Material UI(MUI) components
-import { Avatar, Box, Container, Grid } from '@mui/material';
+import { Avatar, Box, Container } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
 import { createTheme } from '@mui/material/styles';
@@ -144,16 +145,16 @@ const BaseApp = () => {
           <Link to='/'>ロゴ</Link>
         </Box>
         <Grid container className='header-menu' sx={{ alignItems: 'center' }}>
-          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
           </Grid>
-          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Link to='/mypage'>マイページ</Link>
           </Grid>
-          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Link to='/password'>パスワード変更</Link>
           </Grid>
-          <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Link to='/logout'>ログアウト</Link>
           </Grid>
         </Grid>
@@ -229,8 +230,8 @@ const BaseApp = () => {
 
           <Box className='section-wrapper'>
             <Grid container className='section-wrapper-header'>
-              <Grid item className='section-wrapper-title'>参加プロジェクト</Grid>
-              <Grid item>
+              <Grid className='section-wrapper-title'>参加プロジェクト</Grid>
+              <Grid>
                 <Link to='/project/list'>詳細を見る</Link>
               </Grid>
             </Grid>
@@ -253,8 +254,8 @@ const BaseApp = () => {
 
           <Box className='section-wrapper'>
             <Grid container className='section-wrapper-header'>
-              <Grid item className='section-wrapper-title'>ポートフォリオ</Grid>
-              <Grid item>
+              <Grid className='section-wrapper-title'>ポートフォリオ</Grid>
+              <Grid>
                 <Link to='/portfolio/list'>詳細を見る</Link>
               </Grid>
             </Grid>
@@ -270,8 +271,8 @@ const BaseApp = () => {
 
           <Box className='section-wrapper'>
             <Grid container className='section-wrapper-header'>
-              <Grid item className='section-wrapper-title'>活動記録</Grid>
-              <Grid item>
+              <Grid className='section-wrapper-title'>活動記録</Grid>
+              <Grid>
                 <Link to='/activity'>詳細を見る</Link>
               </Grid>
             </Grid>
