@@ -23,6 +23,7 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 
 // ページ
 import DashBoard from './pages/DashBoard';
+import MyPage from './pages/MyPage';
 
 const BaseApp = () => {
 
@@ -218,12 +219,13 @@ const BaseApp = () => {
         </Box> */}
         <BaseSideMenu />
 
-        {/* <Routes>
+        <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
-        </Routes> */}
+          <Route path="/mypage/" element={<MyPage userId={1} />} />
+        </Routes>
 
-        <Container className='page-maincontents'>
-          {/* カルーセル */}
+        <DashBoard />
+        {/* <Container className='page-maincontents'>
           <Container className='dashboard-carousel section-wrapper'>
             <DashBoardCarousel />
           </Container>
@@ -293,7 +295,7 @@ const BaseApp = () => {
             </Box>
           </Box>
 
-        </Container>
+        </Container> */}
       </Box>
     </div>
   );

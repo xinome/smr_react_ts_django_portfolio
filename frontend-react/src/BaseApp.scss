@@ -82,19 +82,19 @@ a:hover {
     .section-wrapper {
       margin-bottom: 1em;
 
-      .section-wrapper-header {
+      .section-header {
         margin-bottom: .5em;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        .section-wrapper-title {
+        .section-title {
           font-size: 1.2em;
           font-weight: bold;
         }
       }
 
-      .section-wrapper-contents {
+      .section-contents {
         padding: 1em;
         background-color: #fff;
         border: 1px solid #ccc;
@@ -108,9 +108,30 @@ a:hover {
           align-items: center;
         }
       }
+
+      .section-footer {
+        margin-top: .5em;
+        display: flex;
+        justify-content: flex-end;
+      }
     }
 
   }
+}
+
+.page-title-wrapper {
+  margin-bottom: 1em;
+
+  .page-title {
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+}
+
+.page-title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 span.tag_category {

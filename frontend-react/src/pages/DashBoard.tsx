@@ -124,13 +124,13 @@ const DashBoard = () => {
       </Container>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid className='section-wrapper-title'>参加プロジェクト</Grid>
+        <Grid container className='section-header'>
+          <Grid className='section-title'>参加プロジェクト</Grid>
           <Grid>
             <Link to='/project/list'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {filteredProjectList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
@@ -148,13 +148,13 @@ const DashBoard = () => {
       </Box>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid className='section-wrapper-title'>ポートフォリオ</Grid>
+        <Grid container className='section-header'>
+          <Grid className='section-title'>ポートフォリオ</Grid>
           <Grid>
             <Link to='/portfolio/list'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {filteredPortfolioList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
@@ -165,13 +165,13 @@ const DashBoard = () => {
       </Box>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid className='section-wrapper-title'>活動記録</Grid>
+        <Grid container className='section-header'>
+          <Grid className='section-title'>活動記録</Grid>
           <Grid>
             <Link to='/activity'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {filteredActivityList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
