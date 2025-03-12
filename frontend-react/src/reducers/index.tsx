@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 // import { INCREMENT, DECREMENT } from './actionTypes';
 
+import accountReducer from '../features/mypage/mypageSlice';
+
 // initialState, reducerは後ほど別ファイルに分ける
 
 type inisitalStateType = {
@@ -13,7 +15,7 @@ const initialState = {
   isLoggedIn: true,
 };
 
-const reducer = (state: inisitalStateType = initialState, action: any) => {
+const loginReducer = (state: inisitalStateType = initialState, action: any) => {
   console.log("action: ", action);
   switch (action.type) {
     case "LOGIN":
@@ -35,9 +37,10 @@ const reducer = (state: inisitalStateType = initialState, action: any) => {
 
 const rootReducer = combineReducers({
   // ここに作成したReducerを記述する
-  reducer,
+  loginReducer,
   // INCREMENT,
   // DECREMENT,
+  accountReducer,
 });
 
 export default rootReducer;

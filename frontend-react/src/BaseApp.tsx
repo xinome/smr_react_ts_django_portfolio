@@ -224,7 +224,6 @@ const BaseApp = () => {
           <Route path="/mypage/" element={<MyPage userId={1} />} />
         </Routes>
 
-        <DashBoard />
         {/* <Container className='page-maincontents'>
           <Container className='dashboard-carousel section-wrapper'>
             <DashBoardCarousel />
