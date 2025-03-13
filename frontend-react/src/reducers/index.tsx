@@ -2,6 +2,9 @@ import { combineReducers } from 'redux';
 // import { INCREMENT, DECREMENT } from './actionTypes';
 
 import accountReducer from '../features/mypage/mypageSlice';
+import projectTopicsReducer from "../features/topics/projectTopicsSlice";
+import activityTopicsReducer from "../features/topics/activityTopicsSlice";
+import portfolioTopicsReducer from "../features/topics/portfolioTopicsSlice";
 
 // initialState, reducerは後ほど別ファイルに分ける
 
@@ -41,6 +44,9 @@ const rootReducer = combineReducers({
   // INCREMENT,
   // DECREMENT,
   accountReducer,
+  projectTopicsReducer,
+  activityTopicsReducer,
+  portfolioTopicsReducer,
 });
 
 export default rootReducer;

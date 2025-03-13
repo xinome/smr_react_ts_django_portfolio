@@ -28,8 +28,7 @@ import MyPage from './pages/MyPage';
 const BaseApp = () => {
 
   // const isLoggedIn = false;
-
-  const BASE_API_URL = "http://localhost:8000/api";
+  // const BASE_API_URL = "http://localhost:8000/api";
 
   type ProjectType = {
     id: number,
@@ -53,91 +52,91 @@ const BaseApp = () => {
   }[];
 
   // JSONデータを取得する
-  const [projectList, setProjectList] = useState<ProjectType>([]);
-  const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
-  const [activityList, setActivityList] = useState<ActivityType>([]);
+  // const [projectList, setProjectList] = useState<ProjectType>([]);
+  // const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
+  // const [activityList, setActivityList] = useState<ActivityType>([]);
 
-  const fetchProjectList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/project_topics`);
-      console.log("fetchProjectList: ", response);
-      setProjectList(response.data);
-    }
-    catch (error) {
-      console.log("fetchProjectList: ", error);
-    }
-  }
+  // const fetchProjectList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/project_topics`);
+  //     console.log("fetchProjectList: ", response);
+  //     setProjectList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchProjectList: ", error);
+  //   }
+  // }
 
-  const fetchPortfolioList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
-      console.log("fetchPortfolioList: ", response);
-      setPortfolioList(response.data);
-    }
-    catch (error) {
-      console.log("fetchPortfolioList: ", error);
-    }
-  }
+  // const fetchPortfolioList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
+  //     console.log("fetchPortfolioList: ", response);
+  //     setPortfolioList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchPortfolioList: ", error);
+  //   }
+  // }
 
-  const fetchActivityList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
-      console.log("fetchActivityList: ", response);
-      setActivityList(response.data);
-    }
-    catch (error) {
-      console.log("fetchActivityList: ", error);
-    }
-  }
+  // const fetchActivityList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
+  //     console.log("fetchActivityList: ", response);
+  //     setActivityList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchActivityList: ", error);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchProjectList();
-    fetchPortfolioList();
-    fetchActivityList();
-  }, []);
+  // useEffect(() => {
+  //   fetchProjectList();
+  //   fetchPortfolioList();
+  //   fetchActivityList();
+  // }, []);
 
-  const filteredProjectList: ProjectType = projectList.filter((item) => {
-    return item.id <= 3;
-  });
-  const filteredPortfolioList = portfolioList.filter((item) => {
-    return item.id <= 3;
-  });
-  const filteredActivityList = activityList.filter((item) => {
-    return item.id <= 3;
-  });
+  // const filteredProjectList: ProjectType = projectList.filter((item) => {
+  //   return item.id <= 3;
+  // });
+  // const filteredPortfolioList = portfolioList.filter((item) => {
+  //   return item.id <= 3;
+  // });
+  // const filteredActivityList = activityList.filter((item) => {
+  //   return item.id <= 3;
+  // });
 
-  const getCategoryColor = (category_id: number) => {
-    switch (category_id) {
-      case 1:
-        return color_category_project;
-      case 2:
-        return color_category_portfolio;
-      case 3:
-        return color_category_activity;
-      default:
-        return "";
-    }
-  };
+  // const getCategoryColor = (category_id: number) => {
+  //   switch (category_id) {
+  //     case 1:
+  //       return color_category_project;
+  //     case 2:
+  //       return color_category_portfolio;
+  //     case 3:
+  //       return color_category_activity;
+  //     default:
+  //       return "";
+  //   }
+  // };
 
   // カテゴリーIDからカテゴリー名を取得する
-  const getCategoryName = (category_id: number) => {
-    switch (category_id) {
-      case 1:
-        return "プロジェクト";
-      case 2:
-        return "ポートフォリオ";
-      case 3:
-        return "活動記録";
-      default:
-        return "";
-    }
-  };
+  // const getCategoryName = (category_id: number) => {
+  //   switch (category_id) {
+  //     case 1:
+  //       return "プロジェクト";
+  //     case 2:
+  //       return "ポートフォリオ";
+  //     case 3:
+  //       return "活動記録";
+  //     default:
+  //       return "";
+  //   }
+  // };
 
-  const menuItemStyle = {
-    padding: '.5em 1em',
-    margin: '0',
-    borderBottom: '1px solid #ccc',
-  };
+  // const menuItemStyle = {
+  //   padding: '.5em 1em',
+  //   margin: '0',
+  //   borderBottom: '1px solid #ccc',
+  // };
   
   return (
     <div className="app">

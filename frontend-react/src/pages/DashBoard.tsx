@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
+import { useAppDispatch } from '../store/index';
+import { RootState } from '../store/index';
 
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Box, Container } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 
 import DashBoardCarousel from '../components/DashBoardCarousel'
 import { color_category_project, color_category_portfolio, color_category_activity } from '../utils/ColorUtils'
 
+import { fetchProjectTopics } from '../features/topics/projectTopicsSlice'
+import { fetchPortfolioTopics } from '../features/topics/portfolioTopicsSlice'
+import { fetchActivityTopics } from '../features/topics/activityTopicsSlice'
+
 const DashBoard = () => {
+
+  const dispatch = useAppDispatch();
+
+  // state, dispatch, useSelectorを使う
+  const projectList = useSelector((state: RootState) => state.projectTopicsReducer.items);
+  const portfolioList = useSelector((state: RootState) => state.portfolioTopicsReducer.items);
+  const activityList = useSelector((state: RootState) => state.activityTopicsReducer.items);
 
   // const isLoggedIn = false;
   const BASE_API_URL = "http://localhost:8000/api";
@@ -35,57 +48,19 @@ const DashBoard = () => {
     category: number,
   }[];
   
-  // JSONデータを取得する
-  const [projectList, setProjectList] = useState<ProjectType>([]);
-  const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
-  const [activityList, setActivityList] = useState<ActivityType>([]);
-
-  const fetchProjectList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/project_topics`);
-      console.log("fetchProjectList: ", response);
-      setProjectList(response.data);
-    }
-    catch (error) {
-      console.log("fetchProjectList: ", error);
-    }
-  }
-
-  const fetchPortfolioList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
-      console.log("fetchPortfolioList: ", response);
-      setPortfolioList(response.data);
-    }
-    catch (error) {
-      console.log("fetchPortfolioList: ", error);
-    }
-  }
-
-  const fetchActivityList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
-      console.log("fetchActivityList: ", response);
-      setActivityList(response.data);
-    }
-    catch (error) {
-      console.log("fetchActivityList: ", error);
-    }
-  }
-
   useEffect(() => {
-    fetchProjectList();
-    fetchPortfolioList();
-    fetchActivityList();
-  }, []);
+    dispatch(fetchProjectTopics());
+    dispatch(fetchPortfolioTopics());
+    dispatch(fetchActivityTopics());
+  }, [dispatch]);
 
-  const filteredProjectList: ProjectType = projectList.filter((item) => {
+  const filteredProjectList: ProjectType = projectList.filter((item: any) => {
     return item.id <= 3;
   });
-  const filteredPortfolioList = portfolioList.filter((item) => {
+  const filteredPortfolioList = portfolioList.filter((item: any) => {
     return item.id <= 3;
   });
-  const filteredActivityList = activityList.filter((item) => {
+  const filteredActivityList = activityList.filter((item: any) => {
     return item.id <= 3;
   });
 
@@ -131,7 +106,7 @@ const DashBoard = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          {filteredProjectList.map((item) => (
+          {filteredProjectList.map((item: any) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
               <dd>
@@ -155,7 +130,7 @@ const DashBoard = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          {filteredPortfolioList.map((item) => (
+          {filteredPortfolioList.map((item: any) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
               <dd>{item.content}</dd>
@@ -172,7 +147,7 @@ const DashBoard = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          {filteredActivityList.map((item) => (
+          {filteredActivityList.map((item: any) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
               <dd>
