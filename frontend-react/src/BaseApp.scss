@@ -145,6 +145,7 @@ span.tag_category {
 
 // *************************
 // Material UI用のスタイル
+// TODO: styled-componentsに移行する
 // *************************
 
 .MuiPaper-root {
@@ -172,5 +173,12 @@ span.tag_category {
   .MuiBox-root {
     padding: .5em 1em;
     border: none;
+  }
+}
+
+.MuiButton-root {
+  a {
+    color: white;
+    text-decoration: none;
   }
 }
