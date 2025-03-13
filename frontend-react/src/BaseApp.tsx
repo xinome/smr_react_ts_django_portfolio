@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // import logo from './logo.svg';
 import { Routes, Route, Link } from 'react-router-dom';
 import Axios from 'axios';
@@ -137,6 +138,9 @@ const BaseApp = () => {
   //   margin: '0',
   //   borderBottom: '1px solid #ccc',
   // };
+
+  const pathname = useLocation().pathname.replaceAll('/', '');
+  console.log("useLocation.pathname: ", pathname);
   
   return (
     <div className="app">

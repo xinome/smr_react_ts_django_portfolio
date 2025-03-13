@@ -46,6 +46,7 @@ const BaseHeader = (props: headerProps) => {
     }
 
     fetchUsersList(userId);
+
   }, [userId]);
 
   const stringAvater = (name: string) => {

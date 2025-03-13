@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom'
 
-const isLoggedIn = store.getState().loginReducer.isLoggedIn;
+const isLoggedIn = store.getState().authReducer.isLoggedIn;
 console.log("state: ", store.getState());
 
 const container = document.getElementById('root');

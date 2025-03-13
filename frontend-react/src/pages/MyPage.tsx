@@ -3,16 +3,16 @@ import Axios from 'axios'
 
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState, AppDispatch } from '../store';
+import { RootState, useAppDispatch } from '../store';
 
-import { Box, Container, Typography, Breadcrumbs, Button, Table } from '@mui/material'
+import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { color_category_project, color_category_portfolio, color_category_activity } from '../utils/ColorUtils'
 
-import { fetchAccountList, getAccountList } from '../features/mypage/mypageSlice'
+import { fetchAccountList, getAccountList } from '../features/account/mypageSlice'
 
 type MypageProps = {
   userId: number,
@@ -20,18 +20,17 @@ type MypageProps = {
 
 const Mypage = (props: MypageProps) => {
 
+  const dispatch = useAppDispatch();
+
   const userId = props.userId;
   console.log("Mypage: userId: ", userId);
 
-  const dispatch: AppDispatch = useDispatch();
-  const itemsAccount = useSelector((state: any) => state.accountReducer.items);
-
   // const BASE_API_URL = "http://localhost:8000/api";
   // テスト用: JSONPlaceholderを使用
-  // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+  const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
   // JSONデータを取得する
-  // const [usersList, setUsersList] = useState<any>([]);
+  const [usersList, setUsersList] = useState<any>([]);
 
   useEffect(() => {
     // const fetchPostsList = async () => {
@@ -48,29 +47,29 @@ const Mypage = (props: MypageProps) => {
 
     // fetchPostsList();
 
-    // const fetchUsersList = async (id: number) => {
-    //   try {
-    //     const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-    //     console.log("fetchUsersList: ", response);
-    //     setUsersList(response.data);
-    //     console.log("fetchUsersList: usersList: ", usersList);
-    //   }
-    //   catch (error) {
-    //     console.log("fetchUsersList: ", error);
-    //   }
-    // }
+    const fetchUsersList = async (id: number) => {
+      try {
+        const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
+        console.log("fetchUsersList: ", response);
+        setUsersList(response.data);
+        console.log("fetchUsersList: usersList: ", usersList);
+      }
+      catch (error) {
+        console.log("fetchUsersList: ", error);
+      }
+    }
 
-    // fetchUsersList(userId);
+    fetchUsersList(userId);
 
     // const itemsAccount = useSelector(getAccountList);
 
-    dispatch(fetchAccountList(userId));
+    // dispatch(fetchAccountList());
 
-  }, [dispatch, userId]);
+  }, [userId]);
 
   // const usersList = itemsAccount.payload.accountReducer.items;
-  console.log("Mypage: itemsAccount: ", itemsAccount);
-  const usersList = itemsAccount;
+  // console.log("Mypage: itemsAccount: ", itemsAccount);
+  // const usersList = itemsAccount;
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
