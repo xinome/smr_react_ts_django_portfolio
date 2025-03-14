@@ -19,16 +19,21 @@ export const fetchActivityTopics = createAsyncThunk(
 
 // Slices
 export const activityTopicsSlice = createSlice({
-  name: "activity_topics",  // stateの名前
+  name: "activity_topics",  // sliceの名前
   initialState: initialState,
   reducers: {
-    getactivityTopics: (state, action) => {
+    getActivityTopics: (state, action) => {
       return {
         ...state,
         items: action.payload,
       };
     },
+
+    // standard reducer logic, with auto-generated action types per reducer
+    // 内部処理名: (state, action) => { return 処理結果 }
   },
+
+  // 外部からのデータ取得
   extraReducers: (builder) => {
     builder
       .addCase(fetchActivityTopics.pending, (state) => {
@@ -54,6 +59,6 @@ export const activityTopicsSlice = createSlice({
 });
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
-export const { getactivityTopics } = activityTopicsSlice.actions;
+export const { getActivityTopics } = activityTopicsSlice.actions;
 
 export default activityTopicsSlice.reducer;

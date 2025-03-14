@@ -19,15 +19,18 @@ export const fetchPortfolioTopics = createAsyncThunk(
 
 // Slices
 export const portfolioTopicsSlice = createSlice({
-  name: "portfolio_topics",  // stateの名前
+  name: "portfolio_topics",  // sliceの名前
   initialState: initialState,
   reducers: {
-    getportfolioTopics: (state, action) => {
+    getPortfolioTopics: (state, action) => {
       return {
         ...state,
         items: action.payload,
       };
     },
+
+    // standard reducer logic, with auto-generated action types per reducer
+    // 内部処理名: (state, action) => { return 処理結果 }     
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +57,6 @@ export const portfolioTopicsSlice = createSlice({
 });
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
-export const { getportfolioTopics } = portfolioTopicsSlice.actions;
+export const { getPortfolioTopics } = portfolioTopicsSlice.actions;
 
 export default portfolioTopicsSlice.reducer;

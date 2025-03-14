@@ -12,7 +12,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { color_category_project, color_category_portfolio, color_category_activity } from '../utils/ColorUtils'
 
-import { fetchAccountList, getAccountList } from '../features/account/mypageSlice'
+import { fetchAccountList } from '../features/account/mypageSlice'
 
 type MypageProps = {
   userId: number,
@@ -21,6 +21,8 @@ type MypageProps = {
 const Mypage = (props: MypageProps) => {
 
   const dispatch = useAppDispatch();
+  const usersList = useSelector((state: any) => state.accountReducer.items);
+  const isLoading = useSelector((state: any) => state.accountReducer.isLoading);
 
   const userId = props.userId;
   console.log("Mypage: userId: ", userId);
@@ -29,47 +31,9 @@ const Mypage = (props: MypageProps) => {
   // テスト用: JSONPlaceholderを使用
   const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
-  // JSONデータを取得する
-  const [usersList, setUsersList] = useState<any>([]);
-
   useEffect(() => {
-    // const fetchPostsList = async () => {
-    //   try {
-    //     const response = await Axios.get(`${BASE_API_URL}/posts`);
-    //     console.log("fetchPostsList: ", response);
-    //     setPostsList(response.data);
-    //     console.log("fetchPostsList: postsList: ", postsList);
-    //   }
-    //   catch (error) {
-    //     console.log("fetchPostsList: ", error);
-    //   }
-    // }
-
-    // fetchPostsList();
-
-    const fetchUsersList = async (id: number) => {
-      try {
-        const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-        console.log("fetchUsersList: ", response);
-        setUsersList(response.data);
-        console.log("fetchUsersList: usersList: ", usersList);
-      }
-      catch (error) {
-        console.log("fetchUsersList: ", error);
-      }
-    }
-
-    fetchUsersList(userId);
-
-    // const itemsAccount = useSelector(getAccountList);
-
-    // dispatch(fetchAccountList());
-
-  }, [userId]);
-
-  // const usersList = itemsAccount.payload.accountReducer.items;
-  // console.log("Mypage: itemsAccount: ", itemsAccount);
-  // const usersList = itemsAccount;
+    dispatch(fetchAccountList(userId));
+  }, [dispatch, userId]);
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
