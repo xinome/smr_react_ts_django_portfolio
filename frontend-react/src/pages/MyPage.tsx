@@ -13,7 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { color_category_project, color_category_portfolio, color_category_activity } from '../utils/ColorUtils'
 
-import { getAccountList } from '../features/account/mypageSlice'
+import { fetchMypageAccountList } from '../features/account/mypageSlice'
 
 type MypageProps = {
   userId: number,
@@ -33,7 +33,7 @@ const Mypage = (props: MypageProps) => {
   // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
   useEffect(() => {
-    dispatch(getAccountList(userId));
+    dispatch(fetchMypageAccountList(userId));
   }, [dispatch, userId]);
 
   console.log("usersList: ", usersList);

@@ -18,7 +18,7 @@ export const fetchGetMypageProfile = createAsyncThunk(
     // 仮置き
     // const response = await axios.get(`${BASE_API_URL}/mypage/edit_profile/${id}/`);
     const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}/`);
-    return response.data[0];
+    return response.data;
   }
 );
 

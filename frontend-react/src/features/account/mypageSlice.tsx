@@ -6,16 +6,15 @@ const initialState = {
   items: [],
 };
 
-// const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 const BASE_API_URL = "http://localhost:8000/api";
+// const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
 /** データ取得非同期処理 */
 export const fetchMypageAccountList = createAsyncThunk(
   "get_mypage_account",   // type: 内部処理名、一意でないとだめ
   async (userId: number) => {
-    // const response = await axios.get(`${BASE_API_URL}/users/${userId}`);
     const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}/`);
-    return response.data[0];
+    return response.data;
   }
 );
 

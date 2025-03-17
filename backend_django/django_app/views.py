@@ -209,7 +209,7 @@ def mypage_user_profile(request, pk=None):
     queryset = MypageUserProfile.objects.all()
   else:
     queryset = MypageUserProfile.objects.filter(id=pk)
-  serializer_class = MypageUserProfileSerializer(queryset, many=True)
+  serializer_class = MypageUserProfileSerializer(queryset.first())
   data = serializer_class.data
 
   return JsonResponse(data, safe=False)
@@ -232,7 +232,7 @@ def mypage_edit_profile(request, pk=None):
     member_type=request.POST['member_type']
   )
 
-  serializer_class = MypageUserProfileSerializer(queryset, many=True)
+  serializer_class = MypageUserProfileSerializer(queryset.first())
   data = serializer_class.data
 
   return JsonResponse(data, safe=False)
