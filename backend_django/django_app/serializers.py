@@ -2,10 +2,10 @@
 
 from rest_framework import serializers
 from .models import (
-   TopicsCategory, PricingPlan,
-   ProjectTopics, PortfolioTopics, ActivityTopics, 
-   MypageUserProfile,
- )
+  TopicsCategory, PricingPlan,
+  ProjectTopics, PortfolioTopics, ActivityTopics, 
+  MypageUserProfile,
+)
 
 # Utility
 class TopicsCategorySerializer(serializers.ModelSerializer):
@@ -20,6 +20,9 @@ class PricingPlanSerializer(serializers.ModelSerializer):
 
 # Dashboard
 class ProjectTopicsSerializer(serializers.ModelSerializer):
+  # 外部キーのカテゴリーを取得する
+  category = TopicsCategorySerializer()
+  
   class Meta:
     model = ProjectTopics
     fields = ('id', 'date', 'content', 'category')
@@ -30,16 +33,18 @@ class PortfolioTopicsSerializer(serializers.ModelSerializer):
     fields = ('id', 'date', 'content')
 
 class ActivityTopicsSerializer(serializers.ModelSerializer):
+  # 外部キーのカテゴリーを取得する
+  category = TopicsCategorySerializer()
+
   class Meta:
     model = ActivityTopics
     fields = ('id', 'date', 'content', 'category')
-    
 
 # Mypage
 class MypageUserProfileSerializer(serializers.ModelSerializer):
   # 外部キーのカテゴリーを取得する
   member_type = PricingPlanSerializer()
-  
+
   class Meta:
     model = MypageUserProfile
-    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'member_type')
+    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone', 'member_type')

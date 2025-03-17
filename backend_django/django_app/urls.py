@@ -11,6 +11,9 @@ urlpatterns = [
     path("project_topics/", views.project_topics, name="project_topics"),
     path("portfolio_topics/", views.portfolio_topics, name="portfolio_topics"),
     path("activity_topics/", views.activity_topics, name="activity_topics"),
-    
+    path("mypage/user_profile/", views.mypage_user_profile, name="mypage_user_profile"),
+    # path("mypage/user_profile/<int:pk>/", views.mypage_user_profile_detail, name="mypage_user_profile_detail"),
+    path("mypage/user_profile/<int:pk>/", views.mypage_user_profile, name="mypage_user_profile"),
+
     # path("", include(router.urls)),
 ]

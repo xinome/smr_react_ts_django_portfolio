@@ -87,23 +87,8 @@ def project_topics(request):
   # django管理画面で追加した項目が反映されるようになる
   queryset = ProjectTopics.objects.all()
 
-  # for ProjectTopic in queryset:
-  #   print("ProjectTopic: ", ProjectTopic)
-  #   print("ProjectTopic.id: ", ProjectTopic.id)
-  #   print("ProjectTopic.date: ", ProjectTopic.date)
-  #   print("ProjectTopic.content: ", ProjectTopic.content)
-  #   print("ProjectTopic.category: ", ProjectTopic.category)
-  #   # print("ProjectTopic.category.id: ", ProjectTopic.category.id)
-  #   # print("ProjectTopic.category.category_name: ", ProjectTopic.category.category_name)
-  #   print("ProjectTopic.created_at: ", ProjectTopic.created_at)
-  #   print("ProjectTopic.updated_at: ", ProjectTopic.updated_at)
-
   serializer_class = ProjectTopicsSerializer(queryset, many=True)
   data = serializer_class.data
-
-  # for item in data:
-  #   print("item: ", item)
-  #   print("item['category']: ", item['category'])
 
   return JsonResponse(data, safe=False)
 
@@ -217,10 +202,18 @@ def activity_topics(request):
 
   return JsonResponse(data, safe=False)
 
-  def mypage_user_profile(request):
- 
-   queryset = MypageUserProfile.objects.all()
-   serializer_class = MypageUserProfileSerializer(queryset, many=True)
-   data = serializer_class.data
- 
-   return JsonResponse(data, safe=False)
+def mypage_user_profile(request, pk=None):
+
+  # サンプルデータを返す
+  data = {
+      "id": pk,
+      "name": "サンプルユーザー",
+      "email": "sample@example.com",
+  }
+  return JsonResponse(data)
+
+  # queryset = MypageUserProfile.objects.filter(id=pk)
+  # serializer_class = MypageUserProfileSerializer(queryset, many=True)
+  # data = serializer_class.data
+
+  # return JsonResponse(data, safe=False)

@@ -69,10 +69,10 @@ class ActivityTopicsAdmin(admin.ModelAdmin):
 # Mypage
 @admin.register(MypageUserProfile)
 class MypageUserProfileAdmin(admin.ModelAdmin):
-  Fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'member_type')
-  list_display = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'member_type', 'created_at', 'updated_at')
+  Fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone', 'member_type')
+  list_display = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone', 'member_type', 'created_at', 'updated_at')
   list_display_links = ('id', )
 
-  search_fields = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')
-  list_filter = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')
+  search_fields = ('name', 'account_id', 'email', 'zip', 'address', 'phone', 'member_type')
+  list_filter = ('name', 'account_id', 'email', 'zip', 'address', 'phone', 'member_type')
   # list_editable = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')

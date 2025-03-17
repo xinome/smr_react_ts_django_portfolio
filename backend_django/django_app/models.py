@@ -90,6 +90,7 @@ class MypageUserProfile(BaseMeta):
   email = models.CharField(max_length=255)
   zip = models.CharField(max_length=7)
   address = models.CharField(max_length=255)
+  phone = models.CharField(max_length=11, null=True)
   member_type = models.ForeignKey(PricingPlan, on_delete=models.PROTECT, null=True)
 
   class Meta:
