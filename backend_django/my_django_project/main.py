@@ -34,6 +34,6 @@ for project_topic in project_topics:
 # project_topics.delete()
 
 # データを追加する
-queryset = MypageUserProfile.objects.filter(id=1)
-print("queryset: ", queryset)
-print("request.POST: ", request.POST)
+# queryset = MypageUserProfile.objects.filter(id=1)
+# print("queryset: ", queryset)
+# print("request.POST: ", request.POST)

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import accountReducer from '../features/account/mypageSlice';
 import authReducer from '../features/account/authSlice';
+import mypageProfileReducer from '../features/mypage/mypageProfileSlice';
 
 import projectTopicsReducer from "../features/topics/projectTopicsSlice";
 import activityTopicsReducer from "../features/topics/activityTopicsSlice";
@@ -47,6 +48,8 @@ const rootReducer = combineReducers({
   // DECREMENT,
   accountReducer,
   authReducer,
+  mypageProfileReducer,
+  
   projectTopicsReducer,
   activityTopicsReducer,
   portfolioTopicsReducer,

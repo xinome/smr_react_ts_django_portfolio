@@ -232,7 +232,7 @@ def mypage_edit_profile(request, pk=None):
     member_type=request.POST['member_type']
   )
 
-  # serializer_class = MypageUserProfileSerializer(queryset, many=True)
-  # data = serializer_class.data
+  serializer_class = MypageUserProfileSerializer(queryset, many=True)
+  data = serializer_class.data
 
-  # return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False)

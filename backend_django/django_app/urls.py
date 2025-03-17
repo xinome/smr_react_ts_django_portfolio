@@ -13,7 +13,7 @@ urlpatterns = [
     path("activity_topics/", views.activity_topics, name="activity_topics"),
     path("mypage/user_profile/", views.mypage_user_profile, name="mypage_user_profile"),
     path("mypage/user_profile/<int:pk>/", views.mypage_user_profile, name="mypage_user_profile"),
-    path("mypage/edit_profile/<int:pk>", views.mypage_edit_profile, name="mypage_edit_profile"),
+    path("mypage/edit_profile/<int:pk>/", views.mypage_edit_profile, name="mypage_edit_profile"),
 
     # path("", include(router.urls)),
 ]

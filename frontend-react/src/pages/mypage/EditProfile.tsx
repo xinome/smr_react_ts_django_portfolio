@@ -13,8 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 // import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 import store from '../../store'
 
-// import { fetchMypageAccountList } from '../../features/mypage/mypageSlice'
-import { getAccountList } from '../../features/account/mypageSlice'
+import { fetchMypageAccountList } from '../../features/account/mypageSlice'
 import { fetchGetMypageProfile, fetchUpdateMypageProfile } from '../../features/mypage/mypageProfileSlice'
 
 type MypageProps = {
@@ -45,7 +44,7 @@ const EditProfile = (props: MypageProps) => {
   }, [currentUserList]);
 
   useEffect(() => {
-    dispatch(getAccountList(userId));
+    dispatch(fetchMypageAccountList(userId));
   }, [dispatch, userId]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>, newUserList: any) => {
@@ -58,7 +57,7 @@ const EditProfile = (props: MypageProps) => {
 
     console.log("is_same: ", currentUserList === newUserList);
 
-    dispatch(fetchUpdateMypageProfile());
+    dispatch(fetchUpdateMypageProfile(newUserList));
   }
   
   return (

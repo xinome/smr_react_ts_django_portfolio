@@ -25,13 +25,25 @@ export const fetchGetMypageProfile = createAsyncThunk(
 // 更新
 export const fetchUpdateMypageProfile = createAsyncThunk(
   "update_mypage_profile",
-  async (id, data) => {
+  async ({ id, data }: { id: number; data: Record<string, any> }) => {
     console.log("id: ", id);
     console.log("data: ", data);
 
     const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}/`, data);
     return response.data;
   }
+
+  // async (id, { dispatch, getState }) => {
+  //   console.log("id: ", id);
+  //   console.log("getState: ", getState());
+  //   console.log("dispatch: ", dispatch);
+
+  //   const target_data = (getState() as { mypageProfile: typeof initialState }).mypageProfile.items;
+  //   console.log("target_data: ", target_data);
+
+  //   const response = await axios.patch(`${BASE_API_URL}/mypage/user_profile/${id}/`, target_data);
+  //   return response.data;
+  // }
 );
 
 // Slices
@@ -108,11 +120,8 @@ export const mypageProfileSlice = createSlice({
       })
       .addCase(fetchUpdateMypageProfile.fulfilled, (state, action) => {
         console.log("fulfilled: ", action.payload);
-        return {
-          ...state,
-          items: action.payload,
-          isLoading: false,
-        };
+        state.items = action.payload;
+        state.isLoading = false;
       })
       .addCase(fetchUpdateMypageProfile.rejected, (state) => {
         console.log("rejected..");
