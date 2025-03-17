@@ -141,6 +141,9 @@ const BaseApp = () => {
 
   const pathname = useLocation().pathname.replaceAll('/', '');
   console.log("useLocation.pathname: ", pathname);
+
+  // 仮置き: ログインユーザID
+  const current_user_id = 1;
   
   return (
     <div className="app">
@@ -163,7 +166,7 @@ const BaseApp = () => {
           </Grid>
         </Grid>
       </header> */}
-      <BaseHeader userId={1} />
+      <BaseHeader userId={current_user_id} />
       <Box className='app-container'>
         {/* <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>
@@ -224,7 +227,7 @@ const BaseApp = () => {
 
         <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
-          <Route path="/mypage/" element={<MyPage userId={1} />} />
+          <Route path="/mypage/" element={<MyPage userId={current_user_id} />} />
         </Routes>
 
         {/* <Container className='page-maincontents'>

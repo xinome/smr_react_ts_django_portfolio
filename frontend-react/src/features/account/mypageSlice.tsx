@@ -6,14 +6,16 @@ const initialState = {
   items: [],
 };
 
-const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+// const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
 export const fetchAccountList = createAsyncThunk(
   "account/getAccountList",   // type: 内部処理名、一意でないとだめ
   async (userId: number) => {
-    const response = await axios.get(`${BASE_API_URL}/users/${userId}`);
-    return response.data;
+    // const response = await axios.get(`${BASE_API_URL}/users/${userId}`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}/`);
+    return response.data[0];
   }
 );
 

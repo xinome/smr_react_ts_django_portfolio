@@ -205,15 +205,15 @@ def activity_topics(request):
 def mypage_user_profile(request, pk=None):
 
   # サンプルデータを返す
-  data = {
-      "id": pk,
-      "name": "サンプルユーザー",
-      "email": "sample@example.com",
-  }
-  return JsonResponse(data)
+  # data = {
+  #     "id": pk,
+  #     "name": "サンプルユーザー",
+  #     "email": "sample@example.com",
+  # }
+  # return JsonResponse(data)
 
-  # queryset = MypageUserProfile.objects.filter(id=pk)
-  # serializer_class = MypageUserProfileSerializer(queryset, many=True)
-  # data = serializer_class.data
+  queryset = MypageUserProfile.objects.filter(id=pk)
+  serializer_class = MypageUserProfileSerializer(queryset, many=True)
+  data = serializer_class.data
 
-  # return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False)
