@@ -3,8 +3,14 @@ from django.http import JsonResponse
 from rest_framework import viewsets
 
 # Model, Serializerをインポートする
-from .serializers import ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer
-from .models import ProjectTopics, PortfolioTopics, ActivityTopics
+from .serializers import (
+   ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
+   MypageUserProfileSerializer,
+)
+from .models import (
+  ProjectTopics, PortfolioTopics, ActivityTopics,
+  MypageUserProfile,
+)
 
 # Create your views here.
 
@@ -210,3 +216,11 @@ def activity_topics(request):
   data = serializer_class.data
 
   return JsonResponse(data, safe=False)
+
+  def mypage_user_profile(request):
+ 
+   queryset = MypageUserProfile.objects.all()
+   serializer_class = MypageUserProfileSerializer(queryset, many=True)
+   data = serializer_class.data
+ 
+   return JsonResponse(data, safe=False)

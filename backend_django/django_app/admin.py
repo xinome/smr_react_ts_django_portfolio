@@ -1,14 +1,16 @@
 from django.contrib import admin
 
 from .models import (
-  TopicsCategory,
-  ProjectTopics, PortfolioTopics, ActivityTopics
+  TopicsCategory, PricingPlan,
+  ProjectTopics, PortfolioTopics, ActivityTopics,
+  MypageUserProfile,
 )
 
 # Register your models here.
 
 # admin.site.register(ProjectTopics)
 
+# Utility
 @admin.register(TopicsCategory)
 class TopicsCategoryAdmin(admin.ModelAdmin):
   Fields = ('id', 'category_name')
@@ -19,6 +21,19 @@ class TopicsCategoryAdmin(admin.ModelAdmin):
   list_filter = ('category_name', )
   list_editable = ('category_name', )
 
+@admin.register(PricingPlan)
+class PricingPlanAdmin(admin.ModelAdmin):
+  Fields = ('id', 'plan_name', 'price', 'description')
+  list_display = ('id', 'plan_name', 'has_creatable_project', 'cnt_project_limit', 'cnt_project', 'price', 'created_at', 'updated_at')
+  list_display_links = ('id', )
+
+  search_fields = ('plan_name', 'price', )
+  list_filter = ('plan_name', 'price', )
+  list_editable = ('plan_name', 'price', )
+
+
+
+# Dashboard
 @admin.register(ProjectTopics)
 class ProjectTopicsAdmin(admin.ModelAdmin):
   Fields = ('id', 'date', 'content')  # 編集画面で表示する項目を指定する
@@ -48,3 +63,16 @@ class ActivityTopicsAdmin(admin.ModelAdmin):
   search_fields = ('content', )
   list_filter = ('date', )
   list_editable = ('date', 'content', 'category')
+
+
+
+# Mypage
+@admin.register(MypageUserProfile)
+class MypageUserProfileAdmin(admin.ModelAdmin):
+  Fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'member_type')
+  list_display = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'member_type', 'created_at', 'updated_at')
+  list_display_links = ('id', )
+
+  search_fields = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')
+  list_filter = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')
+  # list_editable = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')
