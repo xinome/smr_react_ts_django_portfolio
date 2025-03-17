@@ -25,6 +25,7 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 // ページ
 import DashBoard from './pages/DashBoard';
 import MyPage from './pages/MyPage';
+import EditProfile from "./pages/mypage/EditProfile";
 
 const BaseApp = () => {
 
@@ -228,6 +229,7 @@ const BaseApp = () => {
         <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
           <Route path="/mypage/" element={<MyPage userId={current_user_id} />} />
+          <Route path="/mypage/edit_profile/" element={<EditProfile userId={current_user_id} />} />
         </Routes>
 
         {/* <Container className='page-maincontents'>

@@ -10,8 +10,8 @@ const initialState = {
 const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
-export const fetchAccountList = createAsyncThunk(
-  "account/getAccountList",   // type: 内部処理名、一意でないとだめ
+export const fetchMypageAccountList = createAsyncThunk(
+  "get_mypage_account",   // type: 内部処理名、一意でないとだめ
   async (userId: number) => {
     // const response = await axios.get(`${BASE_API_URL}/users/${userId}`);
     const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}/`);
@@ -20,8 +20,8 @@ export const fetchAccountList = createAsyncThunk(
 );
 
 // Slices
-export const accountSlice = createSlice({
-  name: "mypage_account",  // sliceの名前
+export const mypageSlice = createSlice({
+  name: "mypage",  // sliceの名前
   initialState: initialState,
   reducers: {
     getAccountList: (state, action) => {
@@ -39,14 +39,14 @@ export const accountSlice = createSlice({
   extraReducers: (builder) => {
     // TODO: エラー発生時の処理も追加する
     builder
-      .addCase(fetchAccountList.pending, (state) => {
+      .addCase(fetchMypageAccountList.pending, (state) => {
         console.log("pending..");
         return {
           ...state,
           isLoading: true,
         };
       })
-      .addCase(fetchAccountList.fulfilled, (state, action) => {
+      .addCase(fetchMypageAccountList.fulfilled, (state, action) => {
         console.log("fulfilled: ", action.payload);
         return {
           ...state,
@@ -54,7 +54,7 @@ export const accountSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchAccountList.rejected, (state) => {
+      .addCase(fetchMypageAccountList.rejected, (state) => {
         console.log("pending..");
         return {
           ...state,
@@ -65,5 +65,6 @@ export const accountSlice = createSlice({
 });
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
-export const { getAccountList } = accountSlice.actions;
-export default accountSlice.reducer;
+// export const { getAccountList, updateAccountList } = mypageSlice.actions;
+export const { getAccountList } = mypageSlice.actions;
+export default mypageSlice.reducer;
