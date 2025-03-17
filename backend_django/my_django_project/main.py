@@ -6,6 +6,7 @@ from django import setup
 setup(set_prefix=False)
 
 from django_app.models import ProjectTopics
+from django_app.models import MypageUserProfile
 
 # データを追加する
 # project_topics = ProjectTopics(date='2022-10-10', content='[プロジェクト]「プロジェクト名10」デプロイされました。')
@@ -31,3 +32,8 @@ for project_topic in project_topics:
 # # データを削除する
 # project_topics = ProjectTopics.objects.get(id=1)
 # project_topics.delete()
+
+# データを追加する
+queryset = MypageUserProfile.objects.filter(id=1)
+print("queryset: ", queryset)
+print("request.POST: ", request.POST)
