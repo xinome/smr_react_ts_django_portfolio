@@ -1,6 +1,8 @@
 from django.shortcuts import render
+import json
 from django.http import JsonResponse
 from rest_framework import viewsets
+from django.views.decorators.csrf import csrf_exempt
 
 # Model, Serializerをインポートする
 from .serializers import (
@@ -215,24 +217,27 @@ def mypage_user_profile(request, pk=None):
   return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # マイページ: ユーザープロフィールを更新するAPI
+@csrf_exempt
 def mypage_edit_profile(request, pk=None):
 
-  queryset = MypageUserProfile.objects.filter(id=pk)
-  print("queryset: ", queryset)
-  print("request.POST: ", request.POST)
+  if request.method == 'POST':
+    data = json.loads(request.body)  # JSON データをロード
+    print("data: ", data)
 
-  # queryset.update(
-  #   name=request.POST['name'],
-  #   account_id=request.POST['account_id'],
-  #   password=request.POST['password'],
-  #   email=request.POST['email'],
-  #   zip=request.POST['zip'],
-  #   address=request.POST['address'],
-  #   phone=request.POST['phone'],
-  #   member_type=request.POST['member_type']
-  # )
+    queryset = MypageUserProfile.objects.filter(id=pk)
+    queryset.update(
+      name=data.get('name', ''),
+      account_id=data.get('account_id', ''),
+      password=data.get('password', ''),
+      email=data.get('email', ''),
+      zip=data.get('zip', ''),
+      address=data.get('address', ''),
+      phone=data.get('phone', ''),
+    )
 
-  serializer_class = MypageUserProfileSerializer(queryset.first())
-  data = serializer_class.data
+    serializer_class = MypageUserProfileSerializer(queryset.first())
+    data = serializer_class.data
 
-  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
+  else:
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
