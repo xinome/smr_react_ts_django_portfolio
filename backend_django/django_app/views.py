@@ -1,13 +1,18 @@
 from django.shortcuts import render
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework import viewsets
+
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+from rest_framework.views import APIView
+from rest_framework import status
 
 # Model, Serializerをインポートする
 from .serializers import (
    ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
-   MypageUserProfileSerializer,
+   MypageUserProfileSerializer, MypageUserProfileUpdateSerializer,
 )
 from .models import (
   ProjectTopics, PortfolioTopics, ActivityTopics,
@@ -241,3 +246,61 @@ def mypage_edit_profile(request, pk=None):
     return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
   else:
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+# Postmanからの接続テスト（GET, POST, DELETEに限定する）
+@csrf_exempt
+def postman_test(request):
+  # postmanからのget, post, put, deleteのテスト
+  # https://www.postman.com/
+  
+  print("postman_test: ", request)
+  print("request: ", request)
+  print("request.POST: ", request.POST)
+  
+  return JsonResponse({
+    "message": "postman_test",
+    "request": {
+      "method": request.method,
+      "path": request.path,
+      "GET": request.GET,
+      "POST": request.POST,
+    }
+  })
+
+# class based view
+@method_decorator(csrf_exempt, name='dispatch')
+# @api_view(['GET', 'POST'])
+class postman_class_test(APIView):
+  
+  # def get(self, request, *args, **kwargs):
+  def get(self, request, pk):
+
+    print("request: ", request)
+    print("request.data: ", request.data)
+    
+    # 1件のみ取得する場合
+    queryset = MypageUserProfile.objects.get(id=pk)
+    serializer_class = MypageUserProfileUpdateSerializer(queryset)
+
+    # フィルターをかけて取得する場合、many=Trueを指定する
+    # queryset = MypageUserProfile.objects. filter(id=pk)
+    # serializer_class = MypageUserProfileUpdateSerializer(queryset, many=True)
+
+    data = serializer_class.data
+
+    return JsonResponse(data, safe=False)
+
+  def post(self, request, pk):
+    
+    print("request: ", request)
+    print("request.data: ", request.data)
+
+    queryset = MypageUserProfile.objects.get(id=pk)
+
+    serializer_class = MypageUserProfileUpdateSerializer(queryset, data=request.data)
+    if serializer_class.is_valid():
+      serializer_class.save()
+      return JsonResponse(serializer_class.data, status=201)
+
+    return JsonResponse(serializer_class.errors, status=400)

@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   items: [],
+  status: "",
 };
 
 // データ型の定義
@@ -26,8 +27,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchGetMypageProfile = createAsyncThunk(
   "get_mypage_profile",  // type: 内部処理名、一意でないとだめ
   async (userId: number) => {
-    // 仮置き
-    // const response = await axios.get(`${BASE_API_URL}/mypage/edit_profile/${id}/`);
+    console.log("userId: ", userId);
     const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}`);
     return response.data;
   }
@@ -38,11 +38,21 @@ export const fetchUpdateMypageProfile = createAsyncThunk(
   "update_mypage_profile",
   async (data: UpdateProfileData) => {
     console.log("data: ", data);
+    console.log("data.id: ", data.id);
 
     // const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${data.id}`, data);
     // 変更のあったデータを更新する
-    const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${data.id}`, data);
-    return response.data;
+    // const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${data.id}`, data);
+    // return response.data;
+
+    try {
+      const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${data.id}`, data);
+      console.log("updateMypageProfile: ", response);
+      return response.data;
+    }
+    catch (error) {
+      console.log("updateMypageProfile_error: ", error);
+    }
   }
 );
 
@@ -54,32 +64,32 @@ export const mypageProfileSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
     // 内部処理名: (state, action) => { return 処理結果 }
 
-    getMypageProfile: (state, action) => {
-      axios
-        .get(`${BASE_API_URL}/mypage/user_profile/${action.payload}/`)
-        .then((response) => {
-          console.log("getMypageProfile: ", response);
-          state.items = response.data;
-        })
-        .catch((error) => {
-          console.log("getMypageProfile_error: ", error);
-        });
-    },
+    // getMypageProfile: (state, action) => {
+    //   axios
+    //     .get(`${BASE_API_URL}/mypage/user_profile/${action.payload}/`)
+    //     .then((response) => {
+    //       console.log("getMypageProfile: ", response);
+    //       state.items = response.data;
+    //     })
+    //     .catch((error) => {
+    //       console.log("getMypageProfile_error: ", error);
+    //     });
+    // },
 
-    updateMypageProfile: (state, action) => {
-      console.log("state: ", state);
-      console.log("action: ", action);
+    // updateMypageProfile: (state, action) => {
+    //   console.log("state: ", state);
+    //   console.log("action: ", action);
 
-      axios
-        .post(`${BASE_API_URL}/mypage/edit_profile/${action.payload.id}`, action.payload)
-        .then((response) => {
-          console.log("updateMypageProfile: ", response);
-          state.items = response.data;
-        })
-        .catch((error) => {
-          console.log("updateMypageProfile_error: ", error);
-        });
-    }
+    //   axios
+    //     .post(`${BASE_API_URL}/mypage/edit_profile/${action.payload.id}`, action.payload)
+    //     .then((response) => {
+    //       console.log("updateMypageProfile: ", response);
+    //       state.items = response.data;
+    //     })
+    //     .catch((error) => {
+    //       console.log("updateMypageProfile_error: ", error);
+    //     });
+    // }
     
   },
 
@@ -92,6 +102,7 @@ export const mypageProfileSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchGetMypageProfile.fulfilled, (state, action) => {
@@ -100,6 +111,7 @@ export const mypageProfileSlice = createSlice({
           ...state,
           items: action.payload,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchGetMypageProfile.rejected, (state, error) => {
@@ -107,6 +119,7 @@ export const mypageProfileSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -116,23 +129,29 @@ export const mypageProfileSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchUpdateMypageProfile.fulfilled, (state, action) => {
         console.log("fulfilled: ", action.payload);
-        state.items = action.payload;
-        state.isLoading = false;
+        return {
+          ...state,
+          items: action.payload,
+          isLoading: false,
+          status: "success",
+        };
       })
       .addCase(fetchUpdateMypageProfile.rejected, (state, error) => {
         console.log("rejected: ", error);
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
   },
 });
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
-export const { getMypageProfile, updateMypageProfile } = mypageProfileSlice.actions;
+// export const { getMypageProfile, updateMypageProfile } = mypageProfileSlice.actions;
 export default mypageProfileSlice.reducer;

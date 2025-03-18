@@ -1,4 +1,4 @@
-# serializers.py: データの加工や、形式の正誤をチェックする
+# serializers.py: データの加工や、形式の正誤（バリデーション）をチェックする
 
 from rest_framework import serializers
 from .models import (
@@ -40,7 +40,7 @@ class ActivityTopicsSerializer(serializers.ModelSerializer):
     model = ActivityTopics
     fields = ('id', 'date', 'content', 'category')
 
-# Mypage
+# Mypage: get_user_profile
 class MypageUserProfileSerializer(serializers.ModelSerializer):
   # 外部キーのカテゴリーを取得する
   member_type = PricingPlanSerializer()
@@ -48,3 +48,10 @@ class MypageUserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = MypageUserProfile
     fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone', 'member_type')
+
+# Mypage: update_user_profile
+class MypageUserProfileUpdateSerializer(serializers.ModelSerializer):
+  # 対象: member_type（外部キー）以外
+  class Meta:
+    model = MypageUserProfile
+    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone')
