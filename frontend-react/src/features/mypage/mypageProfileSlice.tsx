@@ -6,6 +6,17 @@ const initialState = {
   items: [],
 };
 
+// データ型の定義
+export interface UpdateProfileData {
+  id: number;
+  name: string;
+  account_id: string;
+  email?: string;
+  zip?: string;
+  address?: string;
+  phone?: string;
+}
+
 // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 const BASE_API_URL = "http://localhost:8000/api";
 
@@ -25,25 +36,14 @@ export const fetchGetMypageProfile = createAsyncThunk(
 // 更新
 export const fetchUpdateMypageProfile = createAsyncThunk(
   "update_mypage_profile",
-  async ({ id, data }: { id: number; data: Record<string, any> }) => {
-    console.log("id: ", id);
+  async (data: UpdateProfileData) => {
     console.log("data: ", data);
 
-    const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}`, data);
+    // const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${data.id}`, data);
+    // 変更のあったデータを更新する
+    const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${data.id}`, data);
     return response.data;
   }
-
-  // async (id, { dispatch, getState }) => {
-  //   console.log("id: ", id);
-  //   console.log("getState: ", getState());
-  //   console.log("dispatch: ", dispatch);
-
-  //   const target_data = (getState() as { mypageProfile: typeof initialState }).mypageProfile.items;
-  //   console.log("target_data: ", target_data);
-
-  //   const response = await axios.patch(`${BASE_API_URL}/mypage/user_profile/${id}`, target_data);
-  //   return response.data;
-  // }
 );
 
 // Slices

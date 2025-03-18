@@ -65,7 +65,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 # or for all (開発環境限定)
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'my_django_project.urls'
 

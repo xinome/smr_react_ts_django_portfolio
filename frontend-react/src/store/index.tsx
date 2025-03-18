@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 // Reducers
 import authReducer from '../features/account/authSlice';
 import mypageAccountReducer from '../features/account/mypageSlice';
+import mypageProfileReducer from '../features/mypage/mypageProfileSlice';
 
 import projectTopicsReducer from '../features/topics/projectTopicsSlice';
 import portfolioTopicsReducer from '../features/topics/portfolioTopicsSlice';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   // account
   authReducer,
   mypageAccountReducer,
+  mypageProfileReducer,
 
   // topics
   projectTopicsReducer,
