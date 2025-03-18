@@ -22,8 +22,8 @@ type MypageProps = {
 const Mypage = (props: MypageProps) => {
 
   const dispatch = useAppDispatch();
-  const usersList = useSelector((state: any) => state.accountReducer.items);
-  const isLoading = useSelector((state: any) => state.accountReducer.isLoading);
+  const usersList = useSelector((state: any) => state.mypageAccountReducer.items);
+  const isLoading = useSelector((state: any) => state.mypageAccountReducer.isLoading);
 
   const userId = props.userId;
   console.log("Mypage: userId: ", userId);

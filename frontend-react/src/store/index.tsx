@@ -4,8 +4,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
 // Reducers
-import accountReducer from '../features/account/mypageSlice';
 import authReducer from '../features/account/authSlice';
+import mypageAccountReducer from '../features/account/mypageSlice';
 
 import projectTopicsReducer from '../features/topics/projectTopicsSlice';
 import portfolioTopicsReducer from '../features/topics/portfolioTopicsSlice';
@@ -15,8 +15,8 @@ const rootReducer = combineReducers({
   // ここに作成したReducerを記述する
 
   // account
-  accountReducer,
   authReducer,
+  mypageAccountReducer,
 
   // topics
   projectTopicsReducer,

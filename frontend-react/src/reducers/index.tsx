@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 // import { INCREMENT, DECREMENT } from './actionTypes';
 
-import accountReducer from '../features/account/mypageSlice';
 import authReducer from '../features/account/authSlice';
+import mypageAccountReducer from '../features/account/mypageSlice';
 import mypageProfileReducer from '../features/mypage/mypageProfileSlice';
 
 import projectTopicsReducer from "../features/topics/projectTopicsSlice";
@@ -46,8 +46,8 @@ const rootReducer = combineReducers({
   // loginReducer,
   // INCREMENT,
   // DECREMENT,
-  accountReducer,
   authReducer,
+  mypageAccountReducer,
   mypageProfileReducer,
   
   projectTopicsReducer,
