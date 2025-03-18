@@ -4,16 +4,15 @@ import { RootState, useAppDispatch } from '../../store';
 
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, Container, Grid, Typography, Breadcrumbs, Button } from '@mui/material'
+import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
+import Grid from '@mui/material/Grid2'
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
-// import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
-import store from '../../store'
-
-// import { fetchMypageAccountList } from '../../features/account/mypageSlice'
 import { fetchGetMypageProfile, fetchUpdateMypageProfile } from '../../features/mypage/mypageProfileSlice'
 
 type MypageProps = {
@@ -30,31 +29,27 @@ const EditProfile = (props: MypageProps) => {
     { name: 'プロフィール変更' },
   ];
 
-  console.log("store: ", store.getState());
-  
   const dispatch = useAppDispatch();
   const currentUserList = useSelector((state: any) => state.mypageProfileReducer.items);
   const isLoading = useSelector((state: any) => state.mypageProfileReducer.isLoading);
 
   const [userList, setUserList] = useState(currentUserList);
+  const [snackOpen, setSnackOpen] = useState(false);
 
   // 初回のみ実行
-  useEffect(() => {
-    setUserList(currentUserList);
-  }, [currentUserList]);
-
   useEffect(() => {
     dispatch(fetchGetMypageProfile(userId));
   }, [dispatch, userId]);
 
+  useEffect(() => {
+    setUserList(currentUserList);
+  }, [currentUserList]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>, newUserList: any) => {
     e.preventDefault();
 
-    console.log("store: ", store.getState());
-
     console.log("currentUserList: ", currentUserList);
     console.log("newUserList: ", newUserList);
-
     console.log("is_same: ", currentUserList === newUserList);
 
     dispatch(fetchUpdateMypageProfile(newUserList));
@@ -65,10 +60,10 @@ const EditProfile = (props: MypageProps) => {
 
       <Box className='page-title-wrapper'>
         <Grid container className='page-title-header'>
-          <Grid item className='page-title-item'>
+          <Grid className='page-title-item'>
             <Typography variant='h2' className='page-title'>プロフィール変更</Typography>
           </Grid>
-          <Grid item className='page-title-item'>
+          <Grid className='page-title-item'>
             <Breadcrumbs
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
@@ -96,12 +91,12 @@ const EditProfile = (props: MypageProps) => {
       ) : (
         <Box className='section-wrapper'>
           {/* <Grid container className='section-header'>
-            <Grid item className='section-title'>
+            <Grid className='section-title'>
               ユーザープロフィール
             </Grid>
           </Grid> */}
 
-          <form onSubmit={e => {handleSubmit(e, userList);}}>
+          <form method="POST" onSubmit={e => {handleSubmit(e, userList);}}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableBody>
@@ -195,6 +190,16 @@ const EditProfile = (props: MypageProps) => {
           </form>
         </Box>
       )}
+
+      <Snackbar
+         open={snackOpen}
+         autoHideDuration={6000}
+         onClose={() => setSnackOpen(false)}
+       >
+         <Alert onClose={() => setSnackOpen(false)} severity="success" variant='filled' sx={{ width: '100%' }}>
+           プロフィールを更新しました
+         </Alert>
+       </Snackbar>
 
     </Container>
   )
