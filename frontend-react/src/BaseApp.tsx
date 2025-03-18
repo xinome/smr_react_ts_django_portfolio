@@ -1,220 +1,309 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // import logo from './logo.svg';
-import './BaseApp.scss';
 import { Routes, Route, Link } from 'react-router-dom';
-import { bgcolor_header, bgcolor_sidemenu } from './utils/ColorUtils';
+import Axios from 'axios';
+
+import './BaseApp.scss';
+import {
+  bgcolor_header, bgcolor_sidemenu,
+  color_category_project, color_category_portfolio, color_category_activity,
+} from './utils/ColorUtils';
+
+// Material UI(MUI) components
+import { Avatar, Box, Container } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+
+import { createTheme } from '@mui/material/styles';
 
 // コンポーネント
+import BaseHeader from "./components/BaseHeader";
+import BaseSideMenu from "./components/BaseSideMenu";
 import DashBoardCarousel from './components/DashBoardCarousel';
+
+// ページ
+import DashBoard from './pages/DashBoard';
+import MyPage from './pages/MyPage';
+import EditProfile from "./pages/mypage/EditProfile";
 
 const BaseApp = () => {
 
   // const isLoggedIn = false;
+  // const BASE_API_URL = "http://localhost:8000/api";
 
   type ProjectType = {
     id: number,
     date: string,
-    content: string
+    content: string,
+    category: number,
   }[];
 
   type PortfolioType = {
     id: number,
     date: string,
-    content: string
+    content: string,
+    category: number,
   }[];
 
   type ActivityType = {
     id: number,
     date: string,
-    content: string
+    content: string,
+    category: number,
   }[];
 
   // JSONデータを取得する
-  const [projectList, setProjectList] = useState<ProjectType>([]);
-  const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
-  const [activityList, setActivityList] = useState<ActivityType>([]);
+  // const [projectList, setProjectList] = useState<ProjectType>([]);
+  // const [portfolioList, setPortfolioList] = useState<PortfolioType>([]);
+  // const [activityList, setActivityList] = useState<ActivityType>([]);
+
+  // const fetchProjectList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/project_topics`);
+  //     console.log("fetchProjectList: ", response);
+  //     setProjectList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchProjectList: ", error);
+  //   }
+  // }
+
+  // const fetchPortfolioList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
+  //     console.log("fetchPortfolioList: ", response);
+  //     setPortfolioList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchPortfolioList: ", error);
+  //   }
+  // }
+
+  // const fetchActivityList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
+  //     console.log("fetchActivityList: ", response);
+  //     setActivityList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchActivityList: ", error);
+  //   }
+  // }
 
   // useEffect(() => {
-  //   fetch('./data/project.json')
-  //   .then(response => {
-  //     return response.json();
-  //   })
-  //   .then(jsondata => console.log(jsondata));
-  // }, [projectList]);
+  //   fetchProjectList();
+  //   fetchPortfolioList();
+  //   fetchActivityList();
+  // }, []);
 
-  // useEffect(() => {
-  //   fetch('./data/project.json', {
-  //     headers : {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json'
-  //     }
-  //   })
-  //   .then(response => {
-  //     console.log(response);
-  //     return response.json();
-  //   })
-  //   .then(jsondata => {
-  //     console.log(jsondata);
-  //     setProjectList(jsondata);
-  //   });
-  // }, [projectList]);
+  // const filteredProjectList: ProjectType = projectList.filter((item) => {
+  //   return item.id <= 3;
+  // });
+  // const filteredPortfolioList = portfolioList.filter((item) => {
+  //   return item.id <= 3;
+  // });
+  // const filteredActivityList = activityList.filter((item) => {
+  //   return item.id <= 3;
+  // });
 
-  useEffect(() => {
-    const json = require('./data/project.json');
-    // requireではなくfetch
-    setProjectList(json);
-  }, [projectList]);
+  // const getCategoryColor = (category_id: number) => {
+  //   switch (category_id) {
+  //     case 1:
+  //       return color_category_project;
+  //     case 2:
+  //       return color_category_portfolio;
+  //     case 3:
+  //       return color_category_activity;
+  //     default:
+  //       return "";
+  //   }
+  // };
 
-  useEffect(() => {
-    const json = require('./data/portfolio.json');
-    setPortfolioList(json);
-  }, [portfolioList]);
+  // カテゴリーIDからカテゴリー名を取得する
+  // const getCategoryName = (category_id: number) => {
+  //   switch (category_id) {
+  //     case 1:
+  //       return "プロジェクト";
+  //     case 2:
+  //       return "ポートフォリオ";
+  //     case 3:
+  //       return "活動記録";
+  //     default:
+  //       return "";
+  //   }
+  // };
 
-  useEffect(() => {
-    const json = require('./data/activity.json');
-    setActivityList(json);
-  }, [activityList]);
+  // const menuItemStyle = {
+  //   padding: '.5em 1em',
+  //   margin: '0',
+  //   borderBottom: '1px solid #ccc',
+  // };
 
-  const filteredProjectList: ProjectType = projectList.filter((item) => {
-    return item.id <= 3;
-  });
-  const filteredPortfolioList = portfolioList.filter((item) => {
-    return item.id <= 3;
-  });
-  const filteredActivityList = activityList.filter((item) => {
-    return item.id <= 3;
-  });
+  const pathname = useLocation().pathname.replaceAll('/', '');
+  console.log("useLocation.pathname: ", pathname);
+
+  // 仮置き: ログインユーザID
+  const current_user_id = 1;
   
   return (
     <div className="app">
-      <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
-        <div className='header-logo'>
+      {/* <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
+        <Box className='header-logo'>
           <Link to='/'>ロゴ</Link>
-        </div>
-        <div className='header-menu'>
-          <div className='header-menu-item'>
-            {/* アカウント画像アイコン */}
-            アカウントID
-          </div>
-          <div className='header-menu-item'>
+        </Box>
+        <Grid container className='header-menu' sx={{ alignItems: 'center' }}>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
+            <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
+          </Grid>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Link to='/mypage'>マイページ</Link>
-          </div>
-          <div className='header-menu-item'>
+          </Grid>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Link to='/password'>パスワード変更</Link>
-          </div>
-          <div className='header-menu-item'>
+          </Grid>
+          <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
             <Link to='/logout'>ログアウト</Link>
-          </div>
-        </div>
-      </header>
-      <div className='app-container'>
-        <div className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
+          </Grid>
+        </Grid>
+      </header> */}
+      <BaseHeader userId={current_user_id} />
+      <Box className='app-container'>
+        {/* <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>
-            <li>ポートフォリオ</li>
-            <li>ユーザ基本情報変更</li>
-            <li>プロジェクト管理</li>
-            <li>プロジェクト作成</li>
-            <li>プロジェクト検索</li>
-            <li>スカウト管理</li>
-            <li>開発Tips</li>
-            <li>活動記録</li>
+            <Accordion sx={menuAccordionStyle} className="hoge">
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
+              >
+                <Typography>ポートフォリオ</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{
+                padding: '0',
+                margin: '0',
+              }}>
+                <Link to='/portfolio/list/'>
+                  <Box sx={menuNestedItemStyle}>ポートフォリオ一覧</Box>
+                </Link>
+                <Link to='/portfolio/create/'>
+                  <Box sx={menuNestedItemStyle}>ポートフォリオ作成</Box>
+                </Link>
+              </AccordionDetails>
+            </Accordion>
+            <Link to='/mypage/edit/'>
+              <Box sx={menuItemStyle}>ユーザ基本情報変更</Box>
+            </Link>
+            <Accordion sx={menuAccordionStyle}>
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
+              >
+                <Typography>プロジェクト管理</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{
+                padding: '0',
+                margin: '0',
+              }}>
+                <Link to='/project/list/'>
+                  <Box sx={menuItemStyle}>プロジェクト一覧</Box>
+                </Link>
+                <Link to='/project/list/'>
+                  <Box sx={menuItemStyle}>プロジェクト作成</Box>
+                </Link>
+              </AccordionDetails>
+            </Accordion>
+            <Link to='/searchproject/'>
+              <Box sx={menuItemStyle}>プロジェクト検索</Box>
+            </Link>
+            <Link to='/scout/'>
+              <Box sx={menuItemStyle}>スカウト管理</Box>
+            </Link>
+            <Link to='/tips/'>
+              <Box sx={menuItemStyle}>開発Tips</Box>
+            </Link>
+            <Link to='/activity/'>
+              <Box sx={menuItemStyle}>活動記録</Box>
+            </Link>
           </ul>
-        </div>
-        <div className='page-maincontents'>
-          <div className='dashboard-carousel section-wrapper'>
-            {/* カルーセル */}
-            <DashBoardCarousel />
-          </div>
+        </Box> */}
+        <BaseSideMenu />
 
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>参加プロジェクト</div>
-              <div>
-                <Link to='/project'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
+        <Routes>
+          <Route path="/dashboard/" element={<DashBoard />} /> 
+          <Route path="/mypage/" element={<MyPage userId={current_user_id} />} />
+          <Route path="/mypage/edit_profile/" element={<EditProfile userId={current_user_id} />} />
+        </Routes>
+
+        {/* <Container className='page-maincontents'>
+          <Container className='dashboard-carousel section-wrapper'>
+            <DashBoardCarousel />
+          </Container>
+
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid className='section-wrapper-title'>参加プロジェクト</Grid>
+              <Grid>
+                <Link to='/project/list'>詳細を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
               {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>ポートフォリオ</div>
-              <div>
-                <Link to='/portfolio'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ1」html / css / wordpress</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ2」php / laravel / docker</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ3」vue.js / vuetify / node.js / bootstrap</dd>
-              </dl>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid className='section-wrapper-title'>ポートフォリオ</Grid>
+              <Grid>
+                <Link to='/portfolio/list'>詳細を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
               {filteredPortfolioList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
                   <dd>{item.content}</dd>
                 </dl>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-          <div className='section-wrapper'>
-            <div className='section-wrapper-header'>
-              <div className='section-wrapper-title'>活動記録</div>
-              <div>
+          <Box className='section-wrapper'>
+            <Grid container className='section-wrapper-header'>
+              <Grid className='section-wrapper-title'>活動記録</Grid>
+              <Grid>
                 <Link to='/activity'>詳細を見る</Link>
-              </div>
-            </div>
-            <div className='section-wrapper-contents'>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>[ポートフォリオ]「ポートフォリオ名2」いいねがつきました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.11</dt>
-                <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
-              </dl>
+              </Grid>
+            </Grid>
+            <Box className='section-wrapper-contents'>
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    {item.category && (
+                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
+                        { getCategoryName(item.category) }
+                      </span>
+                    )}
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-        </div>
-      </div>
+        </Container> */}
+      </Box>
     </div>
   );
 }

@@ -11,16 +11,21 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# テンプレートファイルのディレクトリを指定
+# TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+# STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_hyxz0g6d7=5xlv%e$)w)*_$fnvd6bndcb7mw%8d(r9nz=qzs2'
+SECRET_KEY = 'django-insecure-!ps5%1192mx!$nr#uhhm!yt$i&h3a2i-fgsnx0iodwez164s#h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_app',
     'corsheaders',  # フロントエンドとの通信を許可するために追加
+    'rest_framework',  # REST frameworkを使うために追加
 ]
 
 MIDDLEWARE = [
@@ -52,10 +58,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORSによるフロントエンドとの通信を許可するために追加
+# CORSによるフロントエンドとの通信を許可するために追加、フロント側のURLを指定
 CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
+
+# or for all (開発環境限定)
+# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'my_django_project.urls'
 

@@ -53,6 +53,13 @@ a:hover {
     color: white;
     // background-color: greenyellow;
 
+    a {
+      color: white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -75,19 +82,19 @@ a:hover {
     .section-wrapper {
       margin-bottom: 1em;
 
-      .section-wrapper-header {
+      .section-header {
         margin-bottom: .5em;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        .section-wrapper-title {
+        .section-title {
           font-size: 1.2em;
           font-weight: bold;
         }
       }
 
-      .section-wrapper-contents {
+      .section-contents {
         padding: 1em;
         background-color: #fff;
         border: 1px solid #ccc;
@@ -101,7 +108,77 @@ a:hover {
           align-items: center;
         }
       }
+
+      .section-footer {
+        margin-top: .5em;
+        display: flex;
+        justify-content: flex-end;
+      }
     }
 
+  }
+}
+
+.page-title-wrapper {
+  margin-bottom: 1em;
+
+  .page-title {
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+}
+
+.page-title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+span.tag_category {
+  background-color: #e0e0e0;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+  margin-right: 0.5em;
+  color: #fff;
+}
+
+// *************************
+// Material UI用のスタイル
+// TODO: styled-componentsに移行する
+// *************************
+
+.MuiPaper-root {
+  padding: 0;
+}
+
+.MuiAccordion-heading {
+  .MuiButtonBase-root {
+    padding: .5em 1em;
+    min-width: 0;
+    width: 100%;
+    justify-content: space-between;
+
+    .MuiAccordionSummary-content {
+      margin: 0;
+
+      &.Mui-expanded {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.MuiCollapse-wrapper {
+  .MuiBox-root {
+    padding: .5em 1em;
+    border: none;
+  }
+}
+
+.MuiButton-root {
+  a {
+    color: white;
+    text-decoration: none;
   }
 }

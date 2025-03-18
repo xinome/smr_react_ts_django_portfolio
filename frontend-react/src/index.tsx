@@ -2,19 +2,31 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import BaseApp from './BaseApp';
+import { Provider } from 'react-redux';
+import store from './store';
 import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom'
+
+const isLoggedIn = store.getState().authReducer.isLoggedIn;
+console.log("state: ", store.getState());
 
 const container = document.getElementById('root');
 if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(
     <React.StrictMode>
-      <BrowserRouter>
-        {/* TODO: ログイン、非ログインで切り分け */}
-        <BaseApp />
-      </BrowserRouter>
+      <Provider store={store}>
+        {/* ログイン、非ログインで切り分け */}
+        {isLoggedIn ? (
+          <BrowserRouter>
+            <BaseApp />
+          </BrowserRouter>
+        ) : (
+          // <Login />
+          <p>ログインしてください</p>
+        )}
+      </Provider>
     </React.StrictMode>
   );
 }
