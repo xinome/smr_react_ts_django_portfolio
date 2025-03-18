@@ -234,31 +234,31 @@ def mypage_index(request, pk=None):
 
   return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
-# マイページ: ユーザープロフィールを更新するAPI
-@csrf_exempt
-def mypage_edit_profile(request, pk=None):
+# マイページ: ユーザープロフィール
+@method_decorator(csrf_exempt, name='dispatch')
+class mypage_user_profile(APIView):
+  def get(self, request, pk):
+    print("request: ", request)
+    print("request.data: ", request.data)
 
-  if request.method == 'POST':
-    data = json.loads(request.body)  # JSON データをロード
-    print("data: ", data)
+    # 1件のみ取得
+    queryset = MypageUserProfile.objects.get(id=pk)
+    serializer_class = MypageUserProfileSerializer(queryset)
 
-    queryset = MypageUserProfile.objects.filter(id=pk)
-    queryset.update(
-      name=data.get('name', ''),
-      account_id=data.get('account_id', ''),
-      password=data.get('password', ''),
-      email=data.get('email', ''),
-      zip=data.get('zip', ''),
-      address=data.get('address', ''),
-      phone=data.get('phone', ''),
-    )
-
-    serializer_class = MypageUserProfileSerializer(queryset.first())
     data = serializer_class.data
 
-    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
-  else:
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+    return JsonResponse(data, safe=False)
+
+  def post(self, request, pk):
+    queryset = MypageUserProfile.objects.get(id=pk)
+
+    serializer_class = MypageUserProfileUpdateSerializer(queryset, data=request.data)
+    if serializer_class.is_valid():
+      serializer_class.save()
+      print("serializer_class.data: ", serializer_class.data)
+      return JsonResponse(serializer_class.data, status=201)
+
+    return JsonResponse(serializer_class.errors, status=400)
 
 
 # Postmanからの接続テスト（GET, POST, DELETEに限定する）
