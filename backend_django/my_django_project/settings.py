@@ -139,19 +139,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# # CSRF cookieの許可
-# DEFAULT_AUTHENTICATION_CLASSES: [
-#     # 'rest_framework.authentication.SessionAuthentication',
-#     'rest_framework.authentication.BasicAuthentication',
-# ]
-# # CSRFトークンの許可
-# # REST_FRAMEWORK = {
-# #     'DEFAULT_PERMISSION_CLASSES': [
-# #         'rest_framework.permissions.AllowAny',
-# #     ]
-# # }
-
-# CSRF_COOKIE_SECURE = False
-# CSRF_USE_SESSIONS = False
-# CSRF_ENABLED = False
