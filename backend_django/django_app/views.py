@@ -90,7 +90,7 @@ def project_topics(request):
   serializer_class = ProjectTopicsSerializer(queryset, many=True)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 def portfolio_topics(request):
   # data = [
@@ -145,7 +145,7 @@ def portfolio_topics(request):
   serializer_class = PortfolioTopicsSerializer(queryset, many=True)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 def activity_topics(request):
   data = [
@@ -200,7 +200,7 @@ def activity_topics(request):
   serializer_class = ActivityTopicsSerializer(queryset, many=True)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # マイページ: ユーザープロフィールを取得するAPI
 def mypage_user_profile(request, pk=None):
@@ -212,7 +212,7 @@ def mypage_user_profile(request, pk=None):
   serializer_class = MypageUserProfileSerializer(queryset.first())
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # マイページ: ユーザープロフィールを更新するAPI
 def mypage_edit_profile(request, pk=None):
@@ -221,18 +221,18 @@ def mypage_edit_profile(request, pk=None):
   print("queryset: ", queryset)
   print("request.POST: ", request.POST)
 
-  queryset.update(
-    name=request.POST['name'],
-    account_id=request.POST['account_id'],
-    password=request.POST['password'],
-    email=request.POST['email'],
-    zip=request.POST['zip'],
-    address=request.POST['address'],
-    phone=request.POST['phone'],
-    member_type=request.POST['member_type']
-  )
+  # queryset.update(
+  #   name=request.POST['name'],
+  #   account_id=request.POST['account_id'],
+  #   password=request.POST['password'],
+  #   email=request.POST['email'],
+  #   zip=request.POST['zip'],
+  #   address=request.POST['address'],
+  #   phone=request.POST['phone'],
+  #   member_type=request.POST['member_type']
+  # )
 
   serializer_class = MypageUserProfileSerializer(queryset.first())
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})

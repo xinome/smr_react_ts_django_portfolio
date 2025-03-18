@@ -17,7 +17,7 @@ export const fetchGetMypageProfile = createAsyncThunk(
   async (userId: number) => {
     // 仮置き
     // const response = await axios.get(`${BASE_API_URL}/mypage/edit_profile/${id}/`);
-    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}/`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}`);
     return response.data;
   }
 );
@@ -29,7 +29,7 @@ export const fetchUpdateMypageProfile = createAsyncThunk(
     console.log("id: ", id);
     console.log("data: ", data);
 
-    const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}/`, data);
+    const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}`, data);
     return response.data;
   }
 
@@ -41,7 +41,7 @@ export const fetchUpdateMypageProfile = createAsyncThunk(
   //   const target_data = (getState() as { mypageProfile: typeof initialState }).mypageProfile.items;
   //   console.log("target_data: ", target_data);
 
-  //   const response = await axios.patch(`${BASE_API_URL}/mypage/user_profile/${id}/`, target_data);
+  //   const response = await axios.patch(`${BASE_API_URL}/mypage/user_profile/${id}`, target_data);
   //   return response.data;
   // }
 );
@@ -71,7 +71,7 @@ export const mypageProfileSlice = createSlice({
       console.log("action: ", action);
 
       axios
-        .patch(`${BASE_API_URL}/mypage/edit_profile/${action.payload.id}/`, action.payload)
+        .post(`${BASE_API_URL}/mypage/edit_profile/${action.payload.id}`, action.payload)
         .then((response) => {
           console.log("updateMypageProfile: ", response);
           state.items = response.data;
@@ -102,8 +102,8 @@ export const mypageProfileSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchGetMypageProfile.rejected, (state) => {
-        console.log("rejected..");
+      .addCase(fetchGetMypageProfile.rejected, (state, error) => {
+        console.log("rejected: ", error);
         return {
           ...state,
           isLoading: false,
@@ -123,8 +123,8 @@ export const mypageProfileSlice = createSlice({
         state.items = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchUpdateMypageProfile.rejected, (state) => {
-        console.log("rejected..");
+      .addCase(fetchUpdateMypageProfile.rejected, (state, error) => {
+        console.log("rejected: ", error);
         return {
           ...state,
           isLoading: false,

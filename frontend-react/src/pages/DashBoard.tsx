@@ -57,10 +57,10 @@ const DashBoard = () => {
   const filteredProjectList: ProjectType = projectList.filter((item: any) => {
     return item.id <= 3;
   });
-  const filteredPortfolioList = portfolioList.filter((item: any) => {
+  const filteredPortfolioList: PortfolioType = portfolioList.filter((item: any) => {
     return item.id <= 3;
   });
-  const filteredActivityList = activityList.filter((item: any) => {
+  const filteredActivityList: ActivityType = activityList.filter((item: any) => {
     return item.id <= 3;
   });
 
@@ -111,10 +111,10 @@ const DashBoard = () => {
               <dt>{item.date}</dt>
               <dd>
                 {item.category && (
-                      <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
-                        { getCategoryName(item.category) }
-                      </span>
-                    )}
+                  <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category.id) }}>
+                    { getCategoryName(item.category.id) }
+                  </span>
+                )}
                 {item.content}
               </dd>
             </dl>
@@ -152,8 +152,8 @@ const DashBoard = () => {
               <dt>{item.date}</dt>
               <dd>
                 {item.category && (
-                  <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category) }}>
-                    { getCategoryName(item.category) }
+                  <span className="tag_category" style={{ backgroundColor: getCategoryColor(item.category.id) }}>
+                    { getCategoryName(item.category.id) }
                   </span>
                 )}
                 {item.content}

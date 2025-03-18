@@ -13,7 +13,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchMypageAccountList = createAsyncThunk(
   "get_mypage_account",   // type: 内部処理名、一意でないとだめ
   async (userId: number) => {
-    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}/`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}`);
     return response.data;
   }
 );
@@ -53,8 +53,8 @@ export const mypageSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchMypageAccountList.rejected, (state) => {
-        console.log("pending..");
+      .addCase(fetchMypageAccountList.rejected, (state, error) => {
+        console.log("rejected: ", error);
         return {
           ...state,
           isLoading: false,
