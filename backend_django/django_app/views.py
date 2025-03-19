@@ -30,6 +30,21 @@ from .models import (
 # mypage_user_profile: 【マイページ】ユーザープロフィールを取得・更新するAPI
 """
 
+# base: ログインアカウント
+def auth_account(request, pk=None):
+
+  if pk is None or pk == 0:
+    print ("auth_account: pk is None or 0")
+    return JsonResponse({
+      "message": "auth_account: pk is None or 0",
+    }, status=400)
+  else:
+    queryset = MypageUserProfile.objects.get(id=pk)
+  serializer_class = MypageUserProfileSerializer(queryset)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
+
 # ダッシュボード
 def project_topics(request):
   # django管理画面で追加した項目が反映されるようになる
@@ -115,7 +130,7 @@ def mypage_user_profile(request, pk=None):
 
   return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
-# # マイページ: インデックス、契約プラン、プロフィール、スキルを取得するAPI
+# マイページ: インデックス、契約プラン、プロフィール、スキルを取得するAPI
 # 契約プラン、スキルは別途実装する
 def mypage_index(request, pk=None):
 

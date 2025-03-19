@@ -49,12 +49,15 @@ const BaseHeader = (props: headerProps) => {
 
   }, [userId]);
 
+  console.log("usersList: ", usersList);
+
   const stringAvater = (name: string) => {
     return {
       sx: {
         bgcolor: deepPurple[500]
       },
-      children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
+      // children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
+      children: name ? name.slice(0, 1) : '',
     };
   }
 
@@ -67,7 +70,7 @@ const BaseHeader = (props: headerProps) => {
         <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
           {/* アカウント画像アイコン */}
           {/* <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar> */}
-          <Avatar {...stringAvater(usersList.name)}></Avatar>
+          <Avatar {...stringAvater(usersList.account_id)}></Avatar>
         </Grid>
         <Grid className='header-menu-item' sx={{ marginLeft: '1em' }}>
           <Link to='/mypage/'>マイページ</Link>
