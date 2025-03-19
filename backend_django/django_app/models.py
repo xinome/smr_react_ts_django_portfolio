@@ -11,6 +11,7 @@ class BaseMeta(models.Model):
   class Meta:
     abstract = True  # 抽象クラスとして定義する
 
+
 # Util: トピックスカテゴリ
 class TopicsCategory(BaseMeta):
   id = models.AutoField(primary_key=True)
@@ -18,7 +19,7 @@ class TopicsCategory(BaseMeta):
 
   class Meta:
     db_table = 'topics_category'
-    verbose_name_plural = 'トピックスカテゴリ'
+    verbose_name_plural = 'Util_トピックスカテゴリ'
 
   def __str__(self):
     return self.category_name
@@ -40,7 +41,21 @@ class PricingPlan(BaseMeta):
   def __str__(self):
     return self.plan_name
 
-# ダッシュボード: プロジェクトのトピック一覧を取得するAPI
+# Util: Tipsカテゴリ
+class TipsCategory(BaseMeta):
+  id = models.AutoField(primary_key=True)
+  tips_name = models.CharField(max_length=100)
+
+  class Meta:
+    db_table = 'tips_category'
+    verbose_name_plural = 'Util_Tipsカテゴリ'
+
+  def __str__(self):
+    return self.tips_name
+
+  
+
+# ダッシュボード: プロジェクトのトピック一覧を管理するAPI
 class ProjectTopics(BaseMeta):
   id = models.AutoField(primary_key=True)
   date = models.DateField()
@@ -54,7 +69,7 @@ class ProjectTopics(BaseMeta):
   def __str__(self):
     return self.content  # 管理画面で表示されるモデルの名称を指定する
     
-# ダッシュボード: ポートフォリオのトピック一覧を取得するAPI
+# ダッシュボード: ポートフォリオのトピック一覧を管理するAPI
 class PortfolioTopics(BaseMeta):
   id = models.AutoField(primary_key=True)
   date = models.DateField()
@@ -67,7 +82,7 @@ class PortfolioTopics(BaseMeta):
   def __str__(self):
     return self.content
 
-# ダッシュボード: 活動のトピック一覧を取得するAPI
+# ダッシュボード: 活動のトピック一覧を管理するAPI
 class ActivityTopics(BaseMeta):
   id = models.AutoField(primary_key=True)
   date = models.DateField()
@@ -81,7 +96,7 @@ class ActivityTopics(BaseMeta):
   def __str__(self):
     return self.content
 
-# マイページ: ユーザープロフィールを取得するAPI
+# マイページ: ユーザープロフィールを管理するAPI
 class MypageUserProfile(BaseMeta):
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
@@ -99,3 +114,18 @@ class MypageUserProfile(BaseMeta):
 
   def __str__(self):
     return self.name
+
+# 開発Tips: Tips一覧を管理するAPI
+class TipsContents(BaseMeta):
+  id = models.AutoField(primary_key=True)
+  title = models.CharField(max_length=255)
+  date = models.DateField()
+  content = models.TextField()
+  category = models.ForeignKey(TipsCategory, on_delete=models.PROTECT, null=True)
+
+  class Meta:
+    db_table = 'tips'
+    verbose_name_plural = 'Tips_一覧'
+
+  def __str__(self):
+    return self.title

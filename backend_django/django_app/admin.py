@@ -1,9 +1,10 @@
 from django.contrib import admin
 
 from .models import (
-  TopicsCategory, PricingPlan,
+  TopicsCategory, PricingPlan, TipsCategory,
   ProjectTopics, PortfolioTopics, ActivityTopics,
   MypageUserProfile,
+  TipsContents,
 )
 
 # Register your models here.
@@ -18,6 +19,7 @@ class TopicsCategoryAdmin(admin.ModelAdmin):
   list_display_links = ('category_name', )
 
   search_fields = ('category_name', )
+  ordering = ('id', )
   list_filter = ('category_name', )
 
 @admin.register(PricingPlan)
@@ -29,6 +31,15 @@ class PricingPlanAdmin(admin.ModelAdmin):
   search_fields = ('plan_name', 'price', )
   list_filter = ('plan_name', 'price', )
 
+@admin.register(TipsCategory)
+class TipsCategoryAdmin(admin.ModelAdmin):
+  Fields = ('id', 'tips_name')
+  list_display = ('id', 'tips_name', 'created_at', 'updated_at')
+  list_display_links = ('tips_name', )
+
+  search_fields = ('tips_name', )
+  ordering = ('id', )
+  list_filter = ('tips_name', )
 
 
 # Dashboard
@@ -39,6 +50,7 @@ class ProjectTopicsAdmin(admin.ModelAdmin):
   list_display_links = ('id', )  # 一覧画面でリンクにする項目を指定する
 
   search_fields = ('content', )  # 検索ボックスを表示する項目を指定する
+  ordering = ('id', )  # 一覧画面での並び順を指定する
   list_filter = ('date', )  # フィルターを表示する項目を指定する
   list_editable = ('date', 'content', 'category')  # 一覧画面で編集可能にする項目を指定する　※list_display_linksと同時に指定することはできない
 
@@ -49,6 +61,7 @@ class PortfolioTopicsAdmin(admin.ModelAdmin):
   list_display_links = ('id', )
 
   search_fields = ('content', )
+  ordering = ('id', )
   list_filter = ('date', )
   list_editable = ('date', 'content')
 
@@ -59,6 +72,7 @@ class ActivityTopicsAdmin(admin.ModelAdmin):
   list_display_links = ('id', )
 
   search_fields = ('content', )
+  ordering = ('id', )
   list_filter = ('date', )
   list_editable = ('date', 'content', 'category')
 
@@ -72,5 +86,25 @@ class MypageUserProfileAdmin(admin.ModelAdmin):
   list_display_links = ('id', )
 
   search_fields = ('name', 'account_id', 'email', 'zip', 'address', 'phone', 'member_type')
+  ordering = ('id', )
   list_filter = ('name', 'account_id', 'email', 'zip', 'address', 'phone', 'member_type')
   # list_editable = ('name', 'account_id', 'email', 'zip', 'address', 'member_type')
+
+
+
+# 開発Tips
+@admin.register(TipsContents)
+class TipsContentsAdmin(admin.ModelAdmin):
+  Fields = ('id', 'title', 'date', 'content', 'category')
+  list_display = ('id', 'title', 'date', 'content', 'category', 'created_at', 'updated_at')
+  list_display_links = ('title', )
+
+  search_fields = ('title', 'category')
+  ordering = ('id', )
+  list_filter = ('title', 'category')
+
+  # # 長文を省略して表示する
+  # def change_view(self, request, object_id, form_url='', extra_context=None):
+  #   extra_context = extra_context or {}
+  #   extra_context['content'] = object_id.content[:20] + '...'
+  #   return super().change_view(request, object_id, form_url, extra_context)
