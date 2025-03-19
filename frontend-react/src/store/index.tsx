@@ -13,6 +13,7 @@ import portfolioTopicsReducer from '../features/topics/portfolioTopicsSlice';
 import activityTopicsReducer from '../features/topics/activityTopicsSlice';
 
 import tipsReducer from '../features/tips/tipsSlice';
+import tipsCategorizeReducer from '../features/tips/tipsCategorizeSlice';
 
 const rootReducer = combineReducers({
   // ここに作成したReducerを記述する
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
 
   // tips
   tipsReducer,
+  tipsCategorizeReducer,
 });
 
 // Store

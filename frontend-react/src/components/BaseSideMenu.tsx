@@ -112,7 +112,7 @@ const BaseSideMenu = () => {
         </ListItemButton>
         <Collapse in={isOpenAccordion["tips"]} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <Link to='/tips/list/'>
+            <Link to='/tips/'>
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="開発tips一覧" />
               </ListItemButton>
