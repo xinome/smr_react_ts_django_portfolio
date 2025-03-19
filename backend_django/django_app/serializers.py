@@ -2,9 +2,10 @@
 
 from rest_framework import serializers
 from .models import (
-  TopicsCategory, PricingPlan,
+  TopicsCategory, PricingPlan, TipsCategory,
   ProjectTopics, PortfolioTopics, ActivityTopics, 
   MypageUserProfile,
+  TipsContents,
 )
 
 """
@@ -17,11 +18,14 @@ class AuthAccountSerializer(serializers.ModelSerializer):
     model = MypageUserProfile
     fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone')
 
+
+
 """
 # Utility: 外部キー用のシリアライザー
 # 
 # TopicsCategory: カテゴリー一覧を取得するAPI
 # PricingPlan: 料金プラン一覧を取得するAPI
+# TipsCategory: Tipsカテゴリー一覧を取得するAPI
 """
 
 class TopicsCategorySerializer(serializers.ModelSerializer):
@@ -33,6 +37,12 @@ class PricingPlanSerializer(serializers.ModelSerializer):
   class Meta:
     model = PricingPlan
     fields = ('id', 'plan_name', 'has_creatable_project', 'cnt_project_limit', 'cnt_project', 'price', 'description')
+
+class TipsCategorySerializer(serializers.ModelSerializer):
+  class Meta:
+    model = TipsCategory
+    fields = ('id', 'tips_name')
+
 
 
 """
@@ -72,6 +82,7 @@ class ActivityTopicsSerializer(serializers.ModelSerializer):
 # mypage_user_profile: 【マイページ】ユーザープロフィールを取得・更新するAPI
 """
 
+# Mypage: get_user_profile
 class MypageUserProfileSerializer(serializers.ModelSerializer):
   # 外部キーのカテゴリーを取得する
   member_type = PricingPlanSerializer()
@@ -82,7 +93,23 @@ class MypageUserProfileSerializer(serializers.ModelSerializer):
 
 # Mypage: ユーザープロフィールを更新するAPI
 class MypageUserProfileUpdateSerializer(serializers.ModelSerializer):
+  
   # 対象: member_type（外部キー）以外
   class Meta:
     model = MypageUserProfile
     fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone')
+
+
+
+"""
+# 開発Tips: TipsのAPI
+#
+# tips_contents: 【開発Tips】Tips一覧を取得するAPI
+"""
+class TipsContentsSerializer(serializers.ModelSerializer):
+  # 外部キーのカテゴリーを取得する
+  category = TipsCategorySerializer()
+
+  class Meta:
+    model = TipsContents
+    fields = ('id', 'title', 'date', 'content', 'category', 'created_at', 'updated_at')

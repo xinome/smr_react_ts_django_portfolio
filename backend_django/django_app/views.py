@@ -13,10 +13,12 @@ from rest_framework.decorators import api_view
 from .serializers import (
    ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
    MypageUserProfileSerializer, MypageUserProfileUpdateSerializer,
+   TipsContentsSerializer,
 )
 from .models import (
   ProjectTopics, PortfolioTopics, ActivityTopics,
   MypageUserProfile,
+  TipsContents,
 )
 
 # Create your views here.
@@ -170,6 +172,15 @@ class mypage_user_profile(APIView):
 
     return JsonResponse(serializer_class.errors, status=400)
 
+
+# 開発Tips
+# Tips一覧
+def tips_contents(request):
+  queryset = TipsContents.objects.all()
+  serializer_class = TipsContentsSerializer(queryset, many=True)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
 
 # Postmanからの接続テスト（GET, POST, DELETEに限定する）
 @csrf_exempt
