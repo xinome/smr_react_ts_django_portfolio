@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState, useAppDispatch } from '../store';
+import { RootState, useAppDispatch } from '../../store';
 
 import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
 import Grid from '@mui/material/Grid2'
@@ -11,15 +11,15 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { color_category_project, color_category_portfolio, color_category_activity } from '../utils/ColorUtils'
+import { color_category_project, color_category_portfolio, color_category_activity } from '../../utils/ColorUtils'
 
-import { fetchMypageAccountList } from '../features/account/mypageSlice'
+import { fetchMypageAccountList } from '../../features/account/mypageSlice'
 
 type MypageProps = {
   userId: number,
 }
 
-const Mypage = (props: MypageProps) => {
+const MypageIndex = (props: MypageProps) => {
 
   const dispatch = useAppDispatch();
   const usersList = useSelector((state: any) => state.mypageAccountReducer.items);
@@ -239,4 +239,4 @@ const Mypage = (props: MypageProps) => {
   )
 }
 
-export default Mypage
+export default MypageIndex
