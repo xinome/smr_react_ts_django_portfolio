@@ -19,8 +19,8 @@ const TipsList = () => {
 
   // const user_id = props.user_id;
   
-  const tipsList = useSelector((state: any) => state.tipsReducer.items);
-  const isLoading = useSelector((state: any) => state.tipsReducer.isLoading);
+  const tipsList = useSelector((state: RootState) => state.tipsReducer.items);
+  const isLoading = useSelector((state: RootState) => state.tipsReducer.isLoading);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

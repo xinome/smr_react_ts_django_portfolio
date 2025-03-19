@@ -21,8 +21,8 @@ const TipsCategorize = () => {
 
   const params = useParams<{ tips_category: string }>();
   
-  const tipsList = useSelector((state: any) => state.tipsCategorizeReducer.items);
-  const isLoading = useSelector((state: any) => state.tipsCategorizeReducer.isLoading);
+  const tipsList = useSelector((state: RootState) => state.tipsCategorizeReducer.items);
+  const isLoading = useSelector((state: RootState) => state.tipsCategorizeReducer.isLoading);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
