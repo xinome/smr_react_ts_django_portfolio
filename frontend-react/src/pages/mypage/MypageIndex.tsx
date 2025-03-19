@@ -19,7 +19,7 @@ type MypageProps = {
   userId: number,
 }
 
-const MypageIndex = (props: MypageProps) => {
+const MyPageIndex = (props: MypageProps) => {
 
   const dispatch = useAppDispatch();
   const usersList = useSelector((state: any) => state.mypageAccountReducer.items);
@@ -239,4 +239,4 @@ const MypageIndex = (props: MypageProps) => {
   )
 }
 
-export default MypageIndex
+export default MyPageIndex

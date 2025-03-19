@@ -24,10 +24,12 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 
 // ページ
 import DashBoard from './pages/DashBoard';
-import MypageIndex from "./pages/mypage/MypageIndex";
+import MyPageIndex from "./pages/mypage/MyPageIndex";
 import EditProfile from "./pages/mypage/EditProfile";
+
 import TipsIndex from "./pages/tips/TipsIndex";
 import TipsCategorize from "./pages/tips/TipsCategorize";
+import TipsDetail from "./pages/tips/TipsDetail";
 
 const BaseApp = () => {
 
@@ -148,8 +150,6 @@ const BaseApp = () => {
   // 仮置き: ログインユーザID
   const current_user_id = 1;
 
-  const tips_category = "language";
-  
   return (
     <div className="app">
       {/* <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
@@ -232,10 +232,11 @@ const BaseApp = () => {
 
         <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
-          <Route path="/mypage/" element={<MypageIndex userId={current_user_id} />} />
+          <Route path="/mypage/" element={<MyPageIndex userId={current_user_id} />} />
           <Route path="/mypage/edit_profile/" element={<EditProfile userId={current_user_id} />} />
           <Route path="/tips/" element={<TipsIndex />} />
-          <Route path="/tips/:category_name" element={<TipsCategorize category_name={tips_category} />} />
+          <Route path="/tips/:tips_category" element={<TipsCategorize />} />
+          <Route path="/tips/:tips_category/:tips_id" element={<TipsDetail />} />
         </Routes>
 
         {/* <Container className='page-maincontents'>

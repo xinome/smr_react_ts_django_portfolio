@@ -9,22 +9,20 @@ const initialState = {
 const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
-export const fetchTipsCategorizeList = createAsyncThunk(
+export const fetchTipsDetail = createAsyncThunk(
   "tips_list",  // type: 内部処理名、一意でないとだめ
-  async (params: { tips_category: string }) => {
+  async (params: { tips_category: string; tips_id: string }) => {
     console.log("params: ", params);
-
-    const tips_category = params.tips_category;
-    const connect_url = `${BASE_API_URL}/tips/${tips_category}/`;
+    const connect_url = `${BASE_API_URL}/tips/${params.tips_category}/${params.tips_id}`;
     console.log("connect_url: ", connect_url);
 
-    const response = await axios.get(`${BASE_API_URL}/tips/${tips_category}/`);
+    const response = await axios.get(connect_url);
     return response.data;
   }
 );
 
 // Slices
-export const tipsCategorizeSlice = createSlice({
+export const tipsDetailSlice = createSlice({
   name: "tips",  // sliceの名前
   initialState: initialState,
   reducers: {
@@ -36,14 +34,14 @@ export const tipsCategorizeSlice = createSlice({
   extraReducers: (builder) => {
     // TODO: エラー発生時の処理も追加する
     builder
-      .addCase(fetchTipsCategorizeList.pending, (state) => {
+      .addCase(fetchTipsDetail.pending, (state) => {
         console.log("pending..");
         return {
           ...state,
           isLoading: true,
         };
       })
-      .addCase(fetchTipsCategorizeList.fulfilled, (state, action) => {
+      .addCase(fetchTipsDetail.fulfilled, (state, action) => {
         console.log("fulfilled: ", action.payload);
         return {
           ...state,
@@ -51,7 +49,7 @@ export const tipsCategorizeSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchTipsCategorizeList.rejected, (state) => {
+      .addCase(fetchTipsDetail.rejected, (state) => {
         console.log("rejected..");
         return {
           ...state,
@@ -63,4 +61,4 @@ export const tipsCategorizeSlice = createSlice({
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
 // export const { getAccountList, updateAccountList } = mypageSlice.actions;
-export default tipsCategorizeSlice.reducer;
+export default tipsDetailSlice.reducer;
