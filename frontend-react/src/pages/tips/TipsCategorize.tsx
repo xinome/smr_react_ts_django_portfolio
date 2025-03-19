@@ -20,8 +20,12 @@ const TipsCategorize = () => {
   console.log("tips_category: ", useParams().tips_category);
 
   const params = useParams<{ tips_category: string }>();
+
+  console.log("params: ", params);
   
-  const tipsList = useSelector((state: RootState) => state.tipsCategorizeReducer.items);
+  const tipsList = useSelector((state: RootState) =>
+    Array.isArray(state.tipsCategorizeReducer.items) ? state.tipsCategorizeReducer.items : []
+  );
   const isLoading = useSelector((state: RootState) => state.tipsCategorizeReducer.isLoading);
   const dispatch = useAppDispatch();
 
@@ -29,9 +33,13 @@ const TipsCategorize = () => {
     if (params.tips_category) {
       dispatch(fetchTipsCategorizeList({ tips_category: params.tips_category }));
     }
-  }, [dispatch, params]);
+  }, [params.tips_category]);
 
+  // object keysで表示
   console.log("tipsList: ", tipsList);
+  // console.log("typeof tipsList: ", typeof tipsList);
+  // console.log("keys: ", Object.keys(tipsList));
+  // console.log("values: ", Object.values(tipsList));
 
   const getCategoryTags = (category_id: number) => {
     switch (category_id) {
@@ -47,11 +55,29 @@ const TipsCategorize = () => {
         return '#ffffff'; // Default color
     }
   };
+
+  let current_category;
+  switch (params.tips_category) {
+    case 'project':
+      current_category = "プロジェクト";
+      break;
+    case 'language':
+      current_category = "開発言語";
+      break;
+    case 'framework':
+      current_category = "フレームワーク";
+      break;
+    case 'infra':
+      current_category = "インフラ";
+      break;
+    default:
+      current_category = null;
+  }
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
-    { name: params.tips_category },
+    { name: current_category },
   ];    
 
   return (
@@ -83,7 +109,7 @@ const TipsCategorize = () => {
 
       <Box className='section-wrapper'>
         <Grid container className='section-header'>
-          <Grid className='section-title'>{params.tips_category}</Grid>
+          <Grid className='section-title'>{current_category}</Grid>
           <Grid>
           </Grid>
         </Grid>
@@ -102,16 +128,17 @@ const TipsCategorize = () => {
               <dt>2022.10.01</dt>
               <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
             </dl> */}
+
             {tipsList.map((item: any) => (
               <dl key={item.id}>
                 <dt>{item.date}</dt>
                 <dd>
-                  <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                  <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category?.id) }}>
                     {item.category.tips_name}
                   </span>
                   <Link to={`/tips/${params.tips_category}/${item.id}`}>{item.title}</Link>
                   <br />
-                  {item.content && item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                  {item.content?.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
                 </dd>
               </dl>
             ))}

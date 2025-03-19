@@ -196,6 +196,10 @@ def tips_category(request, category_path):
 
 # Tips: 1件のみ取得
 def tips_contents_detail(request, category_path, pk):
+
+  print("category_path: ", category_path)
+  print("pk: ", pk)
+
   queryset = TipsContents.objects.get(category__tips_path=category_path ,id=pk)
   serializer_class = TipsContentsSerializer(queryset)
   data = serializer_class.data

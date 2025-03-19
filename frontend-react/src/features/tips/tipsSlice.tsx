@@ -12,7 +12,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchTipsList = createAsyncThunk(
   "tips_list",  // type: 内部処理名、一意でないとだめ
   async () => {
-    const response = await axios.get(`${BASE_API_URL}/tips`);
+    const response = await axios.get(`${BASE_API_URL}/tips/`);
     return response.data;
   }
 );
