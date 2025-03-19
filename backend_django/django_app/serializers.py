@@ -41,7 +41,7 @@ class PricingPlanSerializer(serializers.ModelSerializer):
 class TipsCategorySerializer(serializers.ModelSerializer):
   class Meta:
     model = TipsCategory
-    fields = ('id', 'tips_name')
+    fields = ('id', 'tips_name', 'tips_path')
 
 
 

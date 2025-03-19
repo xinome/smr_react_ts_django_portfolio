@@ -34,19 +34,19 @@ class PricingPlanAdmin(admin.ModelAdmin):
 @admin.register(TipsCategory)
 class TipsCategoryAdmin(admin.ModelAdmin):
   Fields = ('id', 'tips_name')
-  list_display = ('id', 'tips_name', 'created_at', 'updated_at')
+  list_display = ('id', 'tips_name', 'tips_path', 'created_at', 'updated_at')
   list_display_links = ('tips_name', )
 
-  search_fields = ('tips_name', )
+  search_fields = ('tips_name', 'tips_path', )
   ordering = ('id', )
-  list_filter = ('tips_name', )
+  list_filter = ('tips_name', 'tips_path', )
 
 
 # Dashboard
 @admin.register(ProjectTopics)
 class ProjectTopicsAdmin(admin.ModelAdmin):
   Fields = ('id', 'date', 'content')  # 編集画面で表示する項目を指定する
-  list_display = ('id', 'date', 'content', 'category', 'created_at', 'updated_at')  # 一覧画面で表示する項目を指定する
+  list_display = ('id', 'date', 'category', 'content', 'created_at', 'updated_at')  # 一覧画面で表示する項目を指定する
   list_display_links = ('id', )  # 一覧画面でリンクにする項目を指定する
 
   search_fields = ('content', )  # 検索ボックスを表示する項目を指定する
@@ -96,15 +96,10 @@ class MypageUserProfileAdmin(admin.ModelAdmin):
 @admin.register(TipsContents)
 class TipsContentsAdmin(admin.ModelAdmin):
   Fields = ('id', 'title', 'date', 'content', 'category')
-  list_display = ('id', 'title', 'date', 'content', 'category', 'created_at', 'updated_at')
+  list_display = ('id', 'title', 'date', 'category', 'created_at', 'updated_at')
   list_display_links = ('title', )
 
   search_fields = ('title', 'category')
   ordering = ('id', )
   list_filter = ('title', 'category')
 
-  # # 長文を省略して表示する
-  # def change_view(self, request, object_id, form_url='', extra_context=None):
-  #   extra_context = extra_context or {}
-  #   extra_context['content'] = object_id.content[:20] + '...'
-  #   return super().change_view(request, object_id, form_url, extra_context)

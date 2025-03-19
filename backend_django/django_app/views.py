@@ -182,6 +182,27 @@ def tips_contents(request):
 
   return JsonResponse(data, safe=False)
 
+# Tips: カテゴリーごとのTips一覧
+def tips_category(request, category_path):
+
+  print("category_path: ", category_path)
+
+  # 外部キーでフィルターをかける
+  queryset = TipsContents.objects.filter(category__tips_path=category_path)
+  serializer_class = TipsContentsSerializer(queryset, many=True)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
+
+# Tips: 1件のみ取得
+def tips_contents_detail(request, category_name, pk):
+  queryset = TipsContents.objects.get(id=pk)
+  serializer_class = TipsContentsSerializer(queryset)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
+
+
 # Postmanからの接続テスト（GET, POST, DELETEに限定する）
 @csrf_exempt
 @api_view(['GET', 'POST', 'PUT'])

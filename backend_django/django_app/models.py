@@ -45,6 +45,7 @@ class PricingPlan(BaseMeta):
 class TipsCategory(BaseMeta):
   id = models.AutoField(primary_key=True)
   tips_name = models.CharField(max_length=100)
+  tips_path = models.CharField(max_length=100, null=True, default='tips')
 
   class Meta:
     db_table = 'tips_category'

@@ -17,6 +17,8 @@ urlpatterns = [
 
     # 開発Tips
     path("tips/", views.tips_contents, name="tips_contents"),
+    path("tips/<category_path>/", views.tips_category, name="tips_category"),
+    path("tips/<category_path>/<int:pk>", views.tips_contents_detail, name="tips_contents_detail"),
 
     # 検証用: Postmanとの連携、関数ベース / クラスベース
     path("postman_test/", views.postman_test, name="postman_test"),
