@@ -10,7 +10,7 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { color_category_project, color_category_portfolio, color_category_activity } from '../utils/ColorUtils'
+import { color_category_project, color_category_portfolio, color_category_activity, color_category_tips } from '../utils/ColorUtils'
 
 // import { fetchMypageAccountList } from '../features/mypage/mypageSlice'
 import { fetchTipsList } from '../features/tips/tipsSlice'
@@ -50,18 +50,20 @@ const TipsList = () => {
   console.log("filteredFrameworkTipsList: ", filteredFrameworkTipsList);
   console.log("filteredInfraTipsList: ", filteredInfraTipsList);
 
-  // const getCategoryTags = (category_id) => {
-  //   switch (category_id) {
-  //     case 1:
-  //       return category_project;
-  //     case 2:
-  //       return category_portfolio;
-  //     case 3:
-  //       return category_activity;
-  //     default:
-  //       return null;
-  //   }
-  // };
+  const getCategoryTags = (category_id: number) => {
+    switch (category_id) {
+      case 1:
+        return color_category_project;
+      case 2:
+        return color_category_portfolio;
+      case 3:
+        return color_category_activity;
+      case 4:
+        return color_category_tips;
+      default:
+        return undefined;
+    }
+  };
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
@@ -72,34 +74,45 @@ const TipsList = () => {
     <Container className='page-maincontents'>
 
       <Grid container className='page-title-header'>
-          <Grid className='page-title-item'>
-            <Typography variant='h2' className='page-title'>開発Tips</Typography>
-          </Grid>
-          <Grid className='page-title-item'>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              {breadcrumbs.map((item, index) => (
-                index < breadcrumbs.length - 1 ? (
-                  <Link key={index} color="inherit" to={item.href || '#'}>
-                    {item.name}
-                  </Link>
-                ) : (
-                  <Typography key={index} color="textPrimary">
-                    {item.name}
-                  </Typography>
-                )
-              ))}
-            </Breadcrumbs>
-          </Grid>
+        <Grid className='page-title-item'>
+           <Typography variant='h2' className='page-title'>開発Tips</Typography>
+         </Grid>
+         <Grid className='page-title-item'>
+           <Breadcrumbs
+             separator={<NavigateNextIcon fontSize="small" />}
+             aria-label="breadcrumb"
+           >
+             {breadcrumbs.map((item, index) => (
+               item.href && index < breadcrumbs.length - 1 ? (
+                 <Link key={index} color="inherit" to={item.href}>
+                   {item.name}
+                 </Link>
+               ) : (
+                 <Typography key={index} color="textPrimary">
+                   {item.name}
+                 </Typography>
+               )
+             ))}
+           </Breadcrumbs>
+         </Grid>
         </Grid>
 
       <Box className='section-wrapper'>
         <Grid container className='section-header'>
           <Grid className='section-title'>プロジェクト進行</Grid>
           <Grid>
-            <Link to='/tips/project/'>詳細を見る</Link>
+            <Button variant="contained" color="primary">
+              <Link to='/tips/create/'>Tips新規作成</Link>
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Box className='section-wrapper'>
+        <Grid container className='section-header'>
+          <Grid className='section-title'>開発言語</Grid>
+          <Grid>
+            <Link to='/tips/language/'>詳細を見る</Link>
           </Grid>
         </Grid>
         <Box className='section-contents'>
@@ -115,49 +128,17 @@ const TipsList = () => {
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
           </dl> */}
-          {filteredProjectTipsList.map((item: any) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                {item.category.tips_name}
-                {item.title}
-              </dd>
-            </dl>
-          ))}
-        </Box>
-      </Box>
-
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid className='section-title'>開発言語</Grid>
-          <Grid>
-            <Link to='/tips/language/'>詳細を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          {/* {filteredLanguageTipsList.map((item) => (
+          {filteredLanguageTipsList.map((item: any) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
               <dd>
                 <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.category_name}
+                  {item.category.tips_name}
                 </span>
                 {item.content}
               </dd>
             </dl>
-          ))} */}
+          ))}
         </Box>
       </Box>
 
@@ -169,7 +150,7 @@ const TipsList = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          <dl>
+          {/* <dl>
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
           </dl>
@@ -180,18 +161,20 @@ const TipsList = () => {
           <dl>
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          {/* {filteredFrameworkTipsList.map((item) => (
+          </dl> */}
+          {filteredFrameworkTipsList.map((item: any) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
               <dd>
                 <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.category_name}
+                  {item.category.tips_name}
                 </span>
-                {item.content}
+                <Link to={`/tips/framework/${item.id}`}>{item.title}</Link>
+                <br />
+                {item.content && item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
               </dd>
             </dl>
-          ))} */}
+          ))}
         </Box>
       </Box>
 
@@ -203,7 +186,7 @@ const TipsList = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          <dl>
+          {/* <dl>
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
           </dl>
@@ -214,18 +197,20 @@ const TipsList = () => {
           <dl>
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          {/* {filteredInfraTipsList.map((item) => (
+          </dl> */}
+          {filteredInfraTipsList.map((item: any) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
               <dd>
                 <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.category_name}
+                  {item.category.tips_name}
                 </span>
-                {item.content}
+                <Link to={`/tips/infra/${item.id}`}>{item.title}</Link>
+                <br />
+                {item.content && item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
               </dd>
             </dl>
-          ))} */}
+          ))}
         </Box>
       </Box>
 

@@ -107,6 +107,15 @@ a:hover {
           flex-wrap: wrap;
           align-items: center;
         }
+
+        dt {
+          width: 20%;
+        }
+
+        dd {
+          width: 80%;
+          margin: 0;
+        }
       }
 
       .section-footer {
