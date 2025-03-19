@@ -16,7 +16,7 @@ urlpatterns = [
     path("mypage/edit_profile/<int:pk>", views.mypage_user_profile.as_view(), name="mypage_user_profile"),
 
     # 開発Tips
-    path("tips_contents/", views.tips_contents, name="tips_contents"),
+    path("tips/", views.tips_contents, name="tips_contents"),
 
     # 検証用: Postmanとの連携、関数ベース / クラスベース
     path("postman_test/", views.postman_test, name="postman_test"),

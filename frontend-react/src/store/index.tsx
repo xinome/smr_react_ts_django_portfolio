@@ -12,11 +12,15 @@ import projectTopicsReducer from '../features/topics/projectTopicsSlice';
 import portfolioTopicsReducer from '../features/topics/portfolioTopicsSlice';
 import activityTopicsReducer from '../features/topics/activityTopicsSlice';
 
+import tipsReducer from '../features/tips/tipsSlice';
+
 const rootReducer = combineReducers({
   // ここに作成したReducerを記述する
 
   // account
   authReducer,
+
+  // mypage
   mypageAccountReducer,
   mypageProfileReducer,
 
@@ -24,6 +28,9 @@ const rootReducer = combineReducers({
   projectTopicsReducer,
   portfolioTopicsReducer,
   activityTopicsReducer,
+
+  // tips
+  tipsReducer,
 });
 
 // Store
