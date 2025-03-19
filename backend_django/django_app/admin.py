@@ -15,21 +15,19 @@ from .models import (
 class TopicsCategoryAdmin(admin.ModelAdmin):
   Fields = ('id', 'category_name')
   list_display = ('id', 'category_name', 'created_at', 'updated_at')
-  list_display_links = ('id', )
+  list_display_links = ('category_name', )
 
   search_fields = ('category_name', )
   list_filter = ('category_name', )
-  list_editable = ('category_name', )
 
 @admin.register(PricingPlan)
 class PricingPlanAdmin(admin.ModelAdmin):
   Fields = ('id', 'plan_name', 'price', 'description')
   list_display = ('id', 'plan_name', 'has_creatable_project', 'cnt_project_limit', 'cnt_project', 'price', 'created_at', 'updated_at')
-  list_display_links = ('id', )
+  list_display_links = ('plan_name', )
 
   search_fields = ('plan_name', 'price', )
   list_filter = ('plan_name', 'price', )
-  list_editable = ('plan_name', 'price', )
 
 
 
