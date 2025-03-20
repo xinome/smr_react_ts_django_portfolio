@@ -9,7 +9,7 @@ const initialState = {
 const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
-export const fetchTipsEdit = createAsyncThunk(
+export const fetchGetTipsToEdit = createAsyncThunk(
   "tips_list",  // type: 内部処理名、一意でないとだめ
   async (params: { tips_id: string }) => {
     console.log("params: ", params);
@@ -18,6 +18,27 @@ export const fetchTipsEdit = createAsyncThunk(
 
     const response = await axios.get(connect_url);
     return response.data;
+  }
+);
+
+// 更新処理
+export const fetchUpdateTips = createAsyncThunk(
+  "update_tips_list",  // type: 内部処理名、一意でないとだめ
+  async (data: { id: string; [key: string]: any }) => {
+
+    const tips_id = data.id;
+
+    const connect_url = `${BASE_API_URL}/tips/update/${tips_id}`;
+    console.log("connect_url: ", connect_url);
+
+    try {
+      const response = await axios.post(connect_url, data);
+      console.log("updateTips: ", response);
+      return response.data;
+    }
+    catch (error) {
+      console.log("updateTips_error: ", error);
+    }
   }
 );
 
@@ -34,14 +55,14 @@ export const tipsDetailSlice = createSlice({
   extraReducers: (builder) => {
     // TODO: エラー発生時の処理も追加する
     builder
-      .addCase(fetchTipsEdit.pending, (state) => {
+      .addCase(fetchGetTipsToEdit.pending, (state) => {
         console.log("pending..");
         return {
           ...state,
           isLoading: true,
         };
       })
-      .addCase(fetchTipsEdit.fulfilled, (state, action) => {
+      .addCase(fetchGetTipsToEdit.fulfilled, (state, action) => {
         console.log("fulfilled: ", action.payload);
         return {
           ...state,
@@ -49,7 +70,7 @@ export const tipsDetailSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchTipsEdit.rejected, (state) => {
+      .addCase(fetchGetTipsToEdit.rejected, (state) => {
         console.log("rejected..");
         return {
           ...state,

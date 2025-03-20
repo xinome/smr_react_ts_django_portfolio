@@ -23,7 +23,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
 
-// データ取得、不要かも
+// 編集前のデータ取得
 export const fetchGetMypageProfile = createAsyncThunk(
   "get_mypage_profile",  // type: 内部処理名、一意でないとだめ
   async (userId: number) => {

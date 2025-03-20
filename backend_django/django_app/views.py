@@ -18,12 +18,12 @@ from rest_framework import generics
 from .serializers import (
    ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
    MypageUserProfileSerializer, MypageUserProfileUpdateSerializer,
-   TipsContentsSerializer,
+   TipsContentsSerializer, TipsCategorySerializer,
 )
 from .models import (
   ProjectTopics, PortfolioTopics, ActivityTopics,
   MypageUserProfile,
-  TipsContents,
+  TipsContents, TipsCategory,
 )
 
 # Create your views here.
@@ -187,8 +187,17 @@ def tips_contents(request):
 
   return JsonResponse(data, safe=False)
 
+# Tipsカテゴリー一覧
+@csrf_exempt
+def tips_category(request):
+  queryset = TipsCategory.objects.all()
+  serializer_class = TipsCategorySerializer(queryset, many=True)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
+
 # Tips: カテゴリーごとのTips一覧
-def tips_category(request, category_path):
+def tips_categorized_contents(request, category_path):
 
   print("category_path: ", category_path)
 
@@ -200,7 +209,7 @@ def tips_category(request, category_path):
   return JsonResponse(data, safe=False)
 
 # Tips: 1件のみ取得
-def tips_contents_detail(request, category_path, pk):
+def tips_detail_contents(request, category_path, pk):
 
   print("category_path: ", category_path)
   print("pk: ", pk)

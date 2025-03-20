@@ -52,7 +52,10 @@ const EditProfile = (props: MypageProps) => {
     console.log("newUserList: ", newUserList);
     console.log("is_same: ", currentUserList === newUserList);
 
-    dispatch(fetchUpdateMypageProfile(newUserList));
+    if(currentUserList !== newUserList) {
+      dispatch(fetchUpdateMypageProfile(newUserList));
+      setSnackOpen(true);
+    }
   }
   
   return (
@@ -96,7 +99,7 @@ const EditProfile = (props: MypageProps) => {
             </Grid>
           </Grid> */}
 
-          <form method="POST" onSubmit={e => {handleSubmit(e, userList);}}>
+          <form method="POST" onSubmit={e => {handleSubmit(e, userList)}}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableBody>

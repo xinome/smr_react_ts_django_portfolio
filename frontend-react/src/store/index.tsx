@@ -13,6 +13,7 @@ import portfolioTopicsReducer from '../features/topics/portfolioTopicsSlice';
 import activityTopicsReducer from '../features/topics/activityTopicsSlice';
 
 import tipsReducer from '../features/tips/tipsSlice';
+import tipsCategoryListReducer from '../features/tips/tipsCategoryListSlice';
 import tipsCategorizeReducer from '../features/tips/tipsCategorizeSlice';
 import tipsDetailReducer from '../features/tips/tipsDetailSlice';
 import tipsEditReducer from '../features/tips/tipsEditSlice';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
 
   // tips
   tipsReducer,
+  tipsCategoryListReducer,
   tipsCategorizeReducer,
   tipsDetailReducer,
   tipsEditReducer,
