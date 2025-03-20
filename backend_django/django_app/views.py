@@ -215,7 +215,7 @@ def tips_contents_detail(request, category_path, pk):
 @method_decorator(csrf_exempt, name='dispatch')
 class tips_contents_create(APIView):
 
-  # GET: 確認用
+  # GET: 編集時に参照
   def get(self, request):
     queryset = TipsContents.objects.all()
     serializer_class = TipsContentsSerializer(queryset, many=True)

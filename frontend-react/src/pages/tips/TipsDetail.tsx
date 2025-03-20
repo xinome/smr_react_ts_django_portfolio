@@ -107,6 +107,7 @@ const TipsCategorize = () => {
           <Grid container className='section-header'>
             <Grid className='section-title'>{current_category}</Grid>
             <Grid>
+              <Button variant='contained' color='primary' href={`/tips/edit/${tipsDetail.id}`}>編集</Button>
             </Grid>
           </Grid>
           <Box className='section-contents'>
