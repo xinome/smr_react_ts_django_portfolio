@@ -113,3 +113,24 @@ class TipsContentsSerializer(serializers.ModelSerializer):
   class Meta:
     model = TipsContents
     fields = ('id', 'title', 'date', 'content', 'category', 'created_at', 'updated_at')
+
+  def create(self, validated_data):
+    # categoryは外部キーなので、tips_pathを取得して登録する
+    validated_data['category'] = TipsCategory.objects.get(tips_path=validated_data['category'].get('tips_path'))
+
+    return TipsContents.objects.create(**validated_data)
+
+  def update(self, instance, validated_data):
+
+    instance.title = validated_data.get('title', instance.title)
+    instance.date = validated_data.get('date', instance.date)
+    instance.content = validated_data.get('content', instance.content)
+    # categoryは外部キーなので、tips_pathを取得して更新する
+    instance.category = TipsCategory.objects.get(tips_path=validated_data.get('category').get('tips_path'))
+
+    instance.save()
+    return instance
+
+  def delete(self, instance):
+    instance.delete()
+    return instance

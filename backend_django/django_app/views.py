@@ -9,6 +9,11 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view
 
+# 認証系
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics
+
 # Model, Serializerをインポートする
 from .serializers import (
    ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
@@ -200,11 +205,95 @@ def tips_contents_detail(request, category_path, pk):
   print("category_path: ", category_path)
   print("pk: ", pk)
 
-  queryset = TipsContents.objects.get(category__tips_path=category_path ,id=pk)
+  queryset = TipsContents.objects.get(category__tips_path=category_path, id=pk)
   serializer_class = TipsContentsSerializer(queryset)
   data = serializer_class.data
 
   return JsonResponse(data, safe=False)
+
+# Tips: 新規作成
+@method_decorator(csrf_exempt, name='dispatch')
+class tips_contents_create(APIView):
+
+  # GET: 確認用
+  def get(self, request):
+    queryset = TipsContents.objects.all()
+    serializer_class = TipsContentsSerializer(queryset, many=True)
+
+    data = serializer_class.data
+
+    return JsonResponse(data, safe=False)
+
+  # POST: 実行
+  def post(self, request):
+
+    print("request: ", request)
+    print("request.data: ", request.data)
+
+    serializer_class = TipsContentsSerializer(data=request.data)
+    if serializer_class.is_valid():
+      serializer_class.save()
+      return JsonResponse(serializer_class.data, status=201)
+
+    return JsonResponse(serializer_class.errors, status=400)
+
+# Tips: 更新
+@method_decorator(csrf_exempt, name='dispatch')
+class tips_contents_update(APIView):
+
+  # GET: 確認用
+  def get(self, request, pk):
+
+    # 1件のみ取得
+    queryset = TipsContents.objects.get(id=pk)
+    serializer_class = TipsContentsSerializer(queryset)
+
+    data = serializer_class.data
+
+    return JsonResponse(data, safe=False)
+
+  # POST: 実行
+  def post(self, request, pk):
+
+    print("request: ", request)
+    print("request.data: ", request.data)
+
+    queryset = TipsContents.objects.get(id=pk)
+
+    serializer_class = TipsContentsSerializer(queryset, data=request.data)
+    if serializer_class.is_valid():
+      serializer_class.save()
+      return JsonResponse(serializer_class.data, status=201)
+
+    return JsonResponse(serializer_class.errors, status=400)
+
+# Tips: 削除
+@method_decorator(csrf_exempt, name='dispatch')
+class tips_contents_delete(APIView):
+
+  # GET: 確認用
+  def get(self, request, pk):
+
+    # 1件のみ取得
+    queryset = TipsContents.objects.get(id=pk)
+    serializer_class = TipsContentsSerializer(queryset)
+
+    data = serializer_class.data
+
+    return JsonResponse(data, safe=False)
+
+  # POST: 実行
+  def post(self, request, pk):
+
+    print("request: ", request)
+    print("request.data: ", request.data)
+
+    queryset = TipsContents.objects.get(id=pk)
+    queryset.delete()
+
+    return JsonResponse({
+      "message": "delete success",
+    }, status=201)
 
 
 # Postmanからの接続テスト（GET, POST, DELETEに限定する）

@@ -10,7 +10,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
 export const fetchTipsCategorizeList = createAsyncThunk(
-  "tips_list",  // type: 内部処理名、一意でないとだめ
+  "tips_categorize",  // type: 内部処理名、一意でないとだめ
   async (params: { tips_category: string }) => {
     console.log("params: ", params);
 
