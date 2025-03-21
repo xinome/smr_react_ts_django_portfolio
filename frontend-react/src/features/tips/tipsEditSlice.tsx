@@ -7,12 +7,23 @@ const initialState = {
   status: "",
 };
 
+export type TipsData = {
+  title: string;
+  date: string;
+  content: string;
+  category: {
+    id: number;
+    tips_name: string;
+    tips_path: string;
+  }
+};
+
 const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
 
 // 作成処理
-export const fetchCreateTips = createAsyncThunk(
+export const fetchCreateTips = createAsyncThunk<any, TipsData>(
   "create_tips",  // type: 内部処理名
   async (data) => {
     console.log("data: ", data);

@@ -25,6 +25,8 @@ import { color_category_project, color_category_portfolio, color_category_activi
 import { fetchCreateTips } from '../../features/tips/tipsEditSlice'
 import { fetchCategoryList } from '../../features/tips/tipsCategoryListSlice'
 
+import type { TipsData } from '../../features/tips/tipsEditSlice'
+
 const initialTipsState = {
   "title": "",
   "date": "",
@@ -55,16 +57,16 @@ type categoryType = { id: number; tips_name: string; tips_path: string };
 const TipsCreate = () => {
 
   const categoryList = useSelector((state: any) => state.tipsCategoryListReducer.items);
-  const tipsEditState = useSelector((state: any) => state.tipsEditReducer);
+  const tipsCreateState = useSelector((state: any) => state.tipsEditReducer);
   const dispatch = useAppDispatch();
 
-  const [tipsState, setTipsState] = useState(initialTipsState);
+  const [tipsState, setTipsState] = useState<TipsData>(initialTipsState);
   const [snackOpen, setSnackOpen] = useState(false);
 
   useEffect(() => {
     // 並列にされる
     // if (params.tips_category && params.tips_id) {
-    //   dispatch(fetchTipsDetail({ tips_category: params.tips_category, tips_id: params.tips_id }));
+    //   dispatch(fetchGetTipsDetail({ tips_category: params.tips_category, tips_id: params.tips_id }));
     // }
 
     dispatch(fetchCategoryList());
@@ -72,23 +74,21 @@ const TipsCreate = () => {
     console.log("categoryList: ", categoryList);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>, tipsState: typeof initialTipsState) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("tipsState: ", tipsState);
-
-    // 仮バリデーション
-    if(tipsState.title !== '' && tipsState.date !== '' 
-      && tipsState.content !== '' && tipsState.category.id !== 0
-    ) {
-      dispatch(fetchCreateTips());
-      if(tipsEditState.status === 'success') {
+  
+    if(tipsState.title && tipsState.date && tipsState.content && tipsState.category.id !== 0) {
+      try {
+        await dispatch(fetchCreateTips(tipsState)).unwrap();
         setSnackOpen(true);
+      } catch (err) {
+        console.error("作成エラー", err);
+        alert("作成に失敗しました");
       }
     } else {
       alert("未入力の項目があります");
     }
-  }
+  };
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
@@ -125,7 +125,7 @@ const TipsCreate = () => {
 
       <Box className='section-wrapper'>
 
-        <form method='POST' onSubmit={e => {handleSubmit(e, tipsState)}}>
+        <form method='POST' onSubmit={handleSubmit}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableBody>
