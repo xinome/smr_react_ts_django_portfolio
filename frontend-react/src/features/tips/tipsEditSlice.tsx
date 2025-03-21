@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   items: [],
+  status: "",
 };
 
 const BASE_API_URL = "http://localhost:8000/api";
@@ -93,6 +94,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchCreateTips.fulfilled, (state, action) => {
@@ -100,6 +102,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchCreateTips.rejected, (state) => {
@@ -107,6 +110,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -116,6 +120,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchGetTipsToEdit.fulfilled, (state, action) => {
@@ -124,6 +129,7 @@ export const tipsEditSlice = createSlice({
           ...state,
           items: action.payload,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchGetTipsToEdit.rejected, (state) => {
@@ -131,6 +137,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -140,6 +147,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchUpdateTips.fulfilled, (state, action) => {
@@ -147,6 +155,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchUpdateTips.rejected, (state) => {
@@ -154,6 +163,7 @@ export const tipsEditSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -163,6 +173,7 @@ export const tipsEditSlice = createSlice({
       return {
         ...state,
         isLoading: true,
+        status: "loading",
       };
     })
     .addCase(fetchDeleteTips.fulfilled, (state, action) => {
@@ -170,6 +181,7 @@ export const tipsEditSlice = createSlice({
       return {
         ...state,
         isLoading: false,
+        status: "success",
       };
     })
     .addCase(fetchDeleteTips.rejected, (state) => {
@@ -177,6 +189,7 @@ export const tipsEditSlice = createSlice({
       return {
         ...state,
         isLoading: false,
+        status: "failed",
       };
     });
   },

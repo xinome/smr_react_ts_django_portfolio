@@ -15,9 +15,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { TextareaAutosize as BaseTextareaAutosize } from '@mui/material';
-import { styled } from '@mui/system';
-
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
@@ -42,22 +39,23 @@ const initialTipsState = {
 type categoryType = { id: number; tips_name: string; tips_path: string };
 
 // TestareaのみBase UIを使用
-const Textarea = styled(BaseTextareaAutosize)(
-  ({ theme }) => `
-    box-sizing: border-box;
-    width: 320px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 8px 12px;
-    border-radius: 8px;
-  `,
-);
+// const Textarea = styled(BaseTextareaAutosize)(
+//   ({ theme }) => `
+//     box-sizing: border-box;
+//     width: 320px;
+//     font-family: 'IBM Plex Sans', sans-serif;
+//     font-size: 0.875rem;
+//     font-weight: 400;
+//     line-height: 1.5;
+//     padding: 8px 12px;
+//     border-radius: 8px;
+//   `,
+// );
 
 const TipsCreate = () => {
 
   const categoryList = useSelector((state: any) => state.tipsCategoryListReducer.items);
+  const tipsEditState = useSelector((state: any) => state.tipsEditReducer);
   const dispatch = useAppDispatch();
 
   const [tipsState, setTipsState] = useState(initialTipsState);
@@ -84,7 +82,9 @@ const TipsCreate = () => {
       && tipsState.content !== '' && tipsState.category.id !== 0
     ) {
       dispatch(fetchCreateTips());
-      setSnackOpen(true);
+      if(tipsEditState.status === 'success') {
+        setSnackOpen(true);
+      }
     } else {
       alert("未入力の項目があります");
     }
@@ -199,14 +199,13 @@ const TipsCreate = () => {
                     文面
                   </TableCell>
                   <TableCell align="right">
-                    <Textarea
-                      className="CustomTextareaIntrocudtion"
-                      minRows={5}
-                      aria-label="empty textarea"
-                      placeholder="Empty"
+                    <TextField
+                      id="outlined-multiline-static"
+                      multiline
+                      minRows={4}
+                      sx={{ minWidth: '100%' }}
                       value={tipsState.content}
                       onChange={e => setTipsState({...tipsState, content: e.target.value})}
-                      style={{ width: '100%', minHeight: '150px' }}
                     />
                   </TableCell>
                 </TableRow>
