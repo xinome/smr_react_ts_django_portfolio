@@ -28,7 +28,11 @@ export const fetchGetMypageProfile = createAsyncThunk(
   "get_mypage_profile",  // type: 内部処理名、一意でないとだめ
   async (userId: number) => {
     console.log("userId: ", userId);
-    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   }
 );
@@ -106,13 +110,10 @@ export const mypageProfileSlice = createSlice({
         };
       })
       .addCase(fetchGetMypageProfile.fulfilled, (state, action) => {
-        console.log("fulfilled: ", action.payload);
-        return {
-          ...state,
-          items: action.payload,
-          isLoading: false,
-          status: "success",
-        };
+        console.log('API payload:', action.payload);
+        state.items = action.payload;
+        state.isLoading = false;
+        state.status = "success";
       })
       .addCase(fetchGetMypageProfile.rejected, (state, error) => {
         console.log("rejected: ", error);

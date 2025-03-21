@@ -126,16 +126,16 @@ def activity_topics(request):
   return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # マイページ: ユーザープロフィールを取得するAPI
-def mypage_user_profile(request, pk=None):
+# def mypage_user_profile(request, pk=None):
 
-  if pk is None:
-    queryset = MypageUserProfile.objects.all()
-  else:
-    queryset = MypageUserProfile.objects.filter(id=pk)
-  serializer_class = MypageUserProfileSerializer(queryset.first())
-  data = serializer_class.data
+#   if pk is None:
+#     queryset = MypageUserProfile.objects.all()
+#   else:
+#     queryset = MypageUserProfile.objects.filter(id=pk)
+#   serializer_class = MypageUserProfileSerializer(queryset.first())
+#   data = serializer_class.data
 
-  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
+#   return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # マイページ: インデックス、契約プラン、プロフィール、スキルを取得するAPI
 # 契約プラン、スキルは別途実装する

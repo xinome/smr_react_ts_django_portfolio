@@ -33,16 +33,24 @@ const EditProfile = (props: MypageProps) => {
   const currentUserList = useSelector((state: any) => state.mypageProfileReducer.items);
   const isLoading = useSelector((state: any) => state.mypageProfileReducer.isLoading);
 
-  const [userList, setUserList] = useState(currentUserList);
+  const [userList, setUserList] = useState<any>(null);
   const [snackOpen, setSnackOpen] = useState(false);
 
   // 初回のみ実行
+  // データ取得
   useEffect(() => {
-    dispatch(fetchGetMypageProfile(userId));
+    if (userId) {
+      dispatch(fetchGetMypageProfile(userId));
+    }
   }, [dispatch, userId]);
 
+  // Reduxの更新をローカルStateに反映
   useEffect(() => {
-    setUserList(currentUserList);
+    if (currentUserList && Object.keys(currentUserList).length > 0) {
+      setUserList(currentUserList);
+
+      console.log("currentUserList: ", currentUserList);
+    }
   }, [currentUserList]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>, newUserList: any) => {
@@ -87,7 +95,7 @@ const EditProfile = (props: MypageProps) => {
         </Grid>
       </Box>
 
-      { isLoading ? (
+      { isLoading || !userList ? (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box>
