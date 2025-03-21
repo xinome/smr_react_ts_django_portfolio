@@ -14,24 +14,31 @@ import { color_category_project, color_category_portfolio, color_category_activi
 
 import { useParams } from 'react-router-dom'
 
-import { fetchTipsDetail } from '../../features/tips/tipsDetailSlice'
+import { fetchTipsCategorizeListById } from '../../features/tips/tipsCategorizeSlice'
+import { fetchGetTipsDetail } from '../../features/tips/tipsDetailSlice'
 
-const TipsCategorize = () => {
+const TipsDetail = () => {
 
   const tipsDetail = useSelector((state: any) => state.tipsDetailReducer.items) ?? [];
   const isLoading = useSelector((state: any) => state.tipsDetailReducer.isLoading);
   const dispatch = useAppDispatch();
 
-  const params = useParams<{ tips_category: string; tips_id: string }>();
-  const { tips_category, tips_id } = params;
+  const params = useParams<{ tips_id: string }>();
+  const { tips_id } = params;
 
   console.log("params: ", params);
 
   useEffect(() => {
-    if (tips_category && tips_id) {
-      dispatch(fetchTipsDetail({ tips_category, tips_id }));
+    if (tips_id) {
+      dispatch(fetchGetTipsDetail({ tips_id: tips_id }));
     }
   }, []);
+
+  useEffect(() => {
+    if (params.tips_id) {
+      dispatch(fetchTipsCategorizeListById({ tips_id: params.tips_id }));
+    }
+  }, [params.tips_id]);
 
   console.log("tipsDetail: ", tipsDetail);
 
@@ -50,28 +57,28 @@ const TipsCategorize = () => {
     }
   };
 
-  let current_category;
-  switch (params.tips_category) {
-    case 'project':
-      current_category = "プロジェクト";
-      break;
-    case 'language':
-      current_category = "開発言語";
-      break;
-    case 'framework':
-      current_category = "フレームワーク";
-      break;
-    case 'infra':
-      current_category = "インフラ";
-      break;
-    default:
-      current_category = null;
-  }
+  // let current_category;
+  // switch (params.tips_category) {
+  //   case 'project':
+  //     current_category = "プロジェクト";
+  //     break;
+  //   case 'language':
+  //     current_category = "開発言語";
+  //     break;
+  //   case 'framework':
+  //     current_category = "フレームワーク";
+  //     break;
+  //   case 'infra':
+  //     current_category = "インフラ";
+  //     break;
+  //   default:
+  //     current_category = null;
+  // }
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
-    { name: current_category, href: `/tips/${params.tips_category}/` },
+    // { name: current_category, href: `/tips/${params.tips_category}/` },
     { name: params.tips_id },
   ];    
 
@@ -105,7 +112,7 @@ const TipsCategorize = () => {
       {tipsDetail.length !== 0 && !isLoading ? (
         <Box className='section-wrapper'>
           <Grid container className='section-header'>
-            <Grid className='section-title'>{current_category}</Grid>
+            <Grid className='section-title'>カテゴリー名</Grid>
             <Grid>
               <Button variant='contained' color='primary' href={`/tips/edit/${tipsDetail.id}`}>編集</Button>
             </Grid>
@@ -130,4 +137,4 @@ const TipsCategorize = () => {
   )
 }
 
-export default TipsCategorize
+export default TipsDetail

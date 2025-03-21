@@ -23,6 +23,21 @@ export const fetchTipsCategorizeList = createAsyncThunk(
   }
 );
 
+// idからカテゴリーリストを取得する
+export const fetchTipsCategorizeListById = createAsyncThunk(
+  "tips_categorize_by_id",  // type: 内部処理名、一意でないとだめ
+  async (params: { tips_id: string }) => {
+    console.log("params: ", params);
+
+    const tips_id = params.tips_id;
+    const connect_url = `${BASE_API_URL}/tips/${tips_id}/`;
+    console.log("connect_url: ", connect_url);
+
+    const response = await axios.get(`${BASE_API_URL}/tips/${tips_id}/`);
+    return response.data;
+  }
+);
+
 // Slices
 export const tipsCategorizeSlice = createSlice({
   name: "tips",  // sliceの名前

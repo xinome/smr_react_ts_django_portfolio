@@ -136,7 +136,7 @@ const TipsCategorize = () => {
                   <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category?.id) }}>
                     {item.category.tips_name}
                   </span>
-                  <Link to={`/tips/${params.tips_category}/${item.id}`}>{item.title}</Link>
+                  <Link to={`/tips/detail/${item.id}`}>{item.title}</Link>
                   <br />
                   {item.content?.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
                 </dd>

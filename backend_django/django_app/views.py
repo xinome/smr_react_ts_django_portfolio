@@ -208,13 +208,9 @@ def tips_categorized_contents(request, category_path):
 
   return JsonResponse(data, safe=False)
 
-# Tips: 1件のみ取得
-def tips_detail_contents(request, category_path, pk):
-
-  print("category_path: ", category_path)
-  print("pk: ", pk)
-
-  queryset = TipsContents.objects.get(category__tips_path=category_path, id=pk)
+# Tips: IDを参照して1件のみ取得
+def tips_detail_contents(request, pk):
+  queryset = TipsContents.objects.get(id=pk)
   serializer_class = TipsContentsSerializer(queryset)
   data = serializer_class.data
 

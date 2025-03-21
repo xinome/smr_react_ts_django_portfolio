@@ -23,8 +23,8 @@ urlpatterns = [
     path("tips/update/<int:pk>", views.tips_contents_update.as_view(), name="tips_contents_update"),
     path("tips/delete/<int:pk>", views.tips_contents_delete.as_view(), name="tips_contents_delete"),
 
+    path("tips/detail/<int:pk>", views.tips_detail_contents, name="tips_detail_contents"),
     path("tips/<category_path>/", views.tips_categorized_contents, name="tips_categorized_contents"),
-    path("tips/<category_path>/<int:pk>", views.tips_detail_contents, name="tips_detail_contents"),
 
     # 検証用: Postmanとの連携、関数ベース / クラスベース
     path("postman_test/", views.postman_test, name="postman_test"),

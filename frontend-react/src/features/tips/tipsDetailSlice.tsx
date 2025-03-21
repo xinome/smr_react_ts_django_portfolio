@@ -9,11 +9,11 @@ const initialState = {
 const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
-export const fetchTipsDetail = createAsyncThunk(
-  "get_tips_detail_all",  // type: 内部処理名、一意でないとだめ
-  async (params: { tips_category: string; tips_id: string }) => {
+export const fetchGetTipsDetail = createAsyncThunk(
+  "tips/fetchDetail",  // type: 内部処理名、一意でないとだめ
+  async (params: { tips_id: string }) => {
     console.log("params: ", params);
-    const connect_url = `${BASE_API_URL}/tips/${params.tips_category}/${params.tips_id}`;
+    const connect_url = `${BASE_API_URL}/tips/detail/${params.tips_id}`;
     console.log("connect_url: ", connect_url);
 
     const response = await axios.get(connect_url);
@@ -34,14 +34,14 @@ export const tipsDetailSlice = createSlice({
   extraReducers: (builder) => {
     // TODO: エラー発生時の処理も追加する
     builder
-      .addCase(fetchTipsDetail.pending, (state) => {
+      .addCase(fetchGetTipsDetail.pending, (state) => {
         console.log("pending..");
         return {
           ...state,
           isLoading: true,
         };
       })
-      .addCase(fetchTipsDetail.fulfilled, (state, action) => {
+      .addCase(fetchGetTipsDetail.fulfilled, (state, action) => {
         console.log("fulfilled: ", action.payload);
         return {
           ...state,
@@ -49,7 +49,7 @@ export const tipsDetailSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchTipsDetail.rejected, (state) => {
+      .addCase(fetchGetTipsDetail.rejected, (state) => {
         console.log("rejected..");
         return {
           ...state,
