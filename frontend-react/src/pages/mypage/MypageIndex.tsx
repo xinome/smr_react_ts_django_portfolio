@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
-
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
 import { RootState, useAppDispatch } from '../../store';
 
 import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
@@ -10,8 +9,6 @@ import Grid from '@mui/material/Grid2'
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { color_category_project, color_category_portfolio, color_category_activity } from '../../utils/ColorUtils'
 
 import { fetchMypageAccountList } from '../../features/account/mypageSlice'
 
@@ -26,19 +23,11 @@ const MyPageIndex = (props: MypageProps) => {
   const isLoading = useSelector((state: any) => state.mypageAccountReducer.isLoading);
 
   const userId = props.userId;
-  console.log("Mypage: userId: ", userId);
-
-  // const BASE_API_URL = "http://localhost:8000/api";
-  // テスト用: JSONPlaceholderを使用
-  // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
   useEffect(() => {
     dispatch(fetchMypageAccountList(userId));
   }, [dispatch, userId]);
 
-  console.log("usersList: ", usersList);
-  console.log("memberType: ", usersList.member_type);
-  
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: 'マイページ' },

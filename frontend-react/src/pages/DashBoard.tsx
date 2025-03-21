@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
+import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { useAppDispatch } from '../store/index';
 import { RootState } from '../store/index';
 
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 import { Box, Container } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 
@@ -23,9 +23,6 @@ const DashBoard = () => {
   const projectList = useSelector((state: RootState) => state.projectTopicsReducer.items);
   const portfolioList = useSelector((state: RootState) => state.portfolioTopicsReducer.items);
   const activityList = useSelector((state: RootState) => state.activityTopicsReducer.items);
-
-  // const isLoggedIn = false;
-  const BASE_API_URL = "http://localhost:8000/api";
 
   type ProjectType = {
     id: number,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import Axios from 'axios';
 
 import store from '../store';
 
@@ -27,11 +26,6 @@ const BaseHeader = (props: headerProps) => {
   useEffect(() => {
     const fetchUsersList = async (id: number) => {
       try {
-        // const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-        // console.log("fetchUsersList: ", response);
-        // setUsersList(response.data);
-        // console.log("fetchUsersList: usersList: ", usersList);
-
         fetch(`${BASE_API_URL}/users/${id}`)
           .then((response) => response.json())
           .then((data) => {
@@ -56,7 +50,6 @@ const BaseHeader = (props: headerProps) => {
       sx: {
         bgcolor: deepPurple[500]
       },
-      // children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
       children: name ? name.slice(0, 1) : '',
     };
   }

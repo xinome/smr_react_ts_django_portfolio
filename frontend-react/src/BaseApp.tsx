@@ -1,16 +1,10 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-// import logo from './logo.svg';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import './BaseApp.scss';
 
 // Material UI(MUI) components
-import { Avatar, Box, Container } from '@mui/material';
-import Grid from '@mui/material/Grid2';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-
-import { createTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 // コンポーネント
 import BaseHeader from "./components/BaseHeader";
@@ -28,30 +22,6 @@ import TipsCreate from "./pages/tips/TipsCreate";
 import TipsEdit from "./pages/tips/TipsEdit";
 
 const BaseApp = () => {
-
-  // const isLoggedIn = false;
-  // const BASE_API_URL = "http://localhost:8000/api";
-
-  type ProjectType = {
-    id: number,
-    date: string,
-    content: string,
-    category: number,
-  }[];
-
-  type PortfolioType = {
-    id: number,
-    date: string,
-    content: string,
-    category: number,
-  }[];
-
-  type ActivityType = {
-    id: number,
-    date: string,
-    content: string,
-    category: number,
-  }[];
 
   const pathname = useLocation().pathname.replaceAll('/', '');
   console.log("useLocation.pathname: ", pathname);

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
-import { RootState, useAppDispatch } from '../../store';
-
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { RootState, useAppDispatch } from '../../store';
+
 import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
@@ -101,12 +101,6 @@ const EditProfile = (props: MypageProps) => {
         </Box>
       ) : (
         <Box className='section-wrapper'>
-          {/* <Grid container className='section-header'>
-            <Grid className='section-title'>
-              ユーザープロフィール
-            </Grid>
-          </Grid> */}
-
           <form method="POST" onSubmit={e => {handleSubmit(e, userList)}}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">

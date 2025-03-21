@@ -1,31 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { bgcolor_sidemenu } from '../utils/ColorUtils';
 
-import '../BaseApp.scss';
+import { Box } from '@mui/material';
+import { bgcolor_sidemenu } from '../utils/ColorUtils';
 
 // Material UI(MUI) components
 import { List, ListItemText, ListItemButton, Collapse } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const BaseSideMenu = () => {
-  
-  // const menuAccordionStyle = {
-  //   backgroundColor: bgcolor_sidemenu,
-  //   color: '#fff',
-  //   padding: '.5em',
-  //   borderRadius: '0',
-  //   borderBottom: '1px solid #ccc',
-  //   boxShadow: 'none',
-  // };
+import '../BaseApp.scss';
 
-  const menuItemStyle = {
-    padding: '.5em 1em',
-    margin: '0',
-    borderBottom: '1px solid #ccc',
-  };
+const BaseSideMenu = () => {
 
   type accordionType = {
     "portfolio": boolean,
@@ -33,6 +18,12 @@ const BaseSideMenu = () => {
     "tips": boolean,
     [key: string]: boolean; // Add index signature
   };
+
+  const menuItemStyle = {
+    padding: '.5em 1em',
+    margin: '0',
+    borderBottom: '1px solid #ccc',
+  };  
 
   const [isOpenAccordion, setIsOpenAccordion] = useState<accordionType>(
     {

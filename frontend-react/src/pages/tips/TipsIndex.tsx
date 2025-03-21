@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
-import { RootState, useAppDispatch } from '../../store';
-
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { RootState, useAppDispatch } from '../../store';
+
 import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { color_category_project, color_category_portfolio, color_category_activity, color_category_tips } from '../../utils/ColorUtils'
 
-// import { fetchMypageAccountList } from '../features/mypage/mypageSlice'
 import { fetchTipsList } from '../../features/tips/tipsSlice'
 
 const TipsList = () => {
 
-  // const user_id = props.user_id;
-  
   const tipsList = useSelector((state: RootState) => state.tipsReducer.items) ?? [];
   const isLoading = useSelector((state: RootState) => state.tipsReducer.isLoading);
   const dispatch = useAppDispatch();
@@ -30,8 +26,6 @@ const TipsList = () => {
       console.error("tipsList is not an array:", tipsList);
     }
   }, []);
-
-  console.log("tipsList: ", tipsList);
 
   const filteredProjectTipsList = tipsList.filter((item: any) => {
     return item.category.id === 1;

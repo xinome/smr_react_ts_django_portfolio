@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
-import { RootState, useAppDispatch } from '../../store';
-
 import { Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { RootState, useAppDispatch } from '../../store';
+
 import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -16,13 +15,8 @@ import { fetchTipsCategorizeList } from '../../features/tips/tipsCategorizeSlice
 
 const TipsCategorize = () => {
 
-  console.log("useParams: ", useParams());
-  console.log("tips_category: ", useParams().tips_category);
-
   const params = useParams<{ tips_category: string }>();
 
-  console.log("params: ", params);
-  
   const tipsList = useSelector((state: RootState) =>
     Array.isArray(state.tipsCategorizeReducer.items) ? state.tipsCategorizeReducer.items : []
   );
@@ -37,9 +31,6 @@ const TipsCategorize = () => {
 
   // object keysで表示
   console.log("tipsList: ", tipsList);
-  // console.log("typeof tipsList: ", typeof tipsList);
-  // console.log("keys: ", Object.keys(tipsList));
-  // console.log("values: ", Object.values(tipsList));
 
   const getCategoryTags = (category_id: number) => {
     switch (category_id) {
@@ -116,19 +107,6 @@ const TipsCategorize = () => {
         
         {tipsList.length !== 0 && !isLoading ? (
           <Box className='section-contents'>
-            {/* <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl>
-            <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl>
-            <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl> */}
-
             {tipsList.map((item: any) => (
               <dl key={item.id}>
                 <dt>{item.date}</dt>
@@ -148,7 +126,6 @@ const TipsCategorize = () => {
             <CircularProgress />
           </Box>
         )}
-
       </Box>
 
     </Container>

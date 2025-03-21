@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
-import { RootState, useAppDispatch } from '../../store';
-
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { RootState, useAppDispatch } from '../../store';
+
 import { Box, Container, Typography, Breadcrumbs, Button } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -40,45 +39,9 @@ const TipsDetail = () => {
     }
   }, [params.tips_id]);
 
-  console.log("tipsDetail: ", tipsDetail);
-
-  const getCategoryTags = (category_id: number) => {
-    switch (category_id) {
-      case 1:
-        return color_category_project;
-      case 2:
-        return color_category_portfolio;
-      case 3:
-        return color_category_activity;
-      case 4:
-        return color_category_tips;
-      default:
-        return null;
-    }
-  };
-
-  // let current_category;
-  // switch (params.tips_category) {
-  //   case 'project':
-  //     current_category = "プロジェクト";
-  //     break;
-  //   case 'language':
-  //     current_category = "開発言語";
-  //     break;
-  //   case 'framework':
-  //     current_category = "フレームワーク";
-  //     break;
-  //   case 'infra':
-  //     current_category = "インフラ";
-  //     break;
-  //   default:
-  //     current_category = null;
-  // }
-  
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
-    // { name: current_category, href: `/tips/${params.tips_category}/` },
     { name: params.tips_id },
   ];    
 
