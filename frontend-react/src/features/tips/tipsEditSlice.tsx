@@ -30,18 +30,6 @@ export const fetchCreateTips = createAsyncThunk(
   }
 );
 
-export const fetchGetTipsToEdit = createAsyncThunk(
-  "get_tips_detail",  // type: 内部処理名
-  async (params: { tips_id: string }) => {
-    console.log("params: ", params);
-    const connect_url = `${BASE_API_URL}/tips/update/${params.tips_id}`;
-    console.log("connect_url: ", connect_url);
-
-    const response = await axios.get(connect_url);
-    return response.data;
-  }
-);
-
 // 更新処理
 export const fetchUpdateTips = createAsyncThunk(
   "update_tips_detail",  // type: 内部処理名
@@ -106,33 +94,6 @@ export const tipsEditSlice = createSlice({
         };
       })
       .addCase(fetchCreateTips.rejected, (state) => {
-        console.log("rejected..");
-        return {
-          ...state,
-          isLoading: false,
-          status: "failed",
-        };
-      });
-
-    builder
-      .addCase(fetchGetTipsToEdit.pending, (state) => {
-        console.log("pending..");
-        return {
-          ...state,
-          isLoading: true,
-          status: "loading",
-        };
-      })
-      .addCase(fetchGetTipsToEdit.fulfilled, (state, action) => {
-        console.log("fulfilled: ", action.payload);
-        return {
-          ...state,
-          items: action.payload,
-          isLoading: false,
-          status: "success",
-        };
-      })
-      .addCase(fetchGetTipsToEdit.rejected, (state) => {
         console.log("rejected..");
         return {
           ...state,

@@ -173,9 +173,9 @@ class mypage_user_profile(APIView):
     if serializer_class.is_valid():
       serializer_class.save()
       print("serializer_class.data: ", serializer_class.data)
-      return JsonResponse(serializer_class.data, status=201)
+      return JsonResponse(serializer_class.data, status=201, json_dumps_params={'ensure_ascii': False})
 
-    return JsonResponse(serializer_class.errors, status=400)
+    return JsonResponse(serializer_class.errors, status=400, json_dumps_params={'ensure_ascii': False})
 
 
 # 開発Tips
@@ -185,7 +185,7 @@ def tips_contents(request):
   serializer_class = TipsContentsSerializer(queryset, many=True)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # Tipsカテゴリー一覧
 @csrf_exempt
@@ -194,7 +194,7 @@ def tips_category(request):
   serializer_class = TipsCategorySerializer(queryset, many=True)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # Tips: カテゴリーごとのTips一覧
 def tips_categorized_contents(request, category_path):
@@ -206,7 +206,7 @@ def tips_categorized_contents(request, category_path):
   serializer_class = TipsContentsSerializer(queryset, many=True)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # Tips: IDを参照して1件のみ取得
 def tips_detail_contents(request, pk):
@@ -214,7 +214,7 @@ def tips_detail_contents(request, pk):
   serializer_class = TipsContentsSerializer(queryset)
   data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # Tips: 新規作成
 @method_decorator(csrf_exempt, name='dispatch')
@@ -227,7 +227,7 @@ class tips_contents_create(APIView):
 
     data = serializer_class.data
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
   # POST: 実行
   def post(self, request):
@@ -238,9 +238,9 @@ class tips_contents_create(APIView):
     serializer_class = TipsContentsSerializer(data=request.data)
     if serializer_class.is_valid():
       serializer_class.save()
-      return JsonResponse(serializer_class.data, status=201)
+      return JsonResponse(serializer_class.data, status=201, json_dumps_params={'ensure_ascii': False})
 
-    return JsonResponse(serializer_class.errors, status=400)
+    return JsonResponse(serializer_class.errors, status=400, json_dumps_params={'ensure_ascii': False})
 
 # Tips: 更新
 @method_decorator(csrf_exempt, name='dispatch')
@@ -255,7 +255,7 @@ class tips_contents_update(APIView):
 
     data = serializer_class.data
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
   # POST: 実行
   def post(self, request, pk):
@@ -268,9 +268,9 @@ class tips_contents_update(APIView):
     serializer_class = TipsContentsSerializer(queryset, data=request.data)
     if serializer_class.is_valid():
       serializer_class.save()
-      return JsonResponse(serializer_class.data, status=201)
+      return JsonResponse(serializer_class.data, status=201, json_dumps_params={'ensure_ascii': False})
 
-    return JsonResponse(serializer_class.errors, status=400)
+    return JsonResponse(serializer_class.errors, status=400, json_dumps_params={'ensure_ascii': False})
 
 # Tips: 削除
 @method_decorator(csrf_exempt, name='dispatch')
@@ -285,7 +285,7 @@ class tips_contents_delete(APIView):
 
     data = serializer_class.data
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
   # POST: 実行
   def post(self, request, pk):
@@ -298,7 +298,7 @@ class tips_contents_delete(APIView):
 
     return JsonResponse({
       "message": "delete success",
-    }, status=201)
+    }, status=201, json_dumps_params={'ensure_ascii': False})
 
 
 # Postmanからの接続テスト（GET, POST, DELETEに限定する）
@@ -318,7 +318,7 @@ def postman_test(request):
       "path": request.path,
       "data": request.data,
     }
-  })
+  }, json_dumps_params={'ensure_ascii': False})
 
 # class-based view
 @method_decorator(csrf_exempt, name='dispatch')
@@ -337,7 +337,7 @@ class postman_class_test(APIView):
 
     data = serializer_class.data
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
   def post(self, request, pk):
     
@@ -349,6 +349,6 @@ class postman_class_test(APIView):
     serializer_class = MypageUserProfileUpdateSerializer(queryset, data=request.data)
     if serializer_class.is_valid():
       serializer_class.save()
-      return JsonResponse(serializer_class.data, status=201)
+      return JsonResponse(serializer_class.data, status=201, json_dumps_params={'ensure_ascii': False})
 
-    return JsonResponse(serializer_class.errors, status=400)
+    return JsonResponse(serializer_class.errors, status=400, json_dumps_params={'ensure_ascii': False})

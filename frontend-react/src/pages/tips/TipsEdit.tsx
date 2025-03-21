@@ -24,7 +24,8 @@ import { color_category_project, color_category_portfolio, color_category_activi
 
 import { useParams } from 'react-router-dom'
 
-import { fetchGetTipsToEdit, fetchUpdateTips } from '../../features/tips/tipsEditSlice'
+import { fetchGetTipsDetail } from '../../features/tips/tipsDetailSlice'
+import { fetchUpdateTips } from '../../features/tips/tipsEditSlice'
 import { fetchCategoryList } from '../../features/tips/tipsCategoryListSlice'
 
 type categoryType = { id: number; tips_name: string; tips_path: string };
@@ -57,20 +58,22 @@ const TipsEdit = () => {
 
   console.log("params: ", params);
 
-  const [tipsState, setTipsState] = useState(currentTipsDetail);
+  const [tipsState, setTipsState] = useState(currentTipsDetail || {});
   const [snackOpen, setSnackOpen] = useState(false);
 
+  // カテゴリーリストとTips詳細を取得
   useEffect(() => {
     if (params.tips_id) {
-      dispatch(fetchGetTipsToEdit({ tips_id: params.tips_id }));
+      dispatch(fetchGetTipsDetail({ tips_id: params.tips_id }));
     }
     dispatch(fetchCategoryList());
-
-    console.log("categoryList: ", categoryList);
   }, [params]);
 
   useEffect(() => {
-    setTipsState(currentTipsDetail);
+    if (currentTipsDetail) {
+      console.log("✅ API取得成功: ", currentTipsDetail);
+      setTipsState(currentTipsDetail);
+    }
   }, [currentTipsDetail]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>, tipsState: any) => {
@@ -89,39 +92,6 @@ const TipsEdit = () => {
     }
   }
 
-  const getCategoryTags = (category_id: number) => {
-    switch (category_id) {
-      case 1:
-        return color_category_project;
-      case 2:
-        return color_category_portfolio;
-      case 3:
-        return color_category_activity;
-      case 4:
-        return color_category_tips;
-      default:
-        return null;
-    }
-  };
-
-  let current_category;
-  switch (params.tips_category) {
-    case 'project':
-      current_category = "プロジェクト";
-      break;
-    case 'language':
-      current_category = "開発言語";
-      break;
-    case 'framework':
-      current_category = "フレームワーク";
-      break;
-    case 'infra':
-      current_category = "インフラ";
-      break;
-    default:
-      current_category = null;
-  }
-  
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
@@ -188,7 +158,7 @@ const TipsEdit = () => {
                         <Select
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
-                          value={categoryList.findIndex((category: categoryType) => category.id === tipsState.category?.id) + 1}
+                          value={tipsState.category?.id || ''}
                           onChange={e => {
                             e.preventDefault();
                             setTipsState({
