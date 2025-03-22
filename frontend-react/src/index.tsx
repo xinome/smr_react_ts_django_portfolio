@@ -8,28 +8,27 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom'
 
+import Login from './pages/Login';
+
 const isLoggedIn = store.getState().authReducer.isLoggedIn;
 console.log("state: ", store.getState());
 
-const container = document.getElementById('root');
-if (container) {
-  const root = ReactDOM.createRoot(container);
-  root.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        {/* ログイン、非ログインで切り分け */}
-        {isLoggedIn ? (
-          <BrowserRouter>
-            <BaseApp />
-          </BrowserRouter>
-        ) : (
-          // <Login />
-          <p>ログインしてください</p>
-        )}
-      </Provider>
-    </React.StrictMode>
-  );
-}
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      {/* ログイン、非ログインで切り分け */}
+      {/* {isLoggedIn ? ( */}
+        <BrowserRouter>
+          <BaseApp />
+        </BrowserRouter>
+      {/* ) : (
+        <Login />
+        // <p>ログインしてください</p>
+      )} */}
+    </Provider>
+  </React.StrictMode>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     # アカウント認証
+    path("auth_account/login", views.auth_login, name="auth_login"),
+    path("auth_account/logout", views.auth_logout, name="auth_logout"),
     path("auth_account/<int:pk>", views.auth_account, name="auth_account"),
 
     # ダッシュボード

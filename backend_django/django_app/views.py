@@ -52,6 +52,32 @@ def auth_account(request, pk=None):
 
   return JsonResponse(data, safe=False)
 
+# base: ログイン
+@csrf_exempt
+def auth_login(request):
+
+  print("request: ", request)
+  email = request.POST.get('email')
+  password = request.POST.get('password')
+  
+  queryset = MypageUserProfile.objects.get(email=email, password=password)
+  serializer_class = MypageUserProfileSerializer(queryset)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
+
+# base: ログアウト
+@csrf_exempt
+def auth_logout(request):
+  
+  print("request: ", request)
+  print("request.POST: ", request.POST)
+
+  return JsonResponse({
+    "message": "auth_logout",
+  })
+
+
 # ダッシュボード
 def project_topics(request):
   # django管理画面で追加した項目が反映されるようになる

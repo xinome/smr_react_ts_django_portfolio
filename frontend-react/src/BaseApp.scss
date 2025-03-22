@@ -7,10 +7,32 @@
 
 a {
   text-decoration: none;
-}
-a:hover {
+
+  &:hover {
   text-decoration: underline;
+  }
 }
+
+/* ログイン */
+.login-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282c34;
+}
+
+.login-contents {
+  /* width: 50%; */
+  padding: 2em;
+  background-color: #fff;
+  border-radius: 0.5em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ログイン時レイアウト */
 
 .app-header {
   // background-color: #282c34;
