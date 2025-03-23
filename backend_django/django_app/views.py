@@ -13,6 +13,9 @@ from rest_framework.decorators import api_view
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import generics
+# siimple.jwt ログイン認証
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Model, Serializerをインポートする
 from .serializers import (
@@ -55,24 +58,51 @@ def auth_account(request, pk=None):
 # base: ログイン
 @csrf_exempt
 def auth_login(request):
-
   print("request: ", request)
-  email = request.POST.get('email')
-  password = request.POST.get('password')
-  
-  queryset = MypageUserProfile.objects.get(email=email, password=password)
-  serializer_class = MypageUserProfileSerializer(queryset)
-  data = serializer_class.data
 
-  return JsonResponse(data, safe=False)
+  # JSON形式で受け取る
+  data = json.loads(request.body.decode('utf-8'))
+  email = data.get('email')
+  password = data.get('password')
+
+  print(f"email: {email}, password: {password}")
+
+  try:
+    queryset = MypageUserProfile.objects.get(email=email, password=password)
+    serializer_class = MypageUserProfileSerializer(queryset)
+    data = serializer_class.data
+    return JsonResponse(data, safe=False)
+  except MypageUserProfile.DoesNotExist:
+    return JsonResponse({'error': 'Invalid Credentials'}, status=400)
+
+# JWTを使ったログイン認証
+# class LoginView(generics.CreateAPIView):
+#   permission_classes = (AllowAny,)
+#   authentication_classes = (JWTAuthentication,)
+#   queryset = MypageUserProfile.objects.all()
+#   serializer_class = MypageUserProfileSerializer
+
+#   def post(self, request, *args, **kwargs):
+#     email = request.data.get('email')
+#     password = request.data.get('password')
+    
+#     queryset = MypageUserProfile.objects.get(email=email, password=password)
+#     if queryset is not None:
+#       refresh = RefreshToken.for_user(queryset)
+#       serializer_class = MypageUserProfileSerializer(queryset)
+#       data = {
+#         'user': serializer_class.data,
+#         'refresh': str(refresh),
+#         'access': str(refresh.access_token),
+#       }
+#       return JsonResponse(data, safe=False)
+#     else:
+#       return JsonResponse({'error': 'Invalid Credentials'}, status=400)
 
 # base: ログアウト
 @csrf_exempt
 def auth_logout(request):
   
-  print("request: ", request)
-  print("request.POST: ", request.POST)
-
   return JsonResponse({
     "message": "auth_logout",
   })
@@ -333,10 +363,7 @@ class tips_contents_delete(APIView):
 def postman_test(request):
   # postmanからのget, post, put, deleteのテスト
   # https://www.postman.com/
-  
-  print("request: ", request)
-  print("request.POST: ", request.POST)
-  
+    
   return JsonResponse({
     "message": "postman_test",
     "request": {

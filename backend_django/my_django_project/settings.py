@@ -45,7 +45,15 @@ INSTALLED_APPS = [
     'django_app',
     'corsheaders',  # フロントエンドとの通信を許可するために追加
     'rest_framework',  # REST frameworkを使うために追加
+    'rest_framework_simplejwt',  # JWTを使うために追加
 ]
+
+# JWT_AUTH: ログインステータスのフロントエンド・バックエンド連携
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # フロントエンドとの通信を許可するために追加

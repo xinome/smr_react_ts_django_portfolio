@@ -1,8 +1,13 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import store from "./store";
+
+import { getAuth } from "./features/account/authSlice";
 
 import './BaseApp.scss';
-import { Routes, Route } from 'react-router-dom';
 
 // コンポーネント
 import Login from "./pages/Login";
@@ -21,11 +26,43 @@ import TipsEdit from "./pages/tips/TipsEdit";
 
 const BaseApp = () => {
 
-  const pathname = useLocation().pathname.replaceAll('/', '');
-  console.log("useLocation.pathname: ", pathname);
+  // const pathname = useLocation().pathname.replaceAll('/', '');
+  // console.log("useLocation.pathname: ", pathname);
+  const userAuth = useSelector((state: any) => state.authReducer);
+  const usersList = useSelector((state: any) => state.authReducer.items);
 
-  // 仮置き: ログインユーザID
-  const current_user_id = 1;
+  // ログインユーザID
+  const current_user_id = usersList.id;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // ローカルストレージからアクセストークンを取得
+  const access_token = localStorage.getItem('access_token');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      dispatch(getAuth(user));  // Reduxに復元
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("userAuth: ", userAuth);
+    console.log("usersList: ", usersList);
+
+    // isLoggedIn優先判定
+    if (!userAuth.isLoggedIn && location.pathname !== "/login/") {
+      navigate('/login/');
+    }
+
+    // ログイン済みならdashboardへ
+    if (userAuth.isLoggedIn && location.pathname === "/") {
+      navigate('/dashboard/');
+    }
+  }, [usersList, location, navigate]);
 
   return (
     <div className="app">

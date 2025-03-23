@@ -5,7 +5,12 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   isLoggedIn: true,
-  items: [],
+  items: {},
+};
+
+type LoginAccountParams = {
+  email: string;
+  password: string;
 };
 
 // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
@@ -14,7 +19,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 /** データ取得非同期処理 */
 export const fetchAuth = createAsyncThunk(
   "account/manageAuth",
-  async (id) => {
+  async (id: number) => {
     const response = await axios.get(`${BASE_API_URL}/auth_account/${id}`);
     console.log("fetchAuth: ", response);
     return response.data;
@@ -24,8 +29,8 @@ export const fetchAuth = createAsyncThunk(
 // ログイン処理
 export const accountLogin = createAsyncThunk(
   "account/login",
-  async (data) => {
-    const response = await axios.post(`${BASE_API_URL}/auth_account/login`, data);
+  async (data: LoginAccountParams) => {
+    const response = await axios.post(`${BASE_API_URL}/auth_account/login/`, data);
     console.log("login: ", response);
     return response.data;
   }
@@ -35,7 +40,7 @@ export const accountLogin = createAsyncThunk(
 export const accountLogout = createAsyncThunk(
   "account/logout",
   async () => {
-    const response = await axios.post(`${BASE_API_URL}/auth_account/logout`);
+    const response = await axios.post(`${BASE_API_URL}/auth_account/logout/`);
     console.log("logout: ", response);
     return response.data;
   }
@@ -109,6 +114,9 @@ export const authSlice = createSlice({
       })
       .addCase(accountLogin.fulfilled, (state, action) => {
         console.log("login fulfilled: ", action.payload);
+        // localStorageに保存
+        localStorage.setItem('user', JSON.stringify(action.payload));
+
         return {
           ...state,
           items: action.payload,
@@ -135,7 +143,9 @@ export const authSlice = createSlice({
         };
       })
       .addCase(accountLogout.fulfilled, (state, action) => {
-        console.log("logout fulfilled: ", action.payload);
+        console.log("logout fulfilled");
+        localStorage.removeItem('user');  // ここで確実に削除
+
         return {
           ...state,
           items: action.payload,

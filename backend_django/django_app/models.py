@@ -101,9 +101,9 @@ class ActivityTopics(BaseMeta):
 class MypageUserProfile(BaseMeta):
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
-  account_id = models.CharField(max_length=255)
+  account_id = models.CharField(max_length=255, unique=True)
   password = models.CharField(max_length=255)
-  email = models.CharField(max_length=255)
+  email = models.CharField(max_length=255, unique=True)
   zip = models.CharField(max_length=7)
   address = models.CharField(max_length=255)
   phone = models.CharField(max_length=11, null=True)

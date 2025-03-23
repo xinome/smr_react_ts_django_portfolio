@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import Axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState, useAppDispatch } from '../store';
 
@@ -19,13 +19,15 @@ type BaseHeaderProps = {
 
 const BaseHeader = (props: BaseHeaderProps) => {
 
-  const user_id = props.user_id;
+  // const user_id = props.user_id;
 
   const userAuth = useSelector((state: any) => state.authReducer);
   const usersList = useSelector((state: any) => state.authReducer.items);
-  const dispatch = useAppDispatch();
+  const isLoggedIn = useSelector((state: any) => state.authReducer.isLoggedIn);
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // JSONデータを取得する
   // const [usersList, setUsersList] = useState([]);
@@ -47,20 +49,21 @@ const BaseHeader = (props: BaseHeaderProps) => {
   //   fetchUsersList(user_id);
   // }, [user_id]);
 
-  useEffect(() => {
-    dispatch(fetchAuth());
-  }, []);
-
-  // console.log("usersList: ", usersList);
-
+  // 画面表示時にログインユーザー情報を取得
   useEffect(() => {
     console.log("userAuth: ", userAuth);
-
-    // ログアウト処理: リダイレクト
-    // if(!userAuth.isLoggedIn) {
-    //   navigate('/login/');
-    // }
-  }, [userAuth]);
+    console.log("usersList: ", usersList);
+  
+    // 未ログインなら login に飛ばす
+    if (!isLoggedIn && location.pathname !== "/login/") {
+      navigate('/login/');
+    }
+  
+    // ログイン済みなら dashboard に飛ばす（トップページ限定）
+    if (isLoggedIn && usersList && usersList.length > 0 && location.pathname === "/") {
+      navigate('/dashboard/');
+    }
+  }, [isLoggedIn, usersList, location, navigate]);
 
   const stringAvater = (name: string) => {
     return {
@@ -72,9 +75,15 @@ const BaseHeader = (props: BaseHeaderProps) => {
     };
   }
 
+  // ログアウト処理、リダイレクト
   const handleLogout = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    dispatch(accountLogout());    
+    dispatch(accountLogout());
+
+    // localStorageのユーザー情報も削除
+    localStorage.removeItem('user');
+    
+    navigate('/login/');
   }
 
   return (
