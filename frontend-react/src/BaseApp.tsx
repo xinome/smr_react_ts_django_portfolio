@@ -88,7 +88,7 @@ const BaseApp = () => {
         <BaseSideMenu path={pathname} />
         <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
-          <Route path="/mypage/" element={<MypageIndex user_id={current_user_id} />} />
+          <Route path="/mypage/" element={<MyPageIndex user_id={current_user_id} />} />
           <Route path="/mypage/edit_profile/" element={<EditProfile user_id={current_user_id} />} />
           <Route path="/tips/" element={<TipsIndex />} />
           <Route path="/tips/create/" element={<TipsCreate />} />
