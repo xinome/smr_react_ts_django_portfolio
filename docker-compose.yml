@@ -2,6 +2,7 @@ version: '3'
 services:
   db:
     image: mysql:5.7
+    platform: linux/amd64
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydatabase
@@ -9,10 +10,11 @@ services:
       MYSQL_PASSWORD: mypassword
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    # restart: always
 
   web:
     build: ./nginx
+    platform: linux/amd64
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -20,9 +22,11 @@ services:
       - "80:80"
     depends_on:
       - backend
+      - frontend
 
   backend:
     build: ./backend_django
+    platform: linux/amd64
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend_django:/app
@@ -33,6 +37,10 @@ services:
 
   frontend:
     build: ./frontend_react
+    platform: linux/amd64
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+      - NODE_ENV=development
     volumes:
       - ./frontend_react:/app
     ports:

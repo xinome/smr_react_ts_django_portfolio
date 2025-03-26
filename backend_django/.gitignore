@@ -1,2 +1,5 @@
 # django cache
 **/__pycache__/**
+
+# データベースファイル
+*.sqlite3

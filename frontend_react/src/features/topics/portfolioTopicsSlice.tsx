@@ -12,7 +12,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchPortfolioTopics = createAsyncThunk(
   "topics/getPortfolioTopics",
   async (id) => {
-    const response = await axios.get(`${BASE_API_URL}/portfolio_topics`);
+    const response = await axios.get(`${BASE_API_URL}/portfolio_topics/`);
     return response.data;
   }
 );
