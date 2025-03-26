@@ -1,0 +1,44 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
+  web:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend_django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend_django:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend_react
+    volumes:
+      - ./frontend_react:/app
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:
+  static_volume:
+  media_volume:
