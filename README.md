@@ -5,13 +5,13 @@
 ### バックエンド(backend_django)
 
 - my_django_project/
-プロジェクト全体の設定やルートURL管理を担当します。
+  - プロジェクト全体の設定やルートURL管理を担当します。
 - django_app/
-API実装・DB設計など業務ロジックをまとめたアプリケーション層です。
+  - API実装・DB設計など業務ロジックをまとめたアプリケーション層です。
 - models.py / views.py / serializers.py
-Django REST Framework構成で、データ操作〜APIレスポンスまでを実装しています。
+  - Django REST Framework構成で、データ操作〜APIレスポンスまでを実装しています。
 - migrations/
-DBテーブル構造変更履歴を保持します（自動生成）。
+  - DBテーブル構造変更履歴を保持します（自動生成）。
 
 ```
 backend_django/
@@ -44,19 +44,19 @@ backend_django/
 ### フロントエンド(frontend_react)
 
 - public/
-ReactのベースHTMLやfaviconなどの静的ファイルを管理
+  - ReactのベースHTMLやfaviconなどの静的ファイルを管理
 - src/components/
-HeaderやSideMenuなど再利用可能なUI部品を格納
+  - HeaderやSideMenuなど再利用可能なUI部品を格納
 - src/features/（Redux構成）
-ドメインごとに状態管理を分離（account、tips、topics など）
+  - ドメインごとに状態管理を分離（account、tips、topics など）
 - src/pages/
-画面ごとの構成（マイページ、ダッシュボード、Tips投稿など）
+  - 画面ごとの構成（マイページ、ダッシュボード、Tips投稿など）
 - src/store/
-Reduxストアの生成・ミドルウェア設定など
+  - Reduxストアの生成・ミドルウェア設定など
 - src/utils/
-色変換などの共通ユーティリティ群
+  - 色変換などの共通ユーティリティ群
 - BaseApp.tsx / index.tsx
-アプリ全体のルーティング、レンダリングを担当
+  - アプリ全体のルーティング、レンダリングを担当
 
 ※App.tsxは現在不使用
 
