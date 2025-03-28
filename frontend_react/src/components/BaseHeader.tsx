@@ -13,15 +13,8 @@ import { bgcolor_header } from '../utils/ColorUtils';
 
 import { fetchAuth, accountLogout } from '../features/account/authSlice';
 
-type BaseHeaderProps = {
-  user_id: number;
-}
+const BaseHeader = () => {
 
-const BaseHeader = (props: BaseHeaderProps) => {
-
-  // const user_id = props.user_id;
-
-  const userAuth = useSelector((state: any) => state.authReducer);
   const usersList = useSelector((state: any) => state.authReducer.items);
   const isLoggedIn = useSelector((state: any) => state.authReducer.isLoggedIn);
 
@@ -29,30 +22,8 @@ const BaseHeader = (props: BaseHeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // JSONデータを取得する
-  // const [usersList, setUsersList] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchUsersList = async (id) => {
-  //     try {
-  //       const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-  //       console.log("fetchUsersList: ", response);
-  //       setUsersList(response.data);
-  //       console.log("fetchUsersList > usersList: ", usersList);
-
-  //     }
-  //     catch (error) {
-  //       console.log("fetchUsersList: ", error);
-  //     }
-  //   }
-
-  //   fetchUsersList(user_id);
-  // }, [user_id]);
-
   // 画面表示時にログインユーザー情報を取得
   useEffect(() => {
-    console.log("userAuth: ", userAuth);
-    console.log("usersList: ", usersList);
   
     // 未ログインなら login に飛ばす
     if (!isLoggedIn && location.pathname !== "/login/") {
@@ -70,7 +41,6 @@ const BaseHeader = (props: BaseHeaderProps) => {
       sx: {
         bgcolor: deepPurple[500]
       },
-      // children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
       children: name ? name.slice(0, 1) : '',
     };
   }

@@ -26,8 +26,6 @@ import TipsEdit from "./pages/tips/TipsEdit";
 
 const BaseApp = () => {
 
-  // const pathname = useLocation().pathname.replaceAll('/', '');
-  // console.log("useLocation.pathname: ", pathname);
   const userAuth = useSelector((state: any) => state.authReducer);
   const usersList = useSelector((state: any) => state.authReducer.items);
 
